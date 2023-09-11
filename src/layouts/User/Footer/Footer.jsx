@@ -6,7 +6,85 @@ import footerlogo from "../../../assets/footerlogo.png";
 function Footer() {
   return (
     <footer className={cx("wrapper")}>
-      Footer
+      <div className={cx("footer-top")}>
+        <div className={cx("ft")}>
+          <div className={cx("title")}>
+            <h5>Subscribe Newsletter</h5>
+            <p>Subscribe newsletter to get 5% on all products.</p>
+          </div>
+          <div className={cx("input")}>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email"
+            />
+            <div className={cx("btn-resign")}>
+              <button>Subscribe</button>
+            </div>
+          </div>
+          <div className={cx("social-network")}>
+            <a
+              href="https://www.facebook.com/profile.php?id=100023095460530"
+              target="blank"
+            >
+              <i className="fa fa-facebook"></i>
+            </a>
+            <a href="/">
+              <i className="fa fa-instagram"></i>
+            </a>
+            <a href="/">
+              <i className="fa fa-twitter"></i>
+            </a>
+            <a href="/">
+              <i className="fa fa-linkedin"></i>
+            </a>
+            <a href="/">
+              <i className="fa fa-youtube"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className={cx("inner-footer")}>
+        <div className={cx("main")}>
+          <div className={cx("logo")}>
+            <Link to={"/"}>
+              <img src={footerlogo} alt="" />
+            </Link>
+          </div>
+          <div className={cx("nav-item")}>
+            <Link to={"/"}>Men</Link>
+            <Link to={"/"}>Clothing Fashion</Link>
+            <Link to={"/"}>Winter</Link>
+            <Link to={"/"}>Summer</Link>
+            <Link to={"/"}>Collection 2023</Link>
+          </div>
+          <div className={cx("nav-item")}>
+            <Link to={"/"}>Women</Link>
+            <Link to={"/"}>Clothing Fashion</Link>
+            <Link to={"/"}>Winter</Link>
+            <Link to={"/"}>Summer</Link>
+            <Link to={"/"}>Collection 2023</Link>
+          </div>
+          <div className={cx("nav-item")}>
+            <Link to={"/"}>Baby Collection</Link>
+            <Link to={"/"}>Clothing Fashion</Link>
+            <Link to={"/"}>Winter</Link>
+            <Link to={"/"}>Summer</Link>
+            <Link to={"/"}>Collection 2023</Link>
+          </div>
+          <div className={cx("nav-item")}>
+            <Link to={"/"}>Contact</Link>
+            <Link to={"/"}>Support</Link>
+            <Link to={"/"}>FAQ</Link>
+            <Link to={"/"}>About</Link>
+            <Link to={"/"}>Delivery</Link>
+          </div>
+        </div>
+      </div>
+      <div className={cx("bottom-ft")}>
+        <p>Đồ án tốt nghiệp © 2023 | Mẫu này được thực hiện bởi Hải Đăng</p>
+      </div>
     </footer>
   );
 }
