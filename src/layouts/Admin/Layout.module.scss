@@ -1,0 +1,24 @@
+.wrapper{
+    height: 100vh;
+}
+.side-bar{
+    height: 100vh;
+    margin-top: 80px;
+    position: fixed;
+    left: 0;
+    width: inherit;
+    }
+.header{
+    width: inherit;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+.children{
+    margin-top: 120px;
+}
+@media only screen  and (max-width:768px){
+    .side-bar{
+        height: max-content;
+    }
+}
