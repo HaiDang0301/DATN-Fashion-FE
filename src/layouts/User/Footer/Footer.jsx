@@ -8,40 +8,48 @@ function Footer() {
     <footer className={cx("wrapper")}>
       <div className={cx("footer-top")}>
         <div className={cx("ft")}>
-          <div className={cx("title")}>
-            <h5>Subscribe Newsletter</h5>
-            <p>Subscribe newsletter to get 5% on all products.</p>
-          </div>
-          <div className={cx("input")}>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-            />
-            <div className={cx("btn-resign")}>
-              <button>Subscribe</button>
+          <div className="row">
+            <div className="col-lg-4 col-md-4 col-sm-12 col-12">
+              <div className={cx("title")}>
+                <h5>Subscribe Newsletter</h5>
+                <p>Subscribe newsletter to get 5% on all products.</p>
+              </div>
             </div>
-          </div>
-          <div className={cx("social-network")}>
-            <a
-              href="https://www.facebook.com/profile.php?id=100023095460530"
-              target="blank"
-            >
-              <i className="fa fa-facebook"></i>
-            </a>
-            <a href="/">
-              <i className="fa fa-instagram"></i>
-            </a>
-            <a href="/">
-              <i className="fa fa-twitter"></i>
-            </a>
-            <a href="/">
-              <i className="fa fa-linkedin"></i>
-            </a>
-            <a href="/">
-              <i className="fa fa-youtube"></i>
-            </a>
+            <div className="col-lg-6 col-md-6 col-sm-6 col-12">
+              <div className={cx("input")}>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Enter your email"
+                />
+                <div className={cx("btn-resign")}>
+                  <button>Subscribe</button>
+                </div>
+              </div>
+            </div>
+            <div className="col-lg-2 col-md-2 col-sm-6 col-12">
+              <div className={cx("social-network")}>
+                <a
+                  href="https://www.facebook.com/profile.php?id=100023095460530"
+                  target="blank"
+                >
+                  <i className="fa fa-facebook"></i>
+                </a>
+                <a href="/">
+                  <i className="fa fa-instagram"></i>
+                </a>
+                <a href="/">
+                  <i className="fa fa-twitter"></i>
+                </a>
+                <a href="/">
+                  <i className="fa fa-linkedin"></i>
+                </a>
+                <a href="/">
+                  <i className="fa fa-youtube"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -52,7 +60,7 @@ function Footer() {
               <img src={footerlogo} alt="" />
             </Link>
           </div>
-          <div className={cx("nav-item")}>
+          <div className={cx("nav-ite")}>
             <Link to={"/"}>Men</Link>
             <Link to={"/"}>Clothing Fashion</Link>
             <Link to={"/"}>Winter</Link>

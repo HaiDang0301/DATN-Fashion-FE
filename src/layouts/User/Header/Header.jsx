@@ -100,6 +100,7 @@ function Header() {
               onHide={handleClose}
               backdrop="static"
               placement="end"
+              style={{ width: 60 + "%" }}
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title>
