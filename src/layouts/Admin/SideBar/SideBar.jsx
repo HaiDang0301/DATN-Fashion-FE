@@ -30,7 +30,7 @@ function SideBar() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.adminHome}>Home</Link>
+              <Link to={routesConfig.AdminHome}>Home</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={routesConfig.adminOrders}>Oders</Link>
@@ -45,7 +45,7 @@ function SideBar() {
               <Link to={"#"}>Sales</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={"#"}>Blogs</Link>
+              <Link to={routesConfig.AdminBlogs}>Blogs</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={"#"}>Inventory</Link>
@@ -88,7 +88,7 @@ function SideBar() {
         <ItemMenu
           title="Home"
           icon="fa fa-home"
-          link={routesConfig.adminHome}
+          link={routesConfig.AdminHome}
         ></ItemMenu>
         <ItemMenu
           title="Order"
@@ -123,7 +123,7 @@ function SideBar() {
         <ItemMenu
           title="Blogs"
           icon="fa fa-file-text"
-          link={routesConfig.adminBlogs}
+          link={routesConfig.AdminBlogs}
         ></ItemMenu>
         <ItemMenu title="Setting" icon="fa fa-cogs"></ItemMenu>
       </div>
