@@ -4,10 +4,15 @@ import AdminHome from "../pages/Admin/Home/AdminHome";
 import AdminBlogs from "../pages/Admin/Blogs/Blogs";
 import CreateBlogs from "../pages/Admin/Blogs/Create/CreateBlogs";
 import UpdateBlogs from "../pages/Admin/Blogs/Edit/Update";
+import Blogs from "../pages/User/Blogs/Blog";
 const publicRoutes = [
   {
     path: routesConfig.home,
     component: Home,
+  },
+  {
+    path: routesConfig.blogs,
+    component: Blogs,
   },
 ];
 const privateRoutes = [
