@@ -2,6 +2,7 @@ const routesConfig = {
   //  User
   home: "/",
   blogs: "/blogs",
+  blogDetail: "/blogs/:slug",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",
