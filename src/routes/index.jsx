@@ -13,6 +13,10 @@ const publicRoutes = [
     path: routesConfig.blogs,
     component: Blogs,
   },
+  {
+    path: routesConfig.blogDetail,
+    component: BlogDetail,
+  },
 ];
 const privateRoutes = [
   {
