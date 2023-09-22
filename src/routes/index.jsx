@@ -5,6 +5,7 @@ import AdminBlogs from "../pages/Admin/Blogs/Blogs";
 import CreateBlogs from "../pages/Admin/Blogs/Create/CreateBlogs";
 import UpdateBlogs from "../pages/Admin/Blogs/Edit/Update";
 import Blogs from "../pages/User/Blogs/Blog";
+import BlogDetail from "../pages/User/Blogs/Detail/BlogDetail";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -13,6 +14,10 @@ const publicRoutes = [
   {
     path: routesConfig.blogs,
     component: Blogs,
+  },
+  {
+    path: routesConfig.blogDetail,
+    component: BlogDetail,
   },
 ];
 const privateRoutes = [
