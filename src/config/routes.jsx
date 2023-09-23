@@ -7,6 +7,6 @@ const routesConfig = {
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",
   CreateBlogs: "/admin/blogs/create",
-  UpdateBlogs: "/admin/blogs/edit",
+  UpdateBlogs: "/admin/blogs/:id/edit",
 };
 export default routesConfig;

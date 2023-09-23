@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import Parser from "html-react-parser";
 import className from "classnames/bind";
 import styles from "./BlogDetail.module.scss";
 import { useEffect, useState } from "react";
@@ -39,12 +40,7 @@ function BlogsDetail() {
             </div>
             <div className="col-lg-12">
               <div className={cx("description")}>
-                <p>{blog.description}</p>
-              </div>
-            </div>
-            <div className="col-lg-12">
-              <div className={cx("image")}>
-                <img src={blog.image} alt="" />
+                {blog.description ? Parser(blog.description) : null}
               </div>
             </div>
           </div>

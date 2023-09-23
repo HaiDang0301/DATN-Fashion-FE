@@ -3,7 +3,7 @@ import routesConfig from "../config/routes";
 import AdminHome from "../pages/Admin/Home/AdminHome";
 import AdminBlogs from "../pages/Admin/Blogs/Blogs";
 import CreateBlogs from "../pages/Admin/Blogs/Create/CreateBlogs";
-import UpdateBlogs from "../pages/Admin/Blogs/Edit/Update";
+import UpdateBlogs from "../pages/Admin/Blogs/Update/Update";
 import Blogs from "../pages/User/Blogs/Blog";
 import BlogDetail from "../pages/User/Blogs/Detail/BlogDetail";
 const publicRoutes = [

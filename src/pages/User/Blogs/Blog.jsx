@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import blogAPI from "../../../api/blogsAPI";
+import Parser from "html-react-parser";
 import className from "classnames/bind";
 import styles from "./Blog.module.scss";
 const cx = className.bind(styles);
@@ -118,7 +119,7 @@ function Blogs() {
                 </div>
                 <div className={cx("recent-post")}>
                   <h3>Recent Post</h3>
-                  {blogs.blogs.slice(0, 3).map((item, index) => (
+                  {blogs.blogs.slice(3, 6).map((item, index) => (
                     <div className={cx("item")} key={item._id}>
                       <img src={item.image} alt="" />
                       <div className={cx("title")}>
@@ -149,7 +150,9 @@ function Blogs() {
                                 {item.title}
                               </Card.Title>
                               <Card.Text>
-                                {item.description.slice(0, 25) + ". . ."}
+                                {Parser(
+                                  item.description.slice(0, 25) + ". . ."
+                                )}
                               </Card.Text>
                             </Card.Body>
                           </Card>
@@ -164,7 +167,7 @@ function Blogs() {
                   breakLabel="..."
                   nextLabel=">"
                   onPageChange={handlePage}
-                  pageCount={blogs.totalPage}
+                  pageCount={blogs.totalPage || 1}
                   previousLabel="<"
                   renderOnZeroPageCount={null}
                 />
