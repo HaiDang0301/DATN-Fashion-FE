@@ -1,6 +1,8 @@
 const routesConfig = {
   //  User
   home: "/",
+  register: "/register",
+  login: "/login",
   blogs: "/blogs",
   blogDetail: "/blogs/:slug",
   //Admin

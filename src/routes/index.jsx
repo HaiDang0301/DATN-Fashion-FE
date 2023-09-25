@@ -6,6 +6,8 @@ import CreateBlogs from "../pages/Admin/Blogs/Create/CreateBlogs";
 import UpdateBlogs from "../pages/Admin/Blogs/Update/Update";
 import Blogs from "../pages/User/Blogs/Blog";
 import BlogDetail from "../pages/User/Blogs/Detail/BlogDetail";
+import Register from "../pages/User/Auth/Register/Register";
+import Login from "../pages/User/Auth/Login/Login";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -18,6 +20,16 @@ const publicRoutes = [
   {
     path: routesConfig.blogDetail,
     component: BlogDetail,
+  },
+  {
+    path: routesConfig.register,
+    component: Register,
+    layout: null,
+  },
+  {
+    path: routesConfig.login,
+    component: Login,
+    layout: null,
   },
 ];
 const privateRoutes = [
