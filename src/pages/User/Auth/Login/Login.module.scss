@@ -1,0 +1,117 @@
+.wrapper{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.inner-login{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-form-area{
+    background: #fff;
+    width: 80%;
+    height: max-content;
+    box-shadow: 0px 10px 30px 0px rgba(13,12,13,0.2);
+    text-align: center;
+}
+.login-form{
+    padding: 55px 60px 50px 50px;;
+}
+.login-heading{
+    span{
+    color: #140C40;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: block;
+    text-transform: capitalize;
+    }
+    p{
+    font-family: "Jost",sans-serif;
+    color: #301A22;
+    font-size: 16px;
+    line-height: 30px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    }
+}
+.input-box{
+    padding-top: 35px;
+    padding-bottom: 75px;
+}
+.single-input{
+    display: block;
+    label{
+        width: 100%;
+        text-align: left;
+        font-size: 17px;
+        margin-bottom: 6px;
+        color: #140C40;
+        text-transform: capitalize;
+        font-weight: 500;
+        text-align: left;
+    }
+    input{
+        border: 1px solid #C9C9C9;
+        width: 100%;
+        height: 50px;
+        margin-bottom: 20px;
+        padding: 0 25px;
+        color: #000;
+        &::placeholder{
+            text-align: start;
+        }
+    }
+}
+.login-check{
+    margin-top: 30px;
+    a{
+        text-decoration: none;
+        color: red;
+    }
+}
+.checkbox{
+    text-align: start;
+    input{
+    border: 0.1em solid #e4e4e4;
+    border-radius: 0.2em;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding-left: 0.2em;
+    padding-bottom: 0.3em;
+    margin-right: 10px;
+    vertical-align: bottom;
+    color: transparent;
+    transition: .2s;
+    }
+}
+.login-footer{
+    button{
+    margin-left: auto;
+    background: #FF2020;
+    height: 60px;
+    padding: 10px 43px;
+    border: 0;
+    color: #fff;
+    text-transform: capitalize;
+    font-size: 16px;
+    border-radius: 0px;
+    }
+    a{
+        text-decoration: none;
+        color: #FF2020;
+    }
+}
+.errors{
+    float: left;
+    i{
+        color: red;
+    }
+}
