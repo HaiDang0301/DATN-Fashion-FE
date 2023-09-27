@@ -1,26 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 const cx = classNames.bind(styles);
 function Header() {
+  const navigate = useNavigate();
+  const full_name = localStorage.getItem("full_name");
   const [show, setShow] = useState(false);
-  const [user, setUser] = useState("H");
+  const [user, setUser] = useState();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  useEffect(() => {
+    if (full_name) {
+      setUser(full_name);
+    } else {
+      setUser(sessionStorage.getItem("full_name"));
+    }
+  });
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("full_name");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("full_name");
+    navigate(routesConfig.login);
+  };
   return (
     <header className={cx("header-setion")}>
       <div className={cx("header-top")}>
         <div className={cx("container g-0")}>
-          <div className="row">
-            <div className="col-lg-4 col-sm-4 col-md-4">
+          <div className="row g-0">
+            <div className="col-lg-3 col-sm-3 col-md-3">
               <div className={cx("hd-left")}>
                 <i className="fa fa-envelope"> dinhhaidang1003@gmail.com</i>
               </div>
             </div>
-            <div className="col-lg-6 col-sm-6 col-md-6">
+            <div className="col-lg-7 col-sm-7 col-md-7">
               <div className={cx("phone")}>
                 <i className="fa fa-phone">+84 345 649 255</i>
                 <div className={cx("social-network")}>
@@ -62,7 +78,7 @@ function Header() {
                             </Link>
                           </li>
                           <li>
-                            <Link to={routesConfig.login}>
+                            <Link to={"#"} onClick={handleLogout}>
                               <i className="fa fa-sign-out"> Logout</i>
                             </Link>
                           </li>
@@ -90,7 +106,7 @@ function Header() {
               </Link>
             </div>
             <div className={cx("item")}>
-              <Link to={routesConfig.blogs}>Home</Link>
+              <Link to={routesConfig.home}>Home</Link>
             </div>
             <div className={cx("item")}>
               <ul>

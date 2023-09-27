@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import noimg from "../../../../assets/noimg.png";
-import blogAPI from "../../../../api/blogsAPI";
+import blogAPI from "../../../../api/Admin/blogsAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import className from "classnames/bind";

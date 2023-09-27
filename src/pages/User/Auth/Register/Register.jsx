@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
 import routesConfig from "../../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
+import AuthsAPI from "../../../../api/AuthsAPI";
+import { useState } from "react";
 const cx = classNames.bind(styles);
 function Register() {
   document.title = "Register";
+  const [button, setButton] = useState(true);
   const formik = useFormik({
     initialValues: {
       full_name: "",
@@ -28,8 +32,48 @@ function Register() {
         .required("Please confirm the password"),
     }),
   });
+  const handleSubmit = async () => {
+    if (
+      formik.errors.full_name ||
+      formik.errors.email ||
+      formik.errors.password ||
+      formik.errors.confirm_password
+    ) {
+      toast.error("Please provide full information", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+    } else {
+      const data = {
+        full_name: formik.values.full_name,
+        email: formik.values.email,
+        password: formik.values.password,
+      };
+      const register = await AuthsAPI.register(data)
+        .then((res) => {
+          if (res.data === "Successful account registration") {
+            toast.success("Successful account registration", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+        })
+        .catch((errors) => {
+          if (errors.response.status === 409) {
+            toast.error("The account has been registered", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+        });
+    }
+  };
   return (
     <div className={cx("wrapper")}>
+      <ToastContainer></ToastContainer>
       <div className={cx("inner-register")}>
         <div className={cx("register-form-area")}>
           <div className={cx("register-form")}>
@@ -104,6 +148,7 @@ function Register() {
                   placeholder="Confirm Password"
                   value={formik.values.confirm_password}
                   onBlur={formik.handleBlur}
+                  onClick={(e) => setButton(false)}
                   onChange={formik.handleChange}
                 />
               </div>
@@ -112,7 +157,6 @@ function Register() {
                 formik.errors.confirm_password ? (
                   <>
                     <i className="fa fa-warning">
-                      {" "}
                       {formik.errors.confirm_password}
                     </i>
                   </>
@@ -129,7 +173,9 @@ function Register() {
                   </p>
                 </div>
                 <div className="col-lg-4">
-                  <button>Register</button>
+                  <button onClick={handleSubmit} disabled={button}>
+                    Register
+                  </button>
                 </div>
               </div>
             </div>

@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import routesConfig from "../../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
+import AuthsAPI from "../../../../api/AuthsAPI";
+import { ToastContainer, toast } from "react-toastify";
+import { useState } from "react";
 const cx = classNames.bind(styles);
 function Login() {
   document.title = "Login";
+  const navigate = useNavigate();
+  const [save, setSave] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,8 +22,51 @@ function Login() {
       password: Yup.string().required("Please enter a password"),
     }),
   });
+  const handleSubmit = async () => {
+    const data = {
+      email: formik.values.email,
+      password: formik.values.password,
+    };
+    const login = await AuthsAPI.login(data)
+      .then((res) => {
+        if (save === true) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("full_name", res.data.others.full_name);
+        } else {
+          sessionStorage.setItem("token", res.data.token);
+          sessionStorage.setItem("full_name", res.data.others.full_name);
+        }
+        if (res.status === 200) {
+          if (res.data.others.role === "admin") {
+            navigate(routesConfig.AdminHome);
+            toast.success("Loggin Succes", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          } else {
+            navigate(routesConfig.home);
+            toast.success("Loggin Succes", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+        }
+      })
+      .catch((errors) => {
+        if (errors.response.status === 401) {
+          toast.error("Inventive password account information", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
+  };
   return (
     <div className={cx("wrapper")}>
+      <ToastContainer></ToastContainer>
       <div className={cx("inner-login")}>
         <div className={cx("login-form-area")}>
           <div className={cx("login-form")}>
@@ -69,7 +117,12 @@ function Login() {
                 <div className="row">
                   <div className="col-lg-8 col-sm-12">
                     <div className={cx("checkbox")}>
-                      <input type="checkbox" name="" id="" />
+                      <input
+                        type="checkbox"
+                        name=""
+                        id=""
+                        onClick={(e) => setSave(!save)}
+                      />
                       <label htmlFor="">Keep Me Logged In</label>
                     </div>
                   </div>
@@ -88,7 +141,7 @@ function Login() {
                   </p>
                 </div>
                 <div className="col-lg-4">
-                  <button>Login</button>
+                  <button onClick={handleSubmit}>Login</button>
                 </div>
               </div>
             </div>

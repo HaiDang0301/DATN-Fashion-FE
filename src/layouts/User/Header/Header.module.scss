@@ -13,7 +13,7 @@
 .hd-left {
     display: flex;
     height: 48px;
-    width: max-content;
+    width: 100%;
     align-items: center;
     border-right: 1px solid rgb(150, 150, 150);
     i {
@@ -45,6 +45,7 @@
     height: 48px;
     display: flex;
     justify-content: center;
+    align-items: center;
     i {
         margin-right: 10px;
         margin-left: 10px;
