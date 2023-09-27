@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
-import routesConfig from "../../../../config/routes";
+import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
-import AuthsAPI from "../../../../api/AuthsAPI";
+import AuthsAPI from "../../../api/AuthsAPI";
 import { useState } from "react";
 const cx = classNames.bind(styles);
 function Register() {
