@@ -1,16 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Register.module.scss";
+import { useEffect, useState } from "react";
 import AuthsAPI from "../../../api/AuthsAPI";
-import { useState } from "react";
 const cx = classNames.bind(styles);
 function Register() {
   document.title = "Register";
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   const [button, setButton] = useState(true);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       full_name: "",
@@ -21,7 +24,7 @@ function Register() {
     validationSchema: Yup.object({
       full_name: Yup.string()
         .min(2, "Minimum 2 characters")
-        .max(20, "Maximum of 10 characters")
+        .max(20, "Maximum of 20 characters")
         .required("Please provide full name"),
       email: Yup.string().required("Email must not leave blank"),
       password: Yup.string()
@@ -71,6 +74,11 @@ function Register() {
         });
     }
   };
+  useEffect(() => {
+    if (token) {
+      navigate(routesConfig.home);
+    }
+  }, []);
   return (
     <div className={cx("wrapper")}>
       <ToastContainer></ToastContainer>

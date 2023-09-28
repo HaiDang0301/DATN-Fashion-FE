@@ -1,16 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import routesConfig from "../../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
-import AuthsAPI from "../../../../api/AuthsAPI";
 import { ToastContainer, toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AuthsAPI from "../../../api/AuthsAPI";
+import routesConfig from "../../../config/routes";
 const cx = classNames.bind(styles);
 function Login() {
   document.title = "Login";
   const navigate = useNavigate();
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   const [save, setSave] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -64,6 +66,9 @@ function Login() {
         }
       });
   };
+  useEffect(() => {
+    if (token) return navigate(routesConfig.home);
+  }, []);
   return (
     <div className={cx("wrapper")}>
       <ToastContainer></ToastContainer>
@@ -127,7 +132,7 @@ function Login() {
                     </div>
                   </div>
                   <div className="col-lg-4">
-                    <Link to="/">Forgot password ?</Link>
+                    <Link to={routesConfig.forgetpw}>Forgot password ?</Link>
                   </div>
                 </div>
               </div>

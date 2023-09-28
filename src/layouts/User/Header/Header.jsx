@@ -24,7 +24,9 @@ function Header() {
     localStorage.removeItem("full_name");
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("full_name");
-    navigate(routesConfig.login);
+    setTimeout(() => {
+      navigate(routesConfig.login);
+    }, 100);
   };
   return (
     <header className={cx("header-setion")}>
