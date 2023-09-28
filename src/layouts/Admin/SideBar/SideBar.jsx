@@ -103,7 +103,7 @@ function SideBar() {
         <ItemMenu
           title="Client"
           icon="fa fa-users"
-          link={routesConfig.adminClients}
+          link={routesConfig.AdminClients}
         ></ItemMenu>
         <ItemMenu
           title="Sales"

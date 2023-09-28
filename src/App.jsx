@@ -3,6 +3,7 @@ import { publicRoutes, privateRoutes } from "./routes";
 import DefaultLayout from "./layouts/User";
 import LayoutAdmin from "./layouts/Admin";
 import { Fragment } from "react";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   return (
     <div className="App">
@@ -40,9 +41,11 @@ function App() {
               key={index}
               path={route.path}
               element={
-                <Layout>
-                  <Page />
-                </Layout>
+                <ProtectedRoute>
+                  <Layout>
+                    <Page />
+                  </Layout>
+                </ProtectedRoute>
               }
             ></Route>
           );

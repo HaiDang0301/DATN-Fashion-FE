@@ -3,7 +3,7 @@ import Parser from "html-react-parser";
 import className from "classnames/bind";
 import styles from "./BlogDetail.module.scss";
 import { useEffect, useState } from "react";
-import blogAPI from "../../../../api/blogsAPI";
+import blogAPI from "../../../../api/User/blogsAPI";
 const cx = className.bind(styles);
 function BlogsDetail() {
   window.scrollTo({ top: 0, behavior: "smooth" });

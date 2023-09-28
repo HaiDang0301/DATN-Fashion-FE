@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import routesConfig from "../../../config/routes";
 import { useEffect, useState } from "react";
-import blogAPI from "../../../api/blogsAPI";
+import blogAPI from "../../../api/Admin/blogsAPI";
 import className from "classnames/bind";
 import styles from "./Blogs.module.scss";
 const cx = className.bind(styles);

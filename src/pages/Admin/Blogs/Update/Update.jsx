@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import blogAPI from "../../../../api/blogsAPI";
+import blogAPI from "../../../../api/Admin/blogsAPI";
 import className from "classnames/bind";
 import styles from "./Update.module.scss";
 import { ToastContainer, toast } from "react-toastify";

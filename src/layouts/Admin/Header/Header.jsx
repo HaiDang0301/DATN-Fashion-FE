@@ -1,10 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 const cx = classNames.bind(styles);
 import logo from "../../../assets/logo.png";
+import routesConfig from "../../../config/routes";
 function Header() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("full_name");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("full_name");
+    navigate(routesConfig.login);
+  };
   return (
     <div className={cx("wrapper")}>
       <div className="row g-0">
@@ -53,9 +62,9 @@ function Header() {
                   <i className="fa fa-user"></i>
                   <span>Account</span>
                 </Dropdown.Item>
-                <Dropdown.Item href="#">
+                <Dropdown.Item href="#" onClick={handleLogout}>
                   <i className="fa fa-power-off"></i>
-                  <span>Exit</span>
+                  <span>Log out</span>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

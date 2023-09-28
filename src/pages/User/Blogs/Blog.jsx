@@ -2,7 +2,7 @@ import Card from "react-bootstrap/Card";
 import { Link, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
-import blogAPI from "../../../api/blogsAPI";
+import blogAPI from "../../../api/User/blogsAPI";
 import Parser from "html-react-parser";
 import className from "classnames/bind";
 import styles from "./Blog.module.scss";
@@ -124,7 +124,7 @@ function Blogs() {
                       <img src={item.image} alt="" />
                       <div className={cx("title")}>
                         <Link to={item.slug}>
-                          <p>{item.title.slice(0, 35) + ". . ."}</p>
+                          <label>{item.title.slice(0, 35) + ". . ."}</label>
                           <h5>FASHION - {item.createdAt.slice(0, 10)}</h5>
                         </Link>
                       </div>
@@ -149,11 +149,6 @@ function Blogs() {
                               <Card.Title className={cx("card-title")}>
                                 {item.title}
                               </Card.Title>
-                              <Card.Text>
-                                {Parser(
-                                  item.description.slice(0, 25) + ". . ."
-                                )}
-                              </Card.Text>
                             </Card.Body>
                           </Card>
                         </Link>
