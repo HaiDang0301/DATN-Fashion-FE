@@ -10,6 +10,9 @@ import Register from "../pages/Auth/Register/Register";
 import Login from "../pages/Auth/Login/Login";
 import ForgetPw from "../pages/Auth/Forget/Forget";
 import ResetPw from "../pages/Auth/Reset/Reset";
+import AdminProducers from "../pages/Admin/Producers/Producers";
+import CreateProducers from "../pages/Admin/Producers/Create/CreateProducers";
+import UpdateProducers from "../pages/Admin/Producers/Update/Update";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -60,6 +63,18 @@ const privateRoutes = [
   {
     path: routesConfig.UpdateBlogs,
     component: UpdateBlogs,
+  },
+  {
+    path: routesConfig.AdminProducers,
+    component: AdminProducers,
+  },
+  {
+    path: routesConfig.CreateProducers,
+    component: CreateProducers,
+  },
+  {
+    path: routesConfig.UpdateProducers,
+    component: UpdateProducers,
   },
 ];
 export { publicRoutes, privateRoutes };

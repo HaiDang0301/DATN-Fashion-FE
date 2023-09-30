@@ -101,9 +101,14 @@ function SideBar() {
           link={routesConfig.adminProducts}
         ></ItemMenu>
         <ItemMenu
-          title="Client"
+          title="Clients"
           icon="fa fa-users"
           link={routesConfig.AdminClients}
+        ></ItemMenu>
+        <ItemMenu
+          title="Producers"
+          icon="fa fa-product-hunt"
+          link={routesConfig.AdminProducers}
         ></ItemMenu>
         <ItemMenu
           title="Sales"

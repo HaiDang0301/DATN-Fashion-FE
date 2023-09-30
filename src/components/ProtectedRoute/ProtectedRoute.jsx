@@ -5,10 +5,10 @@ import jwt_decode from "jwt-decode";
 const token = localStorage.getItem("token");
 const ProtectedRoute = ({ children }) => {
   var decoded = null;
-  if (token) {
-    decoded = jwt_decode(token);
+  if (!token) {
+    return <Navigate to={routesConfig.login}></Navigate>;
   } else {
-    decoded = sessionStorage.getItem("token");
+    decoded = jwt_decode(token) || sessionStorage.getItem("token");
   }
   if (decoded.role === "admin") {
     return children;
