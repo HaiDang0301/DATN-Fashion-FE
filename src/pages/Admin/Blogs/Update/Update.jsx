@@ -16,7 +16,6 @@ function UpdateBlogs() {
     author: "",
     description: "",
   });
-  const [description, setDescription] = useState("");
   const [edit, setEdit] = useState(false);
   useEffect(() => {
     const fetchBlog = async () => {
@@ -39,7 +38,7 @@ function UpdateBlogs() {
     data.append("author", blog.author);
     data.append("description", blog.description);
     const updateBlog = await blogAPI.updateBlog(id, data).then((res) => {
-      if (res.data === "Update Success") {
+      if (res.data === "Update Blog Success") {
         toast.success("Update Blog Success", {
           position: "bottom-right",
           autoClose: 5000,
@@ -122,6 +121,11 @@ function UpdateBlogs() {
                     }
                   />
                 </div>
+                <div className={cx("errors")}>
+                  {!blog.title ? (
+                    <i className="fa fa-warning"> Please provide title blog</i>
+                  ) : null}
+                </div>
                 <div className="col-lg-12">
                   <div className={cx("author")}>
                     <h5>Author</h5>
@@ -136,6 +140,11 @@ function UpdateBlogs() {
                       setBlog({ ...blog, author: e.target.value })
                     }
                   />
+                </div>
+                <div className={cx("errors")}>
+                  {!blog.author ? (
+                    <i className="fa fa-warning"> Please provide author blog</i>
+                  ) : null}
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("description")}>
@@ -182,6 +191,14 @@ function UpdateBlogs() {
                         "bullist numlist checklist | removeformat | quickimage",
                     }}
                   />
+                </div>
+                <div className={cx("errors")}>
+                  {!blog.description ? (
+                    <i className="fa fa-warning">
+                      {" "}
+                      Please provide description blog
+                    </i>
+                  ) : null}
                 </div>
               </div>
             </div>

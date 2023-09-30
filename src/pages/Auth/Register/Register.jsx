@@ -71,6 +71,13 @@ function Register() {
               theme: "light",
             });
           }
+          if (errors.response.status === 403) {
+            toast.error("The account has been registered", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
         });
     }
   };

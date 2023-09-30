@@ -12,5 +12,8 @@ const routesConfig = {
   AdminBlogs: "/admin/blogs",
   CreateBlogs: "/admin/blogs/create",
   UpdateBlogs: "/admin/blogs/:id/edit",
+  AdminProducers: "/admin/producers",
+  CreateProducers: "/admin/producers/create",
+  UpdateProducers: "/admin/producers/:id/edit",
 };
 export default routesConfig;

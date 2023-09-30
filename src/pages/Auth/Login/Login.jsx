@@ -58,7 +58,7 @@ function Login() {
       })
       .catch((errors) => {
         if (errors.response.status === 401) {
-          toast.error("Inventive password account information", {
+          toast.error("Wrong account or password information", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
