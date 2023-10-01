@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import loading from "../../../assets/loading.gif";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames/bind";
@@ -10,7 +11,9 @@ import { useState } from "react";
 const cx = classNames.bind(styles);
 function ResetPw() {
   document.title = "Reset Password";
-  const [time, setTime] = useState(5);
+  const [button, setButton] = useState(true);
+  const [check, setCheck] = useState(false);
+  const [isLoading, setIsloading] = useState();
   const token = useParams().token;
   const navigate = useNavigate();
   const formik = useFormik({
@@ -24,6 +27,13 @@ function ResetPw() {
     }),
   });
   const handleSubmit = async () => {
+    setButton(true);
+    setCheck(true);
+    setIsloading(
+      <div className={cx("loading")}>
+        <img src={loading} alt="" />
+      </div>
+    );
     const data = {
       password: formik.values.password,
     };
@@ -36,6 +46,7 @@ function ResetPw() {
               autoClose: 5000,
               theme: "light",
             });
+            setCheck(false);
             setTimeout(() => {
               navigate(routesConfig.login);
             }, 5000);
@@ -70,6 +81,7 @@ function ResetPw() {
               <div className={cx("single-input")}>
                 <label htmlFor="">Password Adress</label>
                 <input
+                  onClick={(e) => setButton(false)}
                   type="password"
                   name="password"
                   id="password"
@@ -88,7 +100,13 @@ function ResetPw() {
               </div>
             </div>
             <div className={cx("forget-footer")}>
-              <button onClick={handleSubmit}>Submit</button>
+              {check ? (
+                isLoading
+              ) : (
+                <button onClick={handleSubmit} disabled={button}>
+                  Submit
+                </button>
+              )}
             </div>
           </div>
         </div>

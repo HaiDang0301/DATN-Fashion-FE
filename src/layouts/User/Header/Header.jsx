@@ -3,15 +3,15 @@ import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import Offcanvas from "react-bootstrap/Offcanvas";
 const cx = classNames.bind(styles);
 function Header() {
   const navigate = useNavigate();
   const full_name = localStorage.getItem("full_name");
   const [show, setShow] = useState(false);
+  const [showchildren, setShowchildren] = useState(false);
   const [user, setUser] = useState();
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => setShow(!show);
+  const handleChildren = () => setShowchildren(!showchildren);
   useEffect(() => {
     if (full_name) {
       setUser(full_name);
@@ -33,12 +33,12 @@ function Header() {
       <div className={cx("header-top")}>
         <div className={cx("container g-0")}>
           <div className="row g-0">
-            <div className="col-lg-3 col-sm-3 col-md-3">
+            <div className="col-lg-3 col-md-4 col-sm-5 col-4">
               <div className={cx("hd-left")}>
                 <i className="fa fa-envelope"> dinhhaidang1003@gmail.com</i>
               </div>
             </div>
-            <div className="col-lg-7 col-sm-7 col-md-7">
+            <div className="col-lg-7 col-md-6 col-sm-4 col-4">
               <div className={cx("phone")}>
                 <i className="fa fa-phone">+84 345 649 255</i>
                 <div className={cx("social-network")}>
@@ -63,7 +63,7 @@ function Header() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-2 col-md-2 col-sm-2">
+            <div className="col-lg-2 col-md-2 col-sm-3 col-4">
               <div className={cx("auth")}>
                 {user ? (
                   <div className={cx("user")}>
@@ -132,10 +132,7 @@ function Header() {
               </ul>
             </div>
             <div className={cx("item")}>
-              <Link to={"#"}>Promotion</Link>
-            </div>
-            <div className={cx("item")}>
-              <Link to={routesConfig.blogs}>Blog</Link>
+              <Link to={routesConfig.blogs}>Blogs</Link>
             </div>
             <div className={cx("item")}>
               <Link to={routesConfig.contacts}>Contact</Link>
@@ -151,8 +148,8 @@ function Header() {
         </div>
       </div>
       <div className={cx("menu")}>
-        <div className="container g-0">
-          <div className="row">
+        <div className="container">
+          <div className="row g-0">
             <div className="col-lg-8 col-md-8 col-sm-8 col-8">
               <div className={cx("logo")}>
                 <img
@@ -176,49 +173,115 @@ function Header() {
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("menu-mobile")}>
                     <Link to={"#"} onClick={handleShow}>
-                      <i className="fa fa-align-justify"></i>
+                      {show ? (
+                        <i className="fa fa-close"></i>
+                      ) : (
+                        <i className="fa fa-align-justify"></i>
+                      )}
                     </Link>
-                    <Offcanvas
-                      show={show}
-                      onHide={handleClose}
-                      backdrop="static"
-                      placement="end"
-                      style={{ width: 60 + "%" }}
-                    >
-                      <Offcanvas.Header closeButton>
-                        <Offcanvas.Title>
-                          <h1>Menu</h1>
-                        </Offcanvas.Title>
-                      </Offcanvas.Header>
-                      <Offcanvas.Body>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.home}>Home</Link>
-                        </div>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.products}>Men</Link>
-                        </div>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.products}>Women</Link>
-                        </div>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.products}>
-                            Baby Collection
-                          </Link>
-                        </div>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.blogs}>Blog</Link>
-                        </div>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.contacts}>Contact</Link>
-                        </div>
-                        <div className={cx("item-mobile")}>
-                          <Link to={routesConfig.login}>Logout</Link>
-                        </div>
-                      </Offcanvas.Body>
-                    </Offcanvas>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={cx(show ? "show-menu" : "hiden-menu")}>
+        <div className="row">
+          <div className="col-12">
+            <div className={cx("item-mobile")}>
+              <ul className={cx("nav-menu")}>
+                <div className="container">
+                  <li>
+                    <div className="row g-0">
+                      <div className="col-12">
+                        <div className={cx("text")}>
+                          <Link
+                            to={routesConfig.home}
+                            onClick={(e) => setShow(false)}
+                          >
+                            Home
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row g-0">
+                      <div className="col-11">
+                        <div className={cx("text")}>
+                          <Link to={"#"} onClick={(e) => setShow(false)}>
+                            Collections
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="col-1">
+                        <div
+                          className={cx("drop-down")}
+                          onClick={handleChildren}
+                        >
+                          <i className="fa fa-angle-down"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <ul
+                      className={cx(
+                        showchildren ? "show-children" : "hiden-children"
+                      )}
+                    >
+                      <div className={cx("text-children")}>
+                        <li>Men</li>
+                      </div>
+                      <div className={cx("text-children")}>
+                        <li>Women</li>
+                      </div>
+                      <div className={cx("text-children")}>
+                        <li>Baby</li>
+                      </div>
+                    </ul>
+                  </li>
+                  <li>
+                    <div className="row g-0">
+                      <div className="col-12">
+                        <div className={cx("text")}>
+                          <Link
+                            to={routesConfig.blogs}
+                            onClick={(e) => setShow(false)}
+                          >
+                            Blogs
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row g-0">
+                      <div className="col-12">
+                        <div className={cx("text")}>
+                          <Link to={"#"} onClick={(e) => setShow(false)}>
+                            Contact
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <div className="row g-0">
+                      <div className="col-12">
+                        <div className={cx("text")}>
+                          <Link to={"#"} onClick={handleLogout}>
+                            {full_name ? (
+                              <label>Logout</label>
+                            ) : (
+                              <label>Login</label>
+                            )}
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </div>
+              </ul>
             </div>
           </div>
         </div>

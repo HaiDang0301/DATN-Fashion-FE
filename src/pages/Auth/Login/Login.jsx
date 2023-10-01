@@ -120,7 +120,7 @@ function Login() {
               </div>
               <div className={cx("login-check")}>
                 <div className="row">
-                  <div className="col-lg-8 col-sm-12">
+                  <div className="col-lg-8 col-md-8 col-sm-12 col-12">
                     <div className={cx("checkbox")}>
                       <input
                         type="checkbox"
@@ -131,7 +131,7 @@ function Login() {
                       <label htmlFor="">Keep Me Logged In</label>
                     </div>
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-4 col-md-4 col-sm-12 col-12">
                     <Link to={routesConfig.forgetpw}>Forgot password ?</Link>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ function Login() {
                 <div className="col-lg-8">
                   <p>
                     Don’t have an account?
-                    <Link to={routesConfig.register}>Sign Up </Link> here
+                    <Link to={routesConfig.register}> Sign Up </Link> here
                   </p>
                 </div>
                 <div className="col-lg-4">

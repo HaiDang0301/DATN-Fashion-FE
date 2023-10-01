@@ -69,10 +69,10 @@ function CreateProducers() {
         <div className="row">
           <div className="col-lg-12">
             <div className="row">
-              <div className="col-lg-10">
+              <div className="col-lg-10 col-md-10 com-sm-9 col-9">
                 <h5>Create Producer</h5>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-3 col-3">
                 <Link
                   to={"#"}
                   className="btn btn-primary"

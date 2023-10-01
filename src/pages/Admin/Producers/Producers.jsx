@@ -81,105 +81,107 @@ function AdminProducers() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="top-blogs">
+      <div className={cx("producers")}>
         <div className="container">
-          <div className={cx("heading")}>
-            <div className="row">
-              <div className="col-lg-6 col-md-5 col-sm-4 col-0">
-                <h5>Producers List</h5>
-              </div>
-              <div className="col-lg-4 col-md-5 col-sm-6 col-9">
-                <div className="row">
-                  <div className="col-lg-8 col-md-8 col-sm-8 col-8">
-                    <select
-                      name="sort"
-                      id="sort"
-                      className={cx("select")}
-                      onClick={handleSelect}
-                    >
-                      <option value="default">Default</option>
-                      <option value="Providing">Providing</option>
-                      <option value="Stop-Providing">Stop Providing</option>
-                    </select>
-                  </div>
-                  <div className="col-lg-4 col-md-4 col-sm-4 col-4">
-                    <button className="btn btn-primary" onClick={handleSearch}>
-                      Search
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-3">
-                <div className={cx("create-producers")}>
-                  <Link
-                    to={routesConfig.CreateProducers}
-                    className="btn btn-primary"
+          <div className="row">
+            <div className="col-lg-6 col-md-5 col-sm-4 col-0">
+              <h5>Producers List</h5>
+            </div>
+            <div className="col-lg-4 col-md-5 col-sm-6 col-9">
+              <div className="row">
+                <div className="col-lg-8 col-md-8 col-sm-8 col-8">
+                  <select
+                    name="sort"
+                    id="sort"
+                    className={cx("select")}
+                    onClick={handleSelect}
                   >
-                    Create
-                  </Link>
+                    <option value="default">Default</option>
+                    <option value="Providing">Providing</option>
+                    <option value="Stop-Providing">Stop Providing</option>
+                  </select>
+                </div>
+                <div className="col-lg-4 col-md-4 col-sm-4 col-4">
+                  <button className="btn btn-primary" onClick={handleSearch}>
+                    Search
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
-          <div className={cx("table-producers")}>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>STT</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone_Number</th>
-                  <th>Adress</th>
-                  <th>Status</th>
-                  <th>Sign_Date</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              {producers.producers
-                ? producers.producers.map((item, index) => (
-                    <tbody key={item._id}>
-                      <tr>
-                        <td>{index + 1}</td>
-                        <td>{item.name}</td>
-                        <td>{item.email}</td>
-                        <td>{item.phone_number}</td>
-                        <td>{item.address}</td>
-                        <td>{item.status}</td>
-                        <td>{item.contract_sign_date.slice(0, 10)}</td>
-                        <td>
-                          <div className={cx("action")}>
-                            <div className={cx("update")}>
-                              <Link to={item._id + "/edit"}>
-                                <i className="fa fa-edit"></i>
-                              </Link>
+            <div className="col-lg-2 col-md-2 col-sm-2 col-3">
+              <div className={cx("create-producers")}>
+                <Link
+                  to={routesConfig.CreateProducers}
+                  className="btn btn-primary"
+                >
+                  Create
+                </Link>
+              </div>
+            </div>
+            <div className={cx("table-producers")}>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>STT</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Adress</th>
+                    <th>Status</th>
+                    <th>Sign_Date</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                {producers.producers
+                  ? producers.producers.map((item, index) => (
+                      <tbody key={index}>
+                        <tr>
+                          <td>{index + 1}</td>
+                          <td>{item.name}</td>
+                          <td>{item.email}</td>
+                          <td>{item.phone_number}</td>
+                          <td>{item.address}</td>
+                          <td>{item.status}</td>
+                          <td>{item.contract_sign_date}</td>
+                          <td>
+                            <div className={cx("action")}>
+                              <div className={cx("update")}>
+                                <Link
+                                  to={item._id + "/edit"}
+                                  className="btn btn-warning"
+                                >
+                                  Update
+                                </Link>
+                              </div>
+                              <div className={cx("delete")}>
+                                <Link
+                                  to={"#"}
+                                  onClick={(e) => {
+                                    setId(item._id), setShow(true);
+                                  }}
+                                  className="btn btn-danger"
+                                >
+                                  Delete
+                                </Link>
+                              </div>
                             </div>
-                            <div className={cx("delete")}>
-                              <Link
-                                to={"#"}
-                                onClick={(e) => {
-                                  setId(item._id), setShow(true);
-                                }}
-                              >
-                                <i className="fa fa-trash"></i>
-                              </Link>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  ))
-                : null}
-            </Table>
-          </div>
-          <div className={cx("panigate")}>
-            <ReactPaginate
-              breakLabel="..."
-              nextLabel=">"
-              onPageChange={handlePage}
-              pageCount={producers.totalPage || 1}
-              previousLabel="<"
-              renderOnZeroPageCount={null}
-            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    ))
+                  : null}
+              </Table>
+            </div>
+            <div className={cx("panigate")}>
+              <ReactPaginate
+                breakLabel="..."
+                nextLabel=">"
+                onPageChange={handlePage}
+                pageCount={producers.totalPage || 1}
+                previousLabel="<"
+                renderOnZeroPageCount={null}
+              />
+            </div>
           </div>
         </div>
       </div>

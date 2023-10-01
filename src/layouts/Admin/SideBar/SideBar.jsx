@@ -36,7 +36,10 @@ function SideBar() {
               <Link to={routesConfig.adminOrders}>Oders</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.adminProducts}>Products</Link>
+              <Link to={"#"}>Products</Link>
+            </div>
+            <div className={cx("item-mobile")}>
+              <Link to={routesConfig.AdminProducers}>Producers</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={"#"}>Enter Stonk</Link>

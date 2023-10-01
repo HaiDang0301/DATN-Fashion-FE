@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import loading from "../../../assets/loading.gif";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames/bind";
@@ -12,7 +13,9 @@ function ForgetPw() {
   document.title = "Forget Password";
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
-  const [button, setButton] = useState(false);
+  const [button, setButton] = useState(true);
+  const [check, setCheck] = useState(false);
+  const [isLoading, setIsloading] = useState();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -23,6 +26,13 @@ function ForgetPw() {
     }),
   });
   const handleSubmit = async () => {
+    setButton(true);
+    setCheck(true);
+    setIsloading(
+      <div className={cx("loading")}>
+        <img src={loading} alt="" />
+      </div>
+    );
     const data = {
       email: formik.values.email,
     };
@@ -34,6 +44,11 @@ function ForgetPw() {
             autoClose: 5000,
             theme: "light",
           });
+          setCheck(false);
+          setButton(true);
+          setTimeout(() => {
+            setButton(false);
+          }, 30000);
         }
       })
       .catch((errors) => {
@@ -45,16 +60,7 @@ function ForgetPw() {
           });
         }
       });
-    setButton(true);
-    setTimeout(() => {
-      setButton(false);
-    }, 30000);
   };
-  useEffect(() => {
-    if (token) {
-      navigate(routesConfig.home);
-    }
-  }, []);
   useEffect(() => {
     if (token) {
       navigate(routesConfig.home);
@@ -74,6 +80,7 @@ function ForgetPw() {
               <div className={cx("single-input")}>
                 <label htmlFor="">Email Adress</label>
                 <input
+                  onClick={(e) => setButton(false)}
                   type="email"
                   name="email"
                   id="email"
@@ -92,9 +99,13 @@ function ForgetPw() {
               </div>
             </div>
             <div className={cx("forget-footer")}>
-              <button onClick={handleSubmit} disabled={button}>
-                Submit
-              </button>
+              {check ? (
+                isLoading
+              ) : (
+                <button onClick={handleSubmit} disabled={button}>
+                  Submit
+                </button>
+              )}
             </div>
           </div>
         </div>

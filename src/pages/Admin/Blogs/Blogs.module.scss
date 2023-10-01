@@ -1,3 +1,6 @@
+.wrapper{
+    width: 100%;
+}
 .search-date {
     text-align: center;
     margin-bottom: 20px;
@@ -85,4 +88,19 @@
             background-color: #ccc;
         }
     }
+}
+@media only screen and (max-width:992px){
+    .create-blogs{
+        margin: 0px;
+    }
+}
+@media only screen and (max-width:768px){
+.create-blogs{
+    margin: 20px 0px;
+}
+}
+@media only screen and (max-width:576px){
+.create-blogs{
+    margin: 20px 0px;
+}
 }

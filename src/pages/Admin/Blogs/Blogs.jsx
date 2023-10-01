@@ -169,13 +169,13 @@ function AdminBlogs() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="top-blogs">
+      <div className={cx("blogs")}>
         <div className="container">
           <h5>Blogs List</h5>
           <div className="row">
-            <div className="col-lg-6 col-md-7 col-sm-12 col-12">
+            <div className="col-lg-7 col-md-12 col-sm-12 col-12">
               <div className="row">
-                <div className="col-lg-4 col-md-4 col-sm-4 col-4">
+                <div className="col-lg-4 col-md-4 col-sm-4 col-12">
                   <div className={cx("search-date")}>
                     <input
                       type="date"
@@ -186,12 +186,12 @@ function AdminBlogs() {
                     />
                   </div>
                 </div>
-                <div className="col-lg-1 col-md-1 col-sm-1 col-1">
+                <div className="col-lg-1 col-md-1 col-sm-1 col-12">
                   <div className={cx("title")}>
                     <label htmlFor="">to</label>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-4 col-sm-4 col-4">
+                <div className="col-lg-4 col-md-4 col-sm-4 col-12">
                   <div className={cx("search-date")}>
                     <input
                       type="date"
@@ -211,7 +211,7 @@ function AdminBlogs() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-3 col-sm-12 col-12">
+            <div className="col-lg-3 col-md-12 col-sm-12 col-12">
               <div className="row g-0">
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("item")}>
@@ -245,10 +245,10 @@ function AdminBlogs() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-2 col-md-2 col-sm-12 col-12">
+            <div className="col-lg-2 col-md-12 col-sm-12 col-12">
               <div className={cx("create-blogs")}>
                 <Link to={routesConfig.CreateBlogs} className="btn btn-primary">
-                  Create Blogs
+                  Create
                 </Link>
               </div>
             </div>

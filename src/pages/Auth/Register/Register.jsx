@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import loading from "../../../assets/loading.gif";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,6 +14,8 @@ function Register() {
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
   const [button, setButton] = useState(true);
+  const [check, setCheck] = useState(false);
+  const [isLoading, setIsloading] = useState();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -36,6 +39,13 @@ function Register() {
     }),
   });
   const handleSubmit = async () => {
+    setButton(true);
+    setCheck(true);
+    setIsloading(
+      <div className={cx("loading")}>
+        <img src={loading} alt="" />
+      </div>
+    );
     if (
       formik.errors.full_name ||
       formik.errors.email ||
@@ -61,6 +71,7 @@ function Register() {
               autoClose: 5000,
               theme: "light",
             });
+            setCheck(false);
           }
         })
         .catch((errors) => {
@@ -70,13 +81,23 @@ function Register() {
               autoClose: 5000,
               theme: "light",
             });
+            setCheck(false);
           }
-          if (errors.response.status === 403) {
-            toast.error("The account has been registered", {
+          if (errors.response.status === 401) {
+            toast.error("Please check your email", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
             });
+            setCheck(false);
+          }
+          if (errors.response.status === 500) {
+            toast.error("Connect server false", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+            setCheck(false);
           }
         });
     }
@@ -100,6 +121,7 @@ function Register() {
               <div className={cx("single-input")}>
                 <label htmlFor="">Full Name</label>
                 <input
+                  onClick={(e) => setButton(false)}
                   type="text"
                   id="full_name"
                   name="full_name"
@@ -119,6 +141,7 @@ function Register() {
               <div className={cx("single-input")}>
                 <label htmlFor="">Email Adress</label>
                 <input
+                  onClick={(e) => setButton(false)}
                   type="email"
                   name="email"
                   id="email"
@@ -138,6 +161,7 @@ function Register() {
               <div className={cx("single-input")}>
                 <label htmlFor="">Password</label>
                 <input
+                  onClick={(e) => setButton(false)}
                   type="password"
                   name="password"
                   id="password"
@@ -157,13 +181,13 @@ function Register() {
               <div className={cx("single-input")}>
                 <label htmlFor="">Confirm Password</label>
                 <input
+                  onClick={(e) => setButton(false)}
                   type="password"
                   name="confirm_password"
                   id="confirm_password"
                   placeholder="Confirm Password"
                   value={formik.values.confirm_password}
                   onBlur={formik.handleBlur}
-                  onClick={(e) => setButton(false)}
                   onChange={formik.handleChange}
                 />
               </div>
@@ -183,14 +207,18 @@ function Register() {
                 <div className="col-lg-8">
                   <p>
                     Already have an account?
-                    <Link to={routesConfig.login}>Login</Link>
+                    <Link to={routesConfig.login}> Login </Link>
                     here
                   </p>
                 </div>
                 <div className="col-lg-4">
-                  <button onClick={handleSubmit} disabled={button}>
-                    Register
-                  </button>
+                  {check ? (
+                    isLoading
+                  ) : (
+                    <button onClick={handleSubmit} disabled={button}>
+                      Register
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

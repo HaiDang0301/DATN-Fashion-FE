@@ -62,10 +62,10 @@ function UpdateBlogs() {
         <div className="row">
           <div className="col-lg-12">
             <div className="row">
-              <div className="col-lg-10">
+              <div className="col-lg-10 col-md-9 com-sm-9 col-8">
                 <h5>Update Blog</h5>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-3 col-sm-3 col-4">
                 <Link
                   to={"#"}
                   className="btn btn-primary"

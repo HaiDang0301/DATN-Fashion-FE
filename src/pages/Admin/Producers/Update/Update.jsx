@@ -14,6 +14,7 @@ function UpdateProducers() {
     email: "",
     phone_number: "",
     address: "",
+    status: "",
   });
   useEffect(() => {
     const fetchProducer = async () => {
@@ -28,6 +29,7 @@ function UpdateProducers() {
       email: producer.email,
       phone_number: producer.phone_number,
       address: producer.address,
+      status: producer.status,
     };
     producersApi
       .updateProducer(id, data)
@@ -55,10 +57,10 @@ function UpdateProducers() {
         <div className="row">
           <div className="col-lg-12">
             <div className="row">
-              <div className="col-lg-10">
+              <div className="col-lg-10 col-md-10 com-sm-9 col-9">
                 <h5>Update Producer</h5>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-3 col-3">
                 <Link
                   to={"#"}
                   className="btn btn-primary"
@@ -160,6 +162,31 @@ function UpdateProducers() {
                       setProducer({ ...producer, address: e.target.value })
                     }
                   />
+                </div>
+                <div className={cx("errors")}>
+                  {!producer.address ? (
+                    <i className="fa fa-warning">
+                      {""} Please provide address producer
+                    </i>
+                  ) : null}
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("adress")}>
+                    <h5>Status</h5>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <select
+                    name="status"
+                    id="status"
+                    value={producer.status}
+                    onChange={(e) =>
+                      setProducer({ ...producer, status: e.target.value })
+                    }
+                  >
+                    <option value="Providing">Providing</option>
+                    <option value="Stop-Providing">Stop-Providing</option>
+                  </select>
                 </div>
                 <div className={cx("errors")}>
                   {!producer.address ? (

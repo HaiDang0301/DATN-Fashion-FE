@@ -38,7 +38,7 @@ function Blogs() {
   };
   const handlePage = (e) => {
     setAPI(!api);
-    window.scrollTo({ top: 500, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
     const author = searchParams.get("author");
     const hashtag = searchParams.get("hashtag");
     const newPage = e.selected + 1;
