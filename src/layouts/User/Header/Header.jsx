@@ -187,7 +187,7 @@ function Header() {
         </div>
       </div>
       <div className={cx(show ? "show-menu" : "hiden-menu")}>
-        <div className="row">
+        <div className="row g-0">
           <div className="col-12">
             <div className={cx("item-mobile")}>
               <ul className={cx("nav-menu")}>

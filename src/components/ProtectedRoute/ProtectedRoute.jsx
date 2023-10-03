@@ -1,14 +1,14 @@
 import { Navigate } from "react-router-dom";
 import routesConfig from "../../config/routes";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import jwt_decode from "jwt-decode";
-const token = localStorage.getItem("token");
+const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 const ProtectedRoute = ({ children }) => {
   var decoded = null;
   if (!token) {
     return <Navigate to={routesConfig.login}></Navigate>;
   } else {
-    decoded = jwt_decode(token) || sessionStorage.getItem("token");
+    decoded = jwt_decode(token);
   }
   if (decoded.role === "admin") {
     return children;
