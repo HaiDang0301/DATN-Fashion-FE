@@ -137,10 +137,12 @@ function CreateBlogs() {
                 <div className="col-lg-12">
                   <div className={cx("editor")}>
                     <Editor
+                      id="editor"
                       apiKey="ns9ltjxjky7crwvi0lq241xpborim7o4p8j36twsf0s7lxna"
                       onEditorChange={setDescription}
                       value={description}
                       init={{
+                        selector: "editor#image-tools",
                         height: 500,
                         menubar: false,
                         plugins: [
@@ -170,7 +172,7 @@ function CreateBlogs() {
                         toolbar:
                           "undo redo | casechange blocks | bold italic backcolor | " +
                           "alignleft aligncenter alignright alignjustify | " +
-                          "bullist numlist checklist | removeformat | quickimage",
+                          "bullist numlist checklist | quickimage|imagetools",
                       }}
                     />
                   </div>

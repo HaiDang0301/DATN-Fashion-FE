@@ -1,0 +1,63 @@
+.create-product {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sort {
+  width: 100%;
+  margin-top: 30px;
+  select {
+    width: 100%;
+    margin-top: 10px;
+  }
+  button {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.table-products {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 500px;
+  margin-top: 30px;
+}
+.total-product {
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  background-color: #add4f7;
+  label {
+    margin-left: 2%;
+  }
+}
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  a {
+    color: black;
+    margin-right: 5%;
+    &:hover {
+      color: red;
+    }
+  }
+}
+@media only screen and (max-width: 992px) {
+  .title {
+    display: none;
+  }
+  .chose-file {
+    display: none;
+  }
+  .download-file {
+    display: none;
+  }
+}
