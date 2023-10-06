@@ -22,6 +22,11 @@
     padding: 0px 5px;
   }
 }
+.table {
+  overflow: hidden;
+  height: 300px;
+  overflow-y: scroll;
+}
 .collections {
   list-style-type: disclosure-closed;
 }

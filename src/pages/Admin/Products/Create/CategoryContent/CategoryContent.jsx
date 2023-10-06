@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -7,17 +7,109 @@ import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import classNames from "classnames/bind";
 import styles from "./CategoryContent.module.scss";
+import modalAPI from "../../../../../api/Admin/modalAPI";
+import { ToastContainer, toast } from "react-toastify";
 const cx = classNames.bind(styles);
 function CategoryContent(props) {
   const [showcontent, setShowContent] = useState(false);
   const handleCloseContent = () => setShowContent(false);
   const handleShowContent = () => setShowContent(true);
-  const [edit, setEdit] = useState(true);
-  const handleEdit = () => {
-    setEdit(false);
+  const [callAPI, setCallAPI] = useState(true);
+  const [results, setResults] = useState([]);
+  const [collection, setCollection] = useState([]);
+  const [valueCollection, setValueCollection] = useState();
+  const [category, setCategory] = useState();
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
+  var params = "collections";
+  useEffect(() => {
+    const fetchAPI = async () => {
+      const result = await modalAPI.getAll(params);
+      setResults(result.data);
+    };
+    fetchAPI();
+  }, [callAPI]);
+  const handleCollection = async () => {
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setCollection(res.data);
+      })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
   };
+  const handleChangeCollection = (e) => {
+    setValueCollection(e.target.value);
+  };
+  const handleChangeCategory = (e) => {
+    setCategory(e.target.value);
+  };
+  const handleSubmit = async () => {
+    const data = {
+      collections: valueCollection,
+      category: category,
+    };
+    await modalAPI
+      .store(params, data)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Add Category Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setCallAPI(!callAPI);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
+  };
+  const handleDestroy = async (id, collection, category) => {
+    const data = {
+      collections: collection,
+      id: category,
+    };
+    console.log(params, id, data);
+    await modalAPI
+      .destroyCategory(params, id, data)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Delete Category Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setCallAPI(!callAPI);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
+  };
+  if (!collection) return null;
   return (
     <div className={cx("wrapper")}>
+      <ToastContainer></ToastContainer>
       <div className={cx("modals")}>
         <Modal show={showcontent} onHide={handleCloseContent}>
           <Modal.Header closeButton>
@@ -29,49 +121,64 @@ function CategoryContent(props) {
               id="uncontrolled-tab-example"
               className="mb-3"
             >
-              <Tab eventKey="Category" title={`List Of Category`}>
-                <Table striped bordered hover className={cx("table")}>
+              <Tab
+                eventKey="Category"
+                title={`List Of Category`}
+                className={cx("table")}
+              >
+                <Table striped bordered hover>
                   <thead>
                     <tr>
                       <th>STT</th>
                       <th>Name of the unit of measure</th>
-                      <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>
-                        <ul>
-                          <li className={cx("collections")}>
-                            Collection
-                            <ul>
-                              <li className={cx("categories")}>
-                                <input
-                                  type="text"
-                                  name=""
-                                  id="category"
-                                  value={123}
-                                  className={cx("input")}
-                                  disabled={edit}
-                                />
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </td>
-                      <td>
-                        <div className={cx("action")}>
-                          <Link to={"#"}>
-                            <i className="fa fa-edit" onClick={handleEdit}></i>
-                          </Link>
-                          <Link to={"#"}>
-                            <i className="fa fa-trash"></i>
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
+                  {results.map((item, index) => (
+                    <tbody key={index}>
+                      <tr>
+                        <td>{index + 1}</td>
+                        <td>
+                          <ul>
+                            <li className={cx("collections")}>
+                              {item.collections}
+                              <ul>
+                                {item.categories.map((category, index) => (
+                                  <li className={cx("categories")} key={index}>
+                                    <div className="row">
+                                      <div className="col-lg-9">
+                                        <input
+                                          type="text"
+                                          name=""
+                                          id="category"
+                                          value={category.category}
+                                          className={cx("input")}
+                                          onChange={(e) => {}}
+                                        />
+                                      </div>
+                                      <div className="col-lg-3">
+                                        <Link
+                                          to={"#"}
+                                          onClick={(e) => {
+                                            handleDestroy(
+                                              item._id,
+                                              item.collections,
+                                              category._id
+                                            );
+                                          }}
+                                        >
+                                          <i className="fa fa-trash"></i>
+                                        </Link>
+                                      </div>
+                                    </div>
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
                 </Table>
               </Tab>
               <Tab
@@ -85,8 +192,18 @@ function CategoryContent(props) {
                         <label htmlFor="collection">Collection</label>
                       </div>
                       <div className="col-lg-9">
-                        <select className={cx("collection")} id="category">
+                        <select
+                          className={cx("collection")}
+                          id="category"
+                          onClick={handleCollection}
+                          onChange={handleChangeCollection}
+                        >
                           <option value="">Collection</option>
+                          {collection.map((item, index) => (
+                            <option value={item.collections} key={index}>
+                              {item.collections}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -103,6 +220,7 @@ function CategoryContent(props) {
                             name=""
                             id=""
                             placeholder={`Enter The Category Name`}
+                            onChange={handleChangeCategory}
                           />
                         </div>
                       </div>
@@ -110,7 +228,11 @@ function CategoryContent(props) {
                   </div>
                   <div className="col-lg-12">
                     <div className={cx("btn-save")}>
-                      <Link to={"#"} className="btn btn-primary">
+                      <Link
+                        to={"#"}
+                        className="btn btn-primary"
+                        onClick={handleSubmit}
+                      >
                         <i className="fa fa-save"> Save</i>
                       </Link>
                     </div>

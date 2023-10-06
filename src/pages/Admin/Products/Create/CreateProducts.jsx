@@ -18,19 +18,16 @@ function CreateProducts() {
   const handleAdd = () => {
     let newfield = { size: "", quantity: "" };
     setBuffer([...buffer, newfield]);
-    console.log(buffer);
   };
   const handleTrash = (index) => {
     let data = [...buffer];
     data.splice(index, 1);
     setBuffer(data);
-    console.log(data);
   };
   const handleFormChange = (index, event) => {
     let data = [...buffer];
     data[index][event.target.name] = event.target.value;
     setBuffer(data);
-    console.log(buffer);
   };
 
   return (
