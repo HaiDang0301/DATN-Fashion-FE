@@ -36,7 +36,7 @@ function SideBar() {
               <Link to={routesConfig.adminOrders}>Oders</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={"#"}>Products</Link>
+              <Link to={routesConfig.AdminProducts}>Products</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={routesConfig.AdminProducers}>Producers</Link>
@@ -99,19 +99,20 @@ function SideBar() {
           link={routesConfig.adminOrders}
         ></ItemMenu>
         <ItemMenu
-          title="Products"
-          icon="fa fa-barcode"
-          link={routesConfig.adminProducts}
-        ></ItemMenu>
-        <ItemMenu
           title="Clients"
           icon="fa fa-users"
           link={routesConfig.AdminClients}
         ></ItemMenu>
+
         <ItemMenu
           title="Producers"
           icon="fa fa-product-hunt"
           link={routesConfig.AdminProducers}
+        ></ItemMenu>
+        <ItemMenu
+          title="Products"
+          icon="fa fa-barcode"
+          link={routesConfig.AdminProducts}
         ></ItemMenu>
         <ItemMenu
           title="Sales"

@@ -22,17 +22,7 @@ function Header() {
             <img src={logo} alt="" />
           </div>
         </div>
-        <div className="col-lg-7 col-md-7 col-sm-5 col-4">
-          <div className={cx("search")}>
-            <input
-              type="search"
-              name="search"
-              id="search"
-              placeholder="Search ..."
-            />
-          </div>
-        </div>
-        <div className="col-lg-1 col-md-1 col-sm-2 col-2">
+        <div className="col-lg-8 col-md-8 col-sm-8 col-6">
           <div className={cx("right-menu")}>
             <div className={cx("mail")}>
               <Link to={"#"}>

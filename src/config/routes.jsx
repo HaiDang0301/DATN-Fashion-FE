@@ -15,5 +15,8 @@ const routesConfig = {
   AdminProducers: "/admin/producers",
   CreateProducers: "/admin/producers/create",
   UpdateProducers: "/admin/producers/:id/edit",
+  AdminProducts: "/admin/products",
+  CreateProducts: "/admin/products/create",
+  UpdateProducts: "/admin/products/:id/edit",
 };
 export default routesConfig;

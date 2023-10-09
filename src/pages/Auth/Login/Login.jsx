@@ -31,14 +31,15 @@ function Login() {
     };
     const login = await AuthsAPI.login(data)
       .then((res) => {
-        if (save === true) {
-          localStorage.setItem("token", res.data.token);
-          localStorage.setItem("full_name", res.data.others.full_name);
-        } else {
-          sessionStorage.setItem("token", res.data.token);
-          sessionStorage.setItem("full_name", res.data.others.full_name);
-        }
+        console.log(res);
         if (res.status === 200) {
+          if (save === true) {
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("full_name", res.data.others.full_name);
+          } else {
+            sessionStorage.setItem("token", res.data.token);
+            sessionStorage.setItem("full_name", res.data.others.full_name);
+          }
           if (res.data.others.role === "admin") {
             navigate(routesConfig.AdminHome);
             toast.success("Loggin Succes", {

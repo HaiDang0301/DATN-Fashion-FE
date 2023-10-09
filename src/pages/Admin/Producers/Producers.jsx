@@ -142,7 +142,7 @@ function AdminProducers() {
                           <td>{item.phone_number}</td>
                           <td>{item.address}</td>
                           <td>{item.status}</td>
-                          <td>{item.contract_sign_date}</td>
+                          <td>{item.contract_sign_date.slice(0, 10)}</td>
                           <td>
                             <div className={cx("action")}>
                               <div className={cx("update")}>

@@ -38,7 +38,7 @@ function UpdateBlogs() {
     data.append("author", blog.author);
     data.append("description", blog.description);
     const updateBlog = await blogAPI.updateBlog(id, data).then((res) => {
-      if (res.data === "Update Blog Success") {
+      if (res.data === "Update Success") {
         toast.success("Update Blog Success", {
           position: "bottom-right",
           autoClose: 5000,

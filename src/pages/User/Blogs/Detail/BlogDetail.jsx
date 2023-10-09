@@ -7,9 +7,9 @@ import blogAPI from "../../../../api/User/blogsAPI";
 const cx = className.bind(styles);
 function BlogsDetail() {
   window.scrollTo({ top: 0, behavior: "smooth" });
-  document.title = "Blog | Detail";
   const params = useParams().slug;
   const [blog, setBlog] = useState([]);
+  document.title = `${blog.title}`;
   useEffect(() => {
     const fetchDetail = async () => {
       const blogDetail = await blogAPI.showDetail(params);
@@ -24,6 +24,11 @@ function BlogsDetail() {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
+              <div className={cx("title")}>
+                <h1>{blog.title}</h1>
+              </div>
+            </div>
+            <div className="col-lg-12">
               <div className={cx("author")}>
                 <i className="fa fa-user">
                   <p>{blog.author}</p>
@@ -31,11 +36,6 @@ function BlogsDetail() {
                     - {blog.createdAt ? blog.createdAt.slice(0, 10) : null}
                   </label>
                 </i>
-              </div>
-            </div>
-            <div className="col-lg-12">
-              <div className={cx("title")}>
-                <h1>{blog.title}</h1>
               </div>
             </div>
             <div className="col-lg-12">

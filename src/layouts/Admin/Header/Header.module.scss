@@ -1,74 +1,56 @@
-.wrapper{
-    width: 100%;
-    height: 80px;
-    border-bottom: 1px solid #ccc;
-    background-color: #0B87C9;
+.wrapper {
+  width: 100%;
+  height: 80px;
+  border-bottom: 1px solid #ccc;
+  background-color: #0b87c9;
 }
-.logo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80px;
-    border-right: 1px solid #ccc;
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+  border-right: 1px solid #ccc;
 }
-.search{
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-right: 1px solid #ccc;
-    input{
-        width: 50%;
-        height: 40%;
-        padding: 0px 15px;
-        border-radius: 5px;
-        &::placeholder{
-            text-align: start;
-        }
-        &:focus{
-            outline: none;
-        }
-    }
-    a{
-        color: black;
-    }
+.right-menu {
+  height: 80px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  a {
+    color: black;
+  }
+  span {
+    margin-top: -130px;
+  }
+  border-right: 1px solid #ccc;
 }
-.right-menu{
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    a{
-        color: black;
-    }
-    span{
-        margin-top: -130px;
-    }
+.bell {
+  margin: 0px 5%;
 }
-.bell{
-    margin: 20%;
+.comment {
+  margin-right: 5%;
 }
-.drop-down{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.drop-down {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
-.section-admin{
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    i{
-        margin-right: 5%;
-    }
-    button{
-    background-color: #0B87C9;
+.section-admin {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  i {
+    margin-right: 5%;
+  }
+  button {
+    background-color: #0b87c9;
     border: none;
     color: black;
-    &:hover{
-        background-color: #0B87C9;
-        color: black;
+    &:hover {
+      background-color: #0b87c9;
+      color: black;
     }
-    }
+  }
 }
