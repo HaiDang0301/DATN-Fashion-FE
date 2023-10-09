@@ -1,13 +1,169 @@
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import { ToastContainer, toast } from "react-toastify";
+import { Link, useSearchParams } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import routesConfig from "../../../config/routes";
 import className from "classnames/bind";
 import styles from "./Products.module.scss";
+import modalAPI from "../../../api/Admin/modalAPI";
+import { useEffect, useState } from "react";
+import productsAPI from "../../../api/Admin/productsAPI";
+import producersApi from "../../../api/Admin/producersAPI";
 const cx = className.bind(styles);
 function AdminProducts() {
   document.title = "Admin | Products";
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [collections, setCollections] = useState([]);
+  const [producer, setProducer] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const params = searchParams;
+  useEffect(() => {
+    const fetchAPI = async () => {
+      await productsAPI.getAll(params).then((res) => {
+        setProducts(res.data);
+      });
+    };
+    fetchAPI();
+  }, [params, show]);
+  const handleChangeName = (e) => {
+    setName(e.target.value);
+  };
+  const handleSearch = () => {
+    setSearchParams({
+      name: name,
+    });
+  };
+  const handleCollections = async () => {
+    const params = "collections";
+    const fetchAPI = async () => {
+      await modalAPI
+        .getAll(params)
+        .then((res) => {
+          setCollections(res.data);
+        })
+        .catch((err) => {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        });
+    };
+    fetchAPI();
+  };
+  const handleProducer = async () => {
+    const fetchAPI = async () => {
+      await producersApi
+        .getAll()
+        .then((res) => {
+          setProducer(res.data);
+        })
+        .catch((err) => {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        });
+    };
+    fetchAPI();
+  };
+  const handleChangeCollection = (e) => {
+    const value = e.target.value;
+    setSearchParams({
+      collection: value,
+    });
+  };
+  const handleChangeProducer = (e) => {
+    const value = e.target.value;
+    setSearchParams({
+      producer: value,
+    });
+  };
+  const handleChangePrice = (e) => {
+    const value = e.target.value;
+    setSearchParams({
+      price: value,
+    });
+  };
+  const handlePage = (e) => {
+    const newPage = e.selected + 1;
+    const collection = searchParams.get("collection");
+    const producer = searchParams.get("producer");
+    const price = searchParams.get("price");
+    if (searchParams) {
+      if (collection) {
+        setSearchParams({
+          collection: collection,
+          page: newPage,
+        });
+      }
+      if (producer) {
+        setSearchParams({
+          producer: producer,
+          page: newPage,
+        });
+      }
+      if (price) {
+        setSearchParams({
+          price: price,
+          page: newPage,
+        });
+      }
+    } else {
+      setSearchParams({
+        page: newPage,
+      });
+    }
+  };
+  const handleDelete = async () => {
+    const destroy = await productsAPI
+      .destroy(id)
+      .then((res) => {
+        console.log(res);
+        if (res.data === "Delete Success") {
+          toast.success("Delete Product Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+        setShow(false);
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast.error("Can't Find Blogs", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+        setShow(false);
+      });
+  };
   return (
     <div className={cx("wrapper")}>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Notification</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You are sure to delete the product !</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleDelete}>
+            Confirm
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <ToastContainer></ToastContainer>
       <div className="container">
         <div className={cx("product-act")}>
           <div className="row g-0">
@@ -17,13 +173,21 @@ function AdminProducts() {
               </div>
             </div>
             <div className="col-lg-6 ">
-              <div className={cx("chose-file")}>
+              <div className={cx("search-name")}>
                 <div className="row">
                   <div className="col-lg-8">
-                    <input type="file" name="file" id="file" />
+                    <input
+                      type="search"
+                      name="file"
+                      id="file"
+                      placeholder="Enter the product name you want to search"
+                      onChange={handleChangeName}
+                    />
                   </div>
                   <div className="col-lg-4">
-                    <button className="btn btn-primary">Import</button>
+                    <button className="btn btn-primary" onClick={handleSearch}>
+                      Search
+                    </button>
                   </div>
                 </div>
               </div>
@@ -48,42 +212,89 @@ function AdminProducts() {
         <div className={cx("sort")}>
           <div className="container">
             <div className="row">
-              <div className="col-lg-3 col-md-12">
+              <div className="col-lg-4 col-md-12">
                 <div className={cx("status")}>
-                  <select name="" id="">
-                    <option value="">Are Trading</option>
-                    <option value="">Stopped Trading</option>
-                  </select>
+                  <div className="row">
+                    <div className="col-lg-4">
+                      <div className={cx("title-sort")}>Collections</div>
+                    </div>
+                    <div className="col-lg-8">
+                      <div className={cx("input-sort")}>
+                        <select
+                          name=""
+                          id=""
+                          onChange={handleChangeCollection}
+                          onClick={handleCollections}
+                        >
+                          <option value="">Default</option>
+                          {collections
+                            ? collections.map((item, index) => (
+                                <option value={item.collections} key={index}>
+                                  {item.collections}
+                                </option>
+                              ))
+                            : null}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-12">
-                <div className={cx("category")}>
-                  <select name="" id="">
-                    <option value="">Shoes</option>
-                    <option value="">Hat</option>
-                  </select>
+              <div className="col-lg-4 col-md-12">
+                <div className={cx("categories")}>
+                  <div className="row">
+                    <div className="col-lg-4">
+                      <div className={cx("title-sort")}>Producers</div>
+                    </div>
+                    <div className="col-lg-8">
+                      <div className={cx("input-sort")}>
+                        <select
+                          name=""
+                          id=""
+                          onClick={handleProducer}
+                          onChange={handleChangeProducer}
+                        >
+                          <option value="">Default</option>
+                          {producer.producers
+                            ? producer.producers.map((item, index) => (
+                                <option value={item.name} key={index}>
+                                  {item.name}
+                                </option>
+                              ))
+                            : null}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-12">
-                <div className={cx("brand")}>
-                  <select name="" id="">
-                    <option value="">Gucci</option>
-                    <option value="">Chanel</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-12">
-                <div className={cx("search")}>
-                  <button className="btn btn-primary">
-                    <i className="fa fa-search"> Search </i>
-                  </button>
+              <div className="col-lg-4 col-md-12">
+                <div className={cx("status")}>
+                  <div className="row">
+                    <div className="col-lg-4">
+                      <div className={cx("title-sort")}>Price</div>
+                    </div>
+                    <div className="col-lg-8">
+                      <div className={cx("input-sort")}>
+                        <select name="" id="" onChange={handleChangePrice}>
+                          <option value="default">Default</option>
+                          <option value="increase">
+                            Product prices gradually increase
+                          </option>
+                          <option value="reduce">
+                            Product prices gradually decrease
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div className={cx("table-products")}>
-          <Table striped bordered hover>
+          <Table striped bordered hover className={cx("table")}>
             <thead>
               <tr>
                 <th>
@@ -99,31 +310,52 @@ function AdminProducts() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <input type="checkbox" name="" id="" />
-                </td>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
-                <td>
-                  <div className={cx("action")}>
-                    <Link to={routesConfig.UpdateProducts}>
-                      <i className="fa fa-edit"></i>
-                    </Link>
-                    <Link>
-                      <i className="fa fa-trash"></i>
-                    </Link>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+            {products.products
+              ? products.products.map((item, index) => (
+                  <tbody key={index + 1}>
+                    <tr>
+                      <td>
+                        <input type="checkbox" name="" id="" />
+                      </td>
+                      <td>1</td>
+                      <td>{item.productCode}</td>
+                      <td>{item.name}</td>
+                      <td>
+                        <img src={item.image[0].url} alt="" />
+                      </td>
+                      <td>{item.importPrice}</td>
+                      <td>{Number(item.price).toLocaleString()}</td>
+                      <td>{item.producer}</td>
+                      <td>
+                        <div className={cx("action")}>
+                          <Link to={item._id + "/edit"}>
+                            <i className="fa fa-edit"></i>
+                          </Link>
+                          <Link
+                            to={"#"}
+                            onClick={(e) => {
+                              setId(item._id), setShow(true);
+                            }}
+                          >
+                            <i className="fa fa-trash"></i>
+                          </Link>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                ))
+              : null}
           </Table>
+        </div>
+        <div className={cx("panigate")}>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel=">"
+            onPageChange={handlePage}
+            pageCount={products.totalPage || 1}
+            previousLabel="<"
+            renderOnZeroPageCount={null}
+          />
         </div>
         <div className={cx("total-product")}>
           <label htmlFor="total-product">

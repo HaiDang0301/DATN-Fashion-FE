@@ -1,18 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import loading from "../../../../assets/loading.gif";
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import className from "classnames/bind";
-import styles from "./CreateProducts.module.scss";
+import styles from "./UpdateProducts.module.scss";
 import CategoryContent from "./CategoryContent/CategoryContent";
 import ModalContent from "./ModalContent/ModalContent";
 import modalAPI from "../../../../api/Admin/modalAPI";
 import { toast } from "react-toastify";
 import productsAPI from "../../../../api/Admin/productsAPI";
+import formatDate from "../../../../formatDate/formatDate";
 const cx = className.bind(styles);
-function CreateProducts() {
+function UpdateProducts() {
+  document.title = "Admin | Update Products";
+  const id = useParams().id;
   const [check, setCheck] = useState(true);
   const [isLoading, setIsloading] = useState();
   const [producers, setProducers] = useState([]);
@@ -24,7 +25,26 @@ function CreateProducts() {
   const [files, setFiles] = useState([]);
   const [description, setDescription] = useState("");
   const [buffer, setBuffer] = useState([{ size: "", quantity: "" }]);
-  document.title = "Admin | Create Products";
+  const [products, setProducts] = useState({
+    name: "",
+    producer: "",
+    category: "",
+    collections: "",
+    color: "",
+    description: "",
+    importPrice: "",
+    out_of_promotion: "",
+    price: "",
+    promotion: "",
+  });
+  useEffect(() => {
+    const fetchBlog = async () => {
+      const product = await productsAPI.edit(id);
+      setProducts(product.data);
+      setBuffer(product.data.sizes);
+    };
+    fetchBlog();
+  }, []);
   const handleProducer = () => {
     const fetchAPI = async () => {
       const params = "producers";
@@ -63,7 +83,7 @@ function CreateProducts() {
     fetchAPI();
   };
   const handleCategory = () => {
-    const params = `collections?collection=${formik.values.collection}`;
+    const params = `collections?collection=${products.collections}`;
     const fetchAPI = async () => {
       await modalAPI
         .getAll(params)
@@ -118,6 +138,7 @@ function CreateProducts() {
     };
     fetchAPI();
   };
+  console.log(products);
   function handleChooseFile(e) {
     setImg(e.target.files[0]);
     setFiles(e.target.files);
@@ -136,92 +157,83 @@ function CreateProducts() {
     data[index][event.target.name] = event.target.value;
     setBuffer(data);
   };
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      product_code: "",
-      producer: "",
-      collection: "",
-      category: "",
-      color: "",
-      import_price: "",
-      price: "",
-      quantity: "",
-    },
-    validationSchema: Yup.object({
-      name: Yup.string()
-        .min(2, "Minimum 2 characters")
-        .max(100, "Maximum of 20 characters")
-        .required("Please provide full name product"),
-      product_code: Yup.string()
-        .min(0, "Minimum 2 characters")
-        .max(6, "Maximum of 6 characters"),
-      producer: Yup.string().required("Please provide producer"),
-      collection: Yup.string().required("Please provide collection"),
-      category: Yup.string().required("Please provide category"),
-      color: Yup.string().required("Please provide color"),
-      import_price: Yup.string().required("Please provide import price"),
-      price: Yup.string().required("Please provide price"),
-      size: Yup.string().required("Please provide size"),
-      quantity: Yup.string().required("Please provide quantity"),
-    }),
-  });
   const handleSubmit = async () => {
     setIsloading(true);
     const data = new FormData();
     for (let i = 0; i < files.length; i++) {
       data.append("image", files[i]);
     }
-    data.append("name", formik.values.name);
-    data.append("productCode", formik.values.product_code);
-    data.append("producer", formik.values.producer);
-    data.append("collections", formik.values.collection);
-    data.append("category", formik.values.category);
-    data.append("color", formik.values.color);
-    data.append("importPrice", formik.values.import_price);
-    data.append("price", formik.values.price);
+    data.append("name", products.name);
+    data.append("producer", products.producer);
+    data.append("collections", products.collections);
+    data.append("category", products.category);
+    data.append("color", products.color);
+    data.append("importPrice", products.importPrice);
+    data.append("price", products.price);
+    data.append("promotion", products.promotion);
+    data.append("out_of_promotion", products.out_of_promotion);
     buffer.map((item) => {
       data.append("size", item.size);
       data.append("quantity", item.quantity);
     });
     data.append("description", description);
-    if (!img) {
-      toast.error("Please provide image", {
-        position: "bottom-right",
-        autoClose: 5000,
-        theme: "light",
-      });
-      setIsloading(false);
-    }
     if (
-      formik.values.name ||
-      formik.values.product_code ||
-      formik.values.import_price ||
-      formik.values.price ||
-      formik.values.quantity ||
-      description
+      !products.name ||
+      !products.importPrice ||
+      !products.price ||
+      !products.quantity ||
+      !img ||
+      !description
     ) {
-      await productsAPI.store(data).then((res) => {
-        if (res.status === 200) {
-          toast.success("Add products Sucssces", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
-        }
-        setIsloading(false);
-      });
-    } else {
-      if (res.status === 200) {
-        toast.error("Please provide full information", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
+      await productsAPI
+        .update(id, data)
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("Update product Sucssces", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+          setIsloading(false);
+        })
+        .catch((err) => {
+          if (err.response.status === 403) {
+            toast.error("Please provide new image", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+            setIsloading(false);
+          }
+          if (err.response.status === 401) {
+            toast.error("Product Name Has existed", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+            setIsloading(false);
+          }
+          if (err.response.status === 404) {
+            toast.error("Can not find ID", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+            setIsloading(false);
+          }
+          if (err.response.status === 500) {
+            toast.error("Connect Server False", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+            setIsloading(false);
+          }
         });
-      }
-      setIsloading(false);
     }
   };
+  if (!products) return null;
   return (
     <div className={cx("wrapper")}>
       <div className={cx("product-act")}>
@@ -230,7 +242,7 @@ function CreateProducts() {
             <div className="col-lg-6">
               <div className={cx("title")}>
                 <h5>
-                  <i className="fa fa-file"> Create Product</i>
+                  <i className="fa fa-file"> Update Product</i>
                 </h5>
               </div>
             </div>
@@ -289,54 +301,15 @@ function CreateProducts() {
                               type="text"
                               name="name"
                               id="name"
+                              value={products.name}
                               placeholder="Enter the product name"
-                              onBlur={formik.handleBlur}
-                              onChange={formik.handleChange}
+                              onChange={(e) => {
+                                setProducts({
+                                  ...products,
+                                  name: e.target.value,
+                                });
+                              }}
                             />
-                          </div>
-                        </div>
-                        <div className={cx("errors")}>
-                          {formik.touched.name && formik.errors.name ? (
-                            <>
-                              <i className="fa fa-warning">
-                                {" "}
-                                {formik.errors.name}
-                              </i>
-                            </>
-                          ) : null}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <div className={cx("title")}>
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div className={cx("text")}>
-                            <h5>Product Code</h5>
-                          </div>
-                        </div>
-                        <div className="col-lg-12">
-                          <div className={cx("input")}>
-                            <input
-                              type="text"
-                              name="product_code"
-                              id="product_code"
-                              placeholder="Enter the product code, otherwise the system will random code itself"
-                              onBlur={formik.handleBlur}
-                              onChange={formik.handleChange}
-                            />
-                            <div className={cx("errors")}>
-                              {formik.touched.product_code &&
-                              formik.errors.product_code ? (
-                                <>
-                                  <i className="fa fa-warning">
-                                    {" "}
-                                    {formik.errors.product_code}
-                                  </i>
-                                </>
-                              ) : null}
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -355,10 +328,17 @@ function CreateProducts() {
                                 name="producer"
                                 id="producer"
                                 onClick={handleProducer}
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                value={products.producer}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    producer: e.target.value,
+                                  });
+                                }}
                               >
-                                <option value="default">Default</option>
+                                <option value={products.producer}>
+                                  {products.producer}
+                                </option>
                                 {producers.producers
                                   ? producers.producers.map((item, index) => (
                                       <option value={item.name} key={index}>
@@ -382,10 +362,17 @@ function CreateProducts() {
                                 name="collection"
                                 id="collection"
                                 onClick={handleCollection}
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                value={products.collections}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    collections: e.target.value,
+                                  });
+                                }}
                               >
-                                <option value="default">Default</option>
+                                <option value={products.collections}>
+                                  {products.collections}
+                                </option>
                                 {collections.map((item, index) => (
                                   <option value={item.collections} key={index}>
                                     {item.collections}
@@ -413,12 +400,19 @@ function CreateProducts() {
                               <select
                                 name="category"
                                 id="category"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
                                 onClick={handleCategory}
                                 disabled={check}
+                                value={products.category}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    category: e.target.value,
+                                  });
+                                }}
                               >
-                                <option value="default">Default</option>
+                                <option value={products.category}>
+                                  {products.category}
+                                </option>
                                 {categories
                                   ? categories.map((item) =>
                                       item.categories.map((i, index) => (
@@ -447,10 +441,17 @@ function CreateProducts() {
                                 name="color"
                                 id="color"
                                 onClick={handleColors}
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                value={products.color}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    color: e.target.value,
+                                  });
+                                }}
                               >
-                                <option value="default">Default</option>
+                                <option value={products.color}>
+                                  {products.color}
+                                </option>
                                 {colors.map((item, index) => (
                                   <option value={item.colors} key={index}>
                                     {item.colors}
@@ -482,20 +483,14 @@ function CreateProducts() {
                                 name="import_price"
                                 id="import_price"
                                 placeholder="0"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                value={products.importPrice || ""}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    importPrice: e.target.value,
+                                  });
+                                }}
                               />
-                              <div className={cx("errors")}>
-                                {formik.touched.import_price &&
-                                formik.errors.import_price ? (
-                                  <>
-                                    <i className="fa fa-warning">
-                                      {" "}
-                                      {formik.errors.import_price}
-                                    </i>
-                                  </>
-                                ) : null}
-                              </div>
                             </div>
                           </div>
                         </div>
@@ -514,19 +509,70 @@ function CreateProducts() {
                                 name="price"
                                 id="price"
                                 placeholder="0"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                value={products.price || ""}
+                                onChange={(e) =>
+                                  setProducts({
+                                    ...products,
+                                    price: e.target.value,
+                                  })
+                                }
                               />
-                              <div className={cx("errors")}>
-                                {formik.touched.price && formik.errors.price ? (
-                                  <>
-                                    <i className="fa fa-warning">
-                                      {" "}
-                                      {formik.errors.price}
-                                    </i>
-                                  </>
-                                ) : null}
-                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-12">
+                    <div className="row">
+                      <div className="col-lg-6">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <div className={cx("title")}>
+                              <h5>Promotion</h5>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className={cx("input")}>
+                              <input
+                                type="text"
+                                name="promotion"
+                                id="promotion"
+                                placeholder="0"
+                                value={products.promotion || ""}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    promotion: e.target.value,
+                                  });
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <div className={cx("title")}>
+                              <h5>Out of promotion</h5>
+                            </div>
+                          </div>
+                          <div className="col-lg-12">
+                            <div className={cx("input")}>
+                              <input
+                                type="date"
+                                name="out_promotion"
+                                id="out_promotion"
+                                placeholder="0"
+                                value={formatDate(products.out_of_promotion)}
+                                onChange={(e) => {
+                                  setProducts({
+                                    ...products,
+                                    out_of_promotion: e.target.value,
+                                  });
+                                }}
+                              />
                             </div>
                           </div>
                         </div>
@@ -552,7 +598,9 @@ function CreateProducts() {
                                         handleFormChange(index, event)
                                       }
                                     >
-                                      <option value="default">Default</option>
+                                      <option value={item.size}>
+                                        {item.size}
+                                      </option>
                                       {sizes.map((item) => (
                                         <option
                                           value={item.sizes}
@@ -601,12 +649,10 @@ function CreateProducts() {
                                       id="quantity"
                                       placeholder="0"
                                       value={item.quantity}
-                                      onBlur={formik.handleBlur}
                                       onChange={(event) =>
                                         handleFormChange(index, event)
                                       }
                                     />
-                                    <div className={cx("errors")}></div>
                                   </div>
                                 </div>
                               </div>
@@ -624,8 +670,13 @@ function CreateProducts() {
                     <div className={cx("editor")}>
                       <Editor
                         apiKey="ns9ltjxjky7crwvi0lq241xpborim7o4p8j36twsf0s7lxna"
-                        onEditorChange={setDescription}
-                        value={description}
+                        onEditorChange={(e) => {
+                          setProducts({
+                            ...products,
+                            description: e,
+                          });
+                        }}
+                        value={products.description}
                         init={{
                           height: 500,
                           menubar: false,
@@ -698,4 +749,4 @@ function CreateProducts() {
     </div>
   );
 }
-export default CreateProducts;
+export default UpdateProducts;

@@ -17,15 +17,33 @@
     align-items: center;
   }
 }
+.search-name {
+  input {
+    border-radius: 5px;
+    padding: 0px 15px;
+    width: 100%;
+    height: 36px;
+  }
+}
 .search {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.title-sort {
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.input-sort {
+  select {
+    height: 100%;
+  }
+}
 .table-products {
   overflow: hidden;
   overflow-y: scroll;
-  height: 500px;
   margin-top: 30px;
 }
 .total-product {
@@ -50,11 +68,38 @@
     }
   }
 }
+.table {
+  img {
+    width: 50px;
+    height: 50px;
+  }
+}
+.panigate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  ul {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+  }
+  a {
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
 @media only screen and (max-width: 992px) {
   .title {
     display: none;
   }
-  .chose-file {
+  .search-name {
     display: none;
   }
   .download-file {
