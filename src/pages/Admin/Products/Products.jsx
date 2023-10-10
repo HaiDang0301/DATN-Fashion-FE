@@ -1,3 +1,5 @@
+import excel from "../../../assets/excel.png";
+import FileDownLoad from "js-file-download";
 import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -8,18 +10,21 @@ import routesConfig from "../../../config/routes";
 import className from "classnames/bind";
 import styles from "./Products.module.scss";
 import modalAPI from "../../../api/Admin/modalAPI";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import productsAPI from "../../../api/Admin/productsAPI";
 import producersApi from "../../../api/Admin/producersAPI";
 const cx = className.bind(styles);
 function AdminProducts() {
   document.title = "Admin | Products";
   const [searchParams, setSearchParams] = useSearchParams();
+  const [reload, setReload] = useState(false);
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [collections, setCollections] = useState([]);
   const [producer, setProducer] = useState([]);
   const [products, setProducts] = useState([]);
+  const [fileExcel, setFileExcel] = useState(null);
+  const inputFiles = useRef();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const params = searchParams;
@@ -30,7 +35,65 @@ function AdminProducts() {
       });
     };
     fetchAPI();
-  }, [params, show]);
+  }, [params, show, reload]);
+  const handleImportExcel = async () => {
+    if (!fileExcel) {
+      toast.error("Please Choose Excel File", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+    }
+    const data = new FormData();
+    data.append("excel", fileExcel);
+    await productsAPI
+      .importExcel(data)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Add Product List Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setReload(!reload);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 409) {
+          toast.error(
+            "There are duplication products or files not in the format",
+            {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            }
+          );
+        }
+        if (err.response.status === 500) {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
+  };
+  const handleDownloadFile = async (e) => {
+    e.preventDefault();
+    await productsAPI
+      .downloadFile()
+      .then((res) => {
+        console.log(res.data);
+        FileDownLoad(res.data, "sampleFile.csv");
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: 5000,
+          theme: "light",
+        });
+      });
+  };
   const handleChangeName = (e) => {
     setName(e.target.value);
   };
@@ -126,7 +189,6 @@ function AdminProducts() {
     const destroy = await productsAPI
       .destroy(id)
       .then((res) => {
-        console.log(res);
         if (res.data === "Delete Success") {
           toast.success("Delete Product Success", {
             position: "bottom-right",
@@ -147,6 +209,13 @@ function AdminProducts() {
         setShow(false);
       });
   };
+  const onclickInput = () => {
+    inputFiles.current.click();
+  };
+  const changeExcel = (e) => {
+    const file = e.target.files[0];
+    setFileExcel(file);
+  };
   return (
     <div className={cx("wrapper")}>
       <Modal show={show} onHide={handleClose}>
@@ -166,59 +235,114 @@ function AdminProducts() {
       <ToastContainer></ToastContainer>
       <div className="container">
         <div className={cx("product-act")}>
-          <div className="row g-0">
-            <div className="col-lg-2">
-              <div className={cx("title")}>
-                <h5>Products List</h5>
-              </div>
-            </div>
-            <div className="col-lg-6 ">
-              <div className={cx("search-name")}>
-                <div className="row">
-                  <div className="col-lg-8">
-                    <input
-                      type="search"
-                      name="file"
-                      id="file"
-                      placeholder="Enter the product name you want to search"
-                      onChange={handleChangeName}
-                    />
+          <div className={cx("heading")}>
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-2 col-md-3 col-sm-4 col-4">
+                  <div className={cx("title")}>
+                    <h5>Products List</h5>
                   </div>
-                  <div className="col-lg-4">
-                    <button className="btn btn-primary" onClick={handleSearch}>
-                      Search
-                    </button>
+                </div>
+                <div className="col-lg-5 col-md-9 col-sm-8 col-8">
+                  <div className={cx("search-name")}>
+                    <div className="row">
+                      <div className="col-lg-9 col-md-8 col-sm-9 col-9">
+                        <input
+                          type="search"
+                          name="search"
+                          id="search"
+                          placeholder="Enter the product name"
+                          onChange={handleChangeName}
+                        />
+                      </div>
+                      <div className="col-lg-2 col-md-4 col-sm-3 col-3">
+                        <div className={cx("search")}>
+                          <button
+                            className="btn btn-primary"
+                            onClick={handleSearch}
+                          >
+                            Search
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-4 col-md-10 col-sm-10 col-10">
+                  <div className="row">
+                    <div className="col-lg-5 col-md-7 col-sm-6 col-6">
+                      <div className={cx("excel-file")}>
+                        <div className="row">
+                          <div className="col-lg-3 col-md-2 col-sm-2 col-2">
+                            <Link to={"#"} onClick={onclickInput}>
+                              <img src={excel}></img>
+                            </Link>
+                          </div>
+                          <div className="col-lg-9 col-md-10 col-sm-6 col-10">
+                            <div className={cx("file-name")}>
+                              <label htmlFor="">
+                                {fileExcel ? fileExcel.name : "No File"}
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-3 col-md-2 col-sm-2 col-2">
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleImportExcel}
+                      >
+                        Import
+                      </button>
+                    </div>
+                    <div className="col-lg-4 col-md-3 col-sm-4 col-4">
+                      <div className={cx("download-file")}>
+                        <Link
+                          to={"#"}
+                          onClick={handleDownloadFile}
+                          className="btn btn-primary"
+                          target="blank"
+                        >
+                          Sample file
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-1 col-md-2 col-sm-2 col-2">
+                  <div className={cx("create-product")}>
+                    <Link
+                      to={routesConfig.CreateProducts}
+                      className="btn btn-primary"
+                    >
+                      Create
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="col-lg-2">
-              <div className={cx("download-file")}>
-                <button className="btn btn-primary">Download File</button>
-              </div>
-            </div>
-            <div className="col-lg-2">
-              <div className={cx("create-product")}>
-                <Link
-                  to={routesConfig.CreateProducts}
-                  className="btn btn-primary"
-                >
-                  Create Products
-                </Link>
-              </div>
-            </div>
+          </div>
+          <div className={cx("input-file")}>
+            <input
+              type="file"
+              name="file"
+              id="file"
+              ref={inputFiles}
+              onChange={changeExcel}
+            />
           </div>
         </div>
         <div className={cx("sort")}>
           <div className="container">
             <div className="row">
-              <div className="col-lg-4 col-md-12">
+              <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                 <div className={cx("status")}>
                   <div className="row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                       <div className={cx("title-sort")}>Collections</div>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
                         <select
                           name=""
@@ -240,13 +364,13 @@ function AdminProducts() {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-12">
+              <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                 <div className={cx("categories")}>
                   <div className="row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                       <div className={cx("title-sort")}>Producers</div>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
                         <select
                           name=""
@@ -268,13 +392,13 @@ function AdminProducts() {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-12">
+              <div className="col-lg-4 col-md-4 col-sm-6 col-6">
                 <div className={cx("status")}>
                   <div className="row">
-                    <div className="col-lg-4">
+                    <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                       <div className={cx("title-sort")}>Price</div>
                     </div>
-                    <div className="col-lg-8">
+                    <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
                         <select name="" id="" onChange={handleChangePrice}>
                           <option value="default">Default</option>
@@ -317,13 +441,20 @@ function AdminProducts() {
                       <td>
                         <input type="checkbox" name="" id="" />
                       </td>
-                      <td>1</td>
+                      <td>{index + 1}</td>
                       <td>{item.productCode}</td>
                       <td>{item.name}</td>
                       <td>
-                        <img src={item.image[0].url} alt="" />
+                        {item.image[0] ? (
+                          <img src={item.image[0].url} alt="" />
+                        ) : (
+                          <img
+                            src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
+                            alt=""
+                          />
+                        )}
                       </td>
-                      <td>{item.importPrice}</td>
+                      <td>{Number(item.importPrice).toLocaleString()}</td>
                       <td>{Number(item.price).toLocaleString()}</td>
                       <td>{item.producer}</td>
                       <td>
@@ -366,5 +497,4 @@ function AdminProducts() {
     </div>
   );
 }
-
 export default AdminProducts;

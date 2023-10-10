@@ -83,7 +83,6 @@ function CategoryContent(props) {
       collections: collection,
       id: category,
     };
-    console.log(params, id, data);
     await modalAPI
       .destroyCategory(params, id, data)
       .then((res) => {

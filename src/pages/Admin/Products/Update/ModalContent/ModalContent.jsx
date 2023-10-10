@@ -56,7 +56,7 @@ function ModalContent(props) {
             theme: "light",
           });
         }
-        if (err.response.status === 401) {
+        if (err.response.status === 409) {
           toast.error(`${params} has existed`, {
             position: "bottom-right",
             autoClose: 5000,

@@ -9,6 +9,14 @@ const productsAPI = {
     const url = "/api/admin/products";
     return axiosConfig.post(url, data);
   },
+  importExcel(data) {
+    const url = "/api/admin/products/importExcel";
+    return axiosConfig.post(url, data);
+  },
+  downloadFile() {
+    const url = "/api/admin/products/download/sampleFile";
+    return axiosConfig.get(url, { responseType: "blob" });
+  },
   edit(id) {
     const url = `/api/admin/products/${id}/edit`;
     return axiosConfig.get(url);

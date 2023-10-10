@@ -138,7 +138,6 @@ function UpdateProducts() {
     };
     fetchAPI();
   };
-  console.log(products);
   function handleChooseFile(e) {
     setImg(e.target.files[0]);
     setFiles(e.target.files);

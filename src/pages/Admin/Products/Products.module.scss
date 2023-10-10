@@ -1,8 +1,3 @@
-.create-product {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 .sort {
   width: 100%;
   margin-top: 30px;
@@ -10,25 +5,30 @@
     width: 100%;
     margin-top: 10px;
   }
-  button {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+}
+.title {
+  margin-bottom: 30px;
+}
+.create-product {
+  text-align: end;
 }
 .search-name {
+  margin-bottom: 30px;
   input {
     border-radius: 5px;
-    padding: 0px 15px;
+    padding: 0px 5px;
     width: 100%;
     height: 36px;
+    &::placeholder {
+      text-align: center;
+    }
   }
 }
 .search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: end;
+}
+.download-file {
+  text-align: end;
 }
 .title-sort {
   height: 36px;
@@ -40,6 +40,20 @@
   select {
     height: 100%;
   }
+}
+.excel-file {
+  img {
+    width: max-content;
+    height: 36px;
+  }
+}
+.file-name {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.input-file {
+  display: none;
 }
 .table-products {
   overflow: hidden;
@@ -69,6 +83,8 @@
   }
 }
 .table {
+  overflow: hidden;
+  overflow-y: scroll;
   img {
     width: 50px;
     height: 50px;
@@ -93,16 +109,5 @@
     &:hover {
       background-color: #ccc;
     }
-  }
-}
-@media only screen and (max-width: 992px) {
-  .title {
-    display: none;
-  }
-  .search-name {
-    display: none;
-  }
-  .download-file {
-    display: none;
   }
 }
