@@ -7,6 +7,7 @@ const routesConfig = {
   resetpw: "/auth/reset-password/:token",
   blogs: "/blogs",
   blogDetail: "/blogs/:slug",
+  Profile: "/user/profile",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",

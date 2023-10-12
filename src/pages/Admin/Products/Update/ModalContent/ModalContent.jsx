@@ -15,6 +15,7 @@ function ModalContent(props) {
   const handleCloseContent = () => setShowContent(false);
   const handleShowContent = () => setShowContent(true);
   const [value, setValue] = useState();
+  const [show, setShow] = useState(false);
   const [callApi, setCallApi] = useState(false);
   const [results, setResults] = useState([]);
   var params = props.title.toLowerCase() + "s";
@@ -169,6 +170,19 @@ function ModalContent(props) {
                         <i className="fa fa-save"> Save</i>
                       </Link>
                     </div>
+                  </div>
+                  <div className="col-lg-12">
+                    {props.show ? (
+                      <>
+                        <input
+                          type="checkbox"
+                          name=""
+                          id=""
+                          onClick={(e) => setShow(!show)}
+                        />{" "}
+                        <label htmlFor="checkShow">Show Home Page</label>
+                      </>
+                    ) : null}
                   </div>
                 </div>
               </Tab>

@@ -31,29 +31,37 @@ function Login() {
     };
     const login = await AuthsAPI.login(data)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          if (save === true) {
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("full_name", res.data.others.full_name);
-          } else {
-            sessionStorage.setItem("token", res.data.token);
-            sessionStorage.setItem("full_name", res.data.others.full_name);
-          }
           if (res.data.others.role === "admin") {
-            navigate(routesConfig.AdminHome);
             toast.success("Loggin Succes", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
             });
+            if (save === true) {
+              localStorage.setItem("token", res.data.token);
+            } else {
+              sessionStorage.setItem("token", res.data.token);
+            }
+            setTimeout(() => {
+              navigate(routesConfig.AdminHome);
+            }, 3000);
           } else {
-            navigate(routesConfig.home);
             toast.success("Loggin Succes", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
             });
+            if (save === true) {
+              localStorage.setItem("token", res.data.token);
+              localStorage.setItem("full_name", res.data.others.full_name);
+            } else {
+              sessionStorage.setItem("token", res.data.token);
+              sessionStorage.setItem("full_name", res.data.others.full_name);
+            }
+            setTimeout(() => {
+              navigate(routesConfig.home);
+            }, 3000);
           }
         }
       })

@@ -16,6 +16,7 @@ import UpdateProducers from "../pages/Admin/Producers/Update/Update";
 import AdminProducts from "../pages/Admin/Products/Products";
 import CreateProducts from "../pages/Admin/Products/Create/CreateProducts";
 import UpdateProducts from "../pages/Admin/Products/Update/UpdateProducts";
+import Profile from "../pages/User/Profile/Profile";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -48,6 +49,10 @@ const publicRoutes = [
     path: routesConfig.resetpw,
     component: ResetPw,
     layout: null,
+  },
+  {
+    path: routesConfig.Profile,
+    component: Profile,
   },
 ];
 const privateRoutes = [

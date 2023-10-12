@@ -395,7 +395,10 @@ function CreateProducts() {
                             </div>
                           </div>
                           <div className="col-lg-2">
-                            <ModalContent title="Collection"></ModalContent>
+                            <ModalContent
+                              title="Collection"
+                              show={true}
+                            ></ModalContent>
                           </div>
                         </div>
                       </div>

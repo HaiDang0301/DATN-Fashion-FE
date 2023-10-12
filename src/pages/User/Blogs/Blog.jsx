@@ -86,25 +86,25 @@ function Blogs() {
                     </button>
                   </div>
                 </div>
-                <div className={cx("item-collections")}>
-                  <h3>Collections</h3>
+                <div className={cx("item-hashtag")}>
+                  <h3>HashTag</h3>
                   <ul>
                     <li>
-                      <Link to={"/blogs/?hashtag=Men"} onClick={handleHashtag}>
-                        Men
+                      <Link to={"/blogs/?hashtag=sale"} onClick={handleHashtag}>
+                        Sale
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={"/blogs/?hashtag=new"} onClick={handleHashtag}>
+                        New Product
                       </Link>
                     </li>
                     <li>
                       <Link
-                        to={"/blogs/?hashtag=Women"}
+                        to={"/blogs/?hashtag=celebrity"}
                         onClick={handleHashtag}
                       >
-                        Women
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={"/blogs/?hashtag=Baby"} onClick={handleHashtag}>
-                        Baby
+                        Celebrity
                       </Link>
                     </li>
                     <li>
