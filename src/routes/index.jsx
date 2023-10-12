@@ -17,6 +17,9 @@ import AdminProducts from "../pages/Admin/Products/Products";
 import CreateProducts from "../pages/Admin/Products/Create/CreateProducts";
 import UpdateProducts from "../pages/Admin/Products/Update/UpdateProducts";
 import Profile from "../pages/User/Profile/Profile";
+import AdminBanners from "../pages/Admin/Banners/Banners";
+import CreateBanners from "../pages/Admin/Banners/Create/CreateBanners";
+import UpdateBanners from "../pages/Admin/Banners/Update/Update";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -95,6 +98,18 @@ const privateRoutes = [
   {
     path: routesConfig.UpdateProducts,
     component: UpdateProducts,
+  },
+  {
+    path: routesConfig.AdminBanners,
+    component: AdminBanners,
+  },
+  {
+    path: routesConfig.CreateBanners,
+    component: CreateBanners,
+  },
+  {
+    path: routesConfig.UpdateBanners,
+    component: UpdateBanners,
   },
 ];
 export { publicRoutes, privateRoutes };
