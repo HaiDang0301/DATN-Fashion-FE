@@ -212,7 +212,7 @@ function Header() {
                 </ul>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"#"}>Salse</Link>
+                <Link to={"#"}>Sale</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <Link to={routesConfig.blogs}>Blog</Link>
@@ -333,7 +333,7 @@ function Header() {
               </button>
             </div>
           </div>
-          <div className={cx("shopping-cart")}>
+          <div className={cx("cart-mobile")}>
             <Link>
               <i className="fa fa-shopping-cart">
                 <span>{cart}</span>

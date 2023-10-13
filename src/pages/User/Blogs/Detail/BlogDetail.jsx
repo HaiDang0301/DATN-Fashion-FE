@@ -4,6 +4,7 @@ import className from "classnames/bind";
 import styles from "./BlogDetail.module.scss";
 import { useEffect, useState } from "react";
 import blogAPI from "../../../../api/User/blogsAPI";
+import formatDate from "../../../../formatDate/formatDate";
 const cx = className.bind(styles);
 function BlogsDetail() {
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -33,7 +34,7 @@ function BlogsDetail() {
                 <i className="fa fa-user">
                   <p>{blog.author}</p>
                   <label>
-                    - {blog.createdAt ? blog.createdAt.slice(0, 10) : null}
+                    - {blog.createdAt ? formatDate(blog.createdAt) : null}
                   </label>
                 </i>
               </div>

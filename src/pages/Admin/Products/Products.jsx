@@ -83,7 +83,6 @@ function AdminProducts() {
     await productsAPI
       .downloadFile()
       .then((res) => {
-        console.log(res.data);
         FileDownLoad(res.data, "sampleFile.csv");
       })
       .catch((err) => {
@@ -179,7 +178,8 @@ function AdminProducts() {
           page: newPage,
         });
       }
-    } else {
+    }
+    if (!collection && !producer && !price) {
       setSearchParams({
         page: newPage,
       });
