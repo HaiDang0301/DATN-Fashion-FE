@@ -8,6 +8,7 @@ const routesConfig = {
   blogs: "/blogs",
   blogDetail: "/blogs/:slug",
   Profile: "/user/profile",
+  Products: "/collections/:collection?",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",
