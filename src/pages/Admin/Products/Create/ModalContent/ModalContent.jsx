@@ -200,6 +200,14 @@ function ModalContent(props) {
                         <label htmlFor="checkShow">Show Home Page</label>
                       </>
                     ) : null}
+                    {props.colors ? (
+                      <Link
+                        to={"https://www.computerhope.com/htmcolor.htm"}
+                        target="blank"
+                      >
+                        Access the link to view color code
+                      </Link>
+                    ) : null}
                   </div>
                 </div>
               </Tab>

@@ -1,0 +1,76 @@
+.wrapper {
+  height: max-content;
+  margin-top: 30px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.menu-left {
+  h5 {
+    font-size: 16px;
+  }
+  ul {
+    padding: 0px;
+    margin: 0px;
+  }
+  li {
+    list-style-type: none;
+    font-size: 14px;
+  }
+}
+.manufacturer {
+  margin-top: 15px;
+}
+.collections {
+  margin-top: 15px;
+}
+.category {
+  margin-top: 15px;
+}
+.color {
+  margin-top: 20px;
+  label {
+    border-radius: 100%;
+    height: 20px;
+    padding: 0;
+    min-width: 20px !important;
+  }
+  span {
+    font-size: 0;
+  }
+}
+.products {
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}
+.title {
+  margin-top: 15px;
+  border-bottom: 1px solid black;
+}
+.quick-access {
+  margin-top: 30px;
+  padding-bottom: 10px;
+}
+.sorter {
+  select {
+    width: 100%;
+  }
+  button {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 1px 5px;
+  }
+}
+.product-item {
+  margin-top: 10px;
+  img {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .menu-left {
+    display: none;
+  }
+}

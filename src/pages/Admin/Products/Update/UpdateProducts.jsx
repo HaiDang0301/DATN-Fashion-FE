@@ -460,7 +460,10 @@ function UpdateProducts() {
                             </div>
                           </div>
                           <div className="col-lg-2">
-                            <ModalContent title="Color"></ModalContent>
+                            <ModalContent
+                              title="Color"
+                              colors={true}
+                            ></ModalContent>
                           </div>
                         </div>
                       </div>

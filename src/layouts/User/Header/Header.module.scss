@@ -180,7 +180,7 @@
   }
 }
 .collections {
-  position: absolute;
+  position: relative;
   &:hover {
     .collection {
       display: block;
@@ -190,9 +190,10 @@
 .collection {
   width: 150px;
   display: none;
-  position: relative;
+  position: absolute;
   color: white;
   background: #ffffff;
+  z-index: 99999;
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
   li {
     text-transform: none;
@@ -203,7 +204,7 @@
   }
 }
 .categories {
-  position: absolute;
+  position: relative;
   &:hover {
     .category {
       display: block;
@@ -212,9 +213,10 @@
 }
 .category {
   display: none;
-  position: relative;
+  position: absolute;
   color: white;
   background: #ffffff;
+  z-index: 99999;
   box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
   li {
     width: 150px;
@@ -250,7 +252,6 @@
   }
 }
 .menu-collections {
-  height: 60px;
   border-bottom: 1px solid #ccc;
 }
 .collection-mobile {

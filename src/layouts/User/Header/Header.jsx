@@ -177,7 +177,7 @@ function Header() {
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <ul className={cx("collections")}>
                   <li>
-                    <Link to={"#"}>Collection</Link>
+                    <Link to={"/collections"}>Collection</Link>
                     <ul className={cx("collection")}>
                       {data
                         ? data.map((item, index) => (
