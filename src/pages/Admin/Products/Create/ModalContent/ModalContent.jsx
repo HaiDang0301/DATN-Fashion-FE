@@ -18,6 +18,7 @@ function ModalContent(props) {
   const [show, setShow] = useState(false);
   const [callApi, setCallApi] = useState(false);
   const [results, setResults] = useState([]);
+  const [image, setImage] = useState();
   var params = props.title.toLowerCase() + "s";
   useEffect(() => {
     const fetchAPI = async () => {
@@ -29,7 +30,18 @@ function ModalContent(props) {
   const handleSubmit = async () => {
     var data = {};
     if (params === "collections") {
-      data = { collections: value, showHome: show };
+      if (!image) {
+        toast.error("Please provide image", {
+          position: "bottom-right",
+          autoClose: 5000,
+          theme: "light",
+        });
+      } else {
+        data = new FormData();
+        data.append("collections", value);
+        data.append("image", image);
+        data.append("showHome", show);
+      }
     }
     if (params === "colors") {
       data = { colors: value };
@@ -173,6 +185,12 @@ function ModalContent(props) {
                   <div className="col-lg-12">
                     {props.show ? (
                       <>
+                        <input
+                          type="file"
+                          name="image"
+                          id="image"
+                          onChange={(e) => setImage(e.target.files[0])}
+                        />
                         <input
                           type="checkbox"
                           name=""

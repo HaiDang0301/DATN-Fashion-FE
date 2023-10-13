@@ -10,7 +10,11 @@ const cx = className.bind(styles);
 function UpdateBanners() {
   document.title = "Admin | Update Banner";
   const [image, setImage] = useState();
-  const [banner, setBanner] = useState({ image: "", title: "" });
+  const [banner, setBanner] = useState({
+    image: "",
+    title: "",
+    description: "",
+  });
   const id = useParams().id;
   useEffect(() => {
     const fetchApi = async () => {
@@ -23,6 +27,7 @@ function UpdateBanners() {
     const data = new FormData();
     data.append("image", image);
     data.append("title", banner.title);
+    data.append("description", banner.description);
     bannerApi
       .update(id, data)
       .then((res) => {
@@ -66,20 +71,55 @@ function UpdateBanners() {
           <div className={cx("banner-form")}>
             <div className={cx("nav-banner")}>
               <div className="row">
+                <div className={cx("show-image")}>
+                  {image ? (
+                    <img src={URL.createObjectURL(image)} alt="" />
+                  ) : (
+                    <img src={banner.image} alt="" />
+                  )}
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("adress")}>
+                    <h5>Image</h5>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
+                </div>
                 <div className="col-lg-12">
                   <div className={cx("name-banner")}>
                     <h5>Title</h5>
                   </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      value={banner.title}
+                      placeholder="Enter ther title banner"
+                      onChange={(e) =>
+                        setBanner({ ...banner, title: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <h5>Description</h5>
                 </div>
                 <div className="col-lg-12">
                   <Editor
                     apiKey="ns9ltjxjky7crwvi0lq241xpborim7o4p8j36twsf0s7lxna"
-                    value={banner.title}
+                    value={banner.description}
                     onEditorChange={(e) => {
-                      setBanner({ ...banner, title: e });
+                      setBanner({ ...banner, description: e });
                     }}
                     init={{
-                      height: 500,
+                      height: 300,
                       menubar: false,
                       plugins: [
                         "a11ychecker",
@@ -111,26 +151,6 @@ function UpdateBanners() {
                         "bullist numlist checklist | removeformat | quickimage",
                     }}
                   />
-                </div>
-                <div className="col-lg-12">
-                  <div className={cx("adress")}>
-                    <h5>Image</h5>
-                  </div>
-                </div>
-                <div className="col-lg-12">
-                  <input
-                    type="file"
-                    name="image"
-                    id="image"
-                    onChange={(e) => setImage(e.target.files[0])}
-                  />
-                </div>
-                <div className={cx("show-image")}>
-                  {image ? (
-                    <img src={URL.createObjectURL(image)} alt="" />
-                  ) : (
-                    <img src={banner.image} alt="" />
-                  )}
                 </div>
               </div>
             </div>

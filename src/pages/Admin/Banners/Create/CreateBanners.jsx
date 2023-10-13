@@ -1,42 +1,30 @@
 import { Link } from "react-router-dom";
-import * as Yup from "yup";
+import { Editor } from "@tinymce/tinymce-react";
+import noimg from "../../../../assets/noimg.png";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import className from "classnames/bind";
 import styles from "./CreateBanners.module.scss";
-import { useFormik } from "formik";
 import bannerApi from "../../../../api/Admin/bannerAPI";
 import { useState } from "react";
 const cx = className.bind(styles);
 function CreateBanners() {
   document.title = "Admin | Create Banner";
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
   const [image, setImage] = useState();
-  const formik = useFormik({
-    initialValues: {
-      title: "",
-    },
-    validationSchema: Yup.object({
-      title: Yup.string().required("Please enter title producer"),
-    }),
-  });
   const handleSubmit = () => {
-    if (formik.errors.title) {
-      toast.error("Please provide title", {
+    if (!image || !title) {
+      toast.error("Please provide full information", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
       });
-      if (!image) {
-        toast.error("Please provide image", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
-        });
-      }
     } else {
       const data = new FormData();
       data.append("image", image);
-      data.append("title", formik.values.title);
+      data.append("title", title);
+      data.append("description", description);
       bannerApi
         .store(data)
         .then((res) => {
@@ -82,30 +70,16 @@ function CreateBanners() {
             <div className={cx("nav-banner")}>
               <div className="row">
                 <div className="col-lg-12">
-                  <div className={cx("name-banner")}>
-                    <h5>Title</h5>
+                  <div className={cx("show-image")}>
+                    {image ? (
+                      <img src={URL.createObjectURL(image)} alt="" />
+                    ) : (
+                      <img src={noimg} alt="" />
+                    )}
                   </div>
                 </div>
                 <div className="col-lg-12">
-                  <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    placeholder="Enter the title banner"
-                    value={formik.values.title}
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div className={cx("errors")}>
-                  {formik.touched.title && formik.errors.title ? (
-                    <>
-                      <i className="fa fa-warning"> {formik.errors.title}</i>
-                    </>
-                  ) : null}
-                </div>
-                <div className="col-lg-12">
-                  <div className={cx("adress")}>
+                  <div className={cx("image")}>
                     <h5>Image</h5>
                   </div>
                 </div>
@@ -116,6 +90,66 @@ function CreateBanners() {
                     id="image"
                     onChange={(e) => setImage(e.target.files[0])}
                   />
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("title-banner")}>
+                    <h5>Title</h5>
+                  </div>
+                  <div className="col-lg-12">
+                    <input
+                      type="text"
+                      name="title"
+                      id="tiele"
+                      placeholder="Enter the title name"
+                      onChange={(e) => setTitle(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("description-banner")}>
+                    <h5>Title</h5>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("editor")}>
+                    <Editor
+                      apiKey="ns9ltjxjky7crwvi0lq241xpborim7o4p8j36twsf0s7lxna"
+                      value={description}
+                      onEditorChange={(e) => setDescription(e)}
+                      init={{
+                        height: 300,
+                        menubar: false,
+                        plugins: [
+                          "a11ychecker",
+                          "advlist",
+                          "advcode",
+                          "advtable",
+                          "autolink",
+                          "checklist",
+                          "export",
+                          "lists",
+                          "link",
+                          "image",
+                          "charmap",
+                          "preview",
+                          "anchor",
+                          "searchreplace",
+                          "visualblocks",
+                          "powerpaste",
+                          "fullscreen",
+                          "formatpainter",
+                          "insertdatetime",
+                          "media",
+                          "table",
+                          "quickbars",
+                        ],
+                        toolbar:
+                          "undo redo | casechange blocks | bold italic backcolor | " +
+                          "alignleft aligncenter alignright alignjustify | " +
+                          "bullist numlist checklist | removeformat | quickimage",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

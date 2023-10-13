@@ -95,6 +95,7 @@ function AdminBanners() {
                     <th>STT</th>
                     <th>Image</th>
                     <th>Title</th>
+                    <th>Description</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -107,6 +108,7 @@ function AdminBanners() {
                             <img src={item.image} alt="" />
                           </td>
                           <td>{Parser(item.title)}</td>
+                          <td>{Parser(item.description)}</td>
                           <td>
                             <div className={cx("action")}>
                               <div className={cx("update")}>

@@ -11,6 +11,19 @@
   h5 {
     font-size: 15px;
   }
+  input {
+    width: 100%;
+    padding: 5px 25px;
+    &::placeholder {
+      text-align: start;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+.description-banner {
+  margin-top: 30px;
 }
 .show-image {
   text-align: center;
@@ -18,4 +31,7 @@
     height: 80%;
     width: 50%;
   }
+}
+.editor {
+  margin-bottom: 50px;
 }
