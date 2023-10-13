@@ -19,5 +19,8 @@ const routesConfig = {
   AdminProducts: "/admin/products",
   CreateProducts: "/admin/products/create",
   UpdateProducts: "/admin/products/:id/edit",
+  AdminBanners: "/admin/banners",
+  CreateBanners: "/admin/banners/create",
+  UpdateBanners: "/admin/banners/:id/edit",
 };
 export default routesConfig;

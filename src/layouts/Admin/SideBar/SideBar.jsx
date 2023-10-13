@@ -94,6 +94,11 @@ function SideBar() {
           link={routesConfig.AdminHome}
         ></ItemMenu>
         <ItemMenu
+          title="Banners"
+          icon="fa fa-audio-description"
+          link={routesConfig.AdminBanners}
+        ></ItemMenu>
+        <ItemMenu
           title="Order"
           icon="fa fa-shopping-cart"
           link={routesConfig.adminOrders}

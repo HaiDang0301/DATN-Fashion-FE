@@ -1,0 +1,21 @@
+.banner-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: max-content;
+}
+.nav-banner {
+  height: 100%;
+  width: 80%;
+  h5 {
+    font-size: 15px;
+  }
+}
+.show-image {
+  text-align: center;
+  img {
+    height: 80%;
+    width: 50%;
+  }
+}
