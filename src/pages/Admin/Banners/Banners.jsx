@@ -145,7 +145,7 @@ function AdminBanners() {
                 onPageChange={handlePage}
                 pageCount={banners.totalPage || 1}
                 previousLabel="<"
-                renderOnZeroPageCount={null}
+                forcePage={searchParams.get("page") - 1}
               />
             </div>
           </div>

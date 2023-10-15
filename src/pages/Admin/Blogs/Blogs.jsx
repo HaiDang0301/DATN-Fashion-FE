@@ -312,7 +312,7 @@ function AdminBlogs() {
               onPageChange={handlePage}
               pageCount={blogs.totalPage || 1}
               previousLabel="<"
-              renderOnZeroPageCount={null}
+              forcePage={searchParams.get("page") - 1}
             />
           </div>
         </div>

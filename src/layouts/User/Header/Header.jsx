@@ -116,6 +116,9 @@ function Header() {
                               <Link to={routesConfig.Profile}>My Account</Link>
                             </li>
                             <li>
+                              <Link to={routesConfig.blogs}>Blogs</Link>
+                            </li>
+                            <li>
                               <Link to={"#"}>Contact</Link>
                             </li>
                             <li>
@@ -174,7 +177,7 @@ function Header() {
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <Link to={routesConfig.home}>Home</Link>
               </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+              <div className="col-lg-2 col-md-2 col-sm-3 col-2">
                 <ul className={cx("collections")}>
                   <li>
                     <Link to={"/collections"}>Collection</Link>
@@ -185,7 +188,7 @@ function Header() {
                               key={index}
                               to={`/collections/${item.collections}`}
                             >
-                              <li>{item.collections}</li>
+                              <li key={index}>{item.collections}</li>
                             </Link>
                           ))
                         : null}
@@ -193,16 +196,16 @@ function Header() {
                   </li>
                 </ul>
               </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <ul className={cx("categories")}>
-                  <Link>
-                    <li>Category</li>
+              <div className="col-lg-2 col-md-2 col-sm-1 col-2">
+                <ul className={cx("new-product")}>
+                  <Link to={"/collections/new-products"}>
+                    <li>New</li>
                   </Link>
                   <ul className={cx("category")}>
                     {data
                       ? data.map((item) =>
                           item.categories.map((i, index) => (
-                            <Link to={"#"} key={index}>
+                            <Link to={`/collections/${i.category}`} key={index}>
                               <li>{i.category}</li>
                             </Link>
                           ))
@@ -212,13 +215,13 @@ function Header() {
                 </ul>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"#"}>Sale</Link>
+                <Link to={"/collections/sale"}>Sale</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.blogs}>Blog</Link>
+                <Link to={"#"}>Delivery</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.blogs}>Delivery</Link>
+                <Link to={"#"}>About Us</Link>
               </div>
             </div>
           </div>
@@ -324,8 +327,8 @@ function Header() {
             <div className={cx(searchMobile ? "show-search" : "hiden-search")}>
               <input
                 type="search"
-                name=""
-                id=""
+                name="search"
+                id="search"
                 placeholder="Enter the product name"
               />
               <button>
@@ -343,7 +346,9 @@ function Header() {
         </div>
         <div className={cx("logo-mobile")}>
           <div className="container">
-            <img src={logo} alt="" />
+            <Link to={routesConfig.home}>
+              <img src={logo} alt="" />
+            </Link>
           </div>
         </div>
         <div className={cx("menu-collections")}>
@@ -351,7 +356,7 @@ function Header() {
             <ul className={cx("collection-mobile")}>
               <li>
                 <Link
-                  to={"#"}
+                  to={"/collections"}
                   onClick={(e) => {
                     setShowCollection(!showCollection);
                   }}
@@ -366,7 +371,10 @@ function Header() {
                 <ul className={cx(showCollection ? "show-lv2" : "hiden-lv2")}>
                   {data
                     ? data.map((item, index) => (
-                        <Link key={index} to={"#"}>
+                        <Link
+                          key={index}
+                          to={`/collections/${item.collections}`}
+                        >
                           <li>{item.collections}</li>
                         </Link>
                       ))

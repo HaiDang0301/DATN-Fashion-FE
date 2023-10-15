@@ -485,7 +485,7 @@ function AdminProducts() {
             onPageChange={handlePage}
             pageCount={products.totalPage || 1}
             previousLabel="<"
-            renderOnZeroPageCount={null}
+            forcePage={searchParams.get("page") - 1}
           />
         </div>
         <div className={cx("total-product")}>

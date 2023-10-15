@@ -175,7 +175,7 @@ function UpdateProducts() {
       data.append("size", item.size);
       data.append("quantity", item.quantity);
     });
-    data.append("description", description);
+    data.append("description", products.description);
     if (
       !products.name ||
       !products.importPrice ||
@@ -452,7 +452,13 @@ function UpdateProducts() {
                                   {products.color}
                                 </option>
                                 {colors.map((item, index) => (
-                                  <option value={item.colors} key={index}>
+                                  <option
+                                    value={item.colors}
+                                    key={index}
+                                    style={{
+                                      backgroundColor: `${item.colors}`,
+                                    }}
+                                  >
                                     {item.colors}
                                   </option>
                                 ))}

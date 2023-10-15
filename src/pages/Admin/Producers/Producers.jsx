@@ -179,7 +179,7 @@ function AdminProducers() {
                 onPageChange={handlePage}
                 pageCount={producers.totalPage || 1}
                 previousLabel="<"
-                renderOnZeroPageCount={null}
+                forcePage={searchParams.get("page") - 1}
               />
             </div>
           </div>

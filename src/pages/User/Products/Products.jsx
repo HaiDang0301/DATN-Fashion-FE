@@ -1,15 +1,141 @@
-import { Link } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import Parser from "html-react-parser";
 import col from "../../../assets/col.jpg";
 import grid from "../../../assets/grid.jpg";
 import classNames from "classnames/bind";
 import styles from "./Products.module.scss";
 import routesConfig from "../../../config/routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import modalAPI from "../../../api/Admin/modalAPI";
+import producersApi from "../../../api/Admin/producersAPI";
+import productsAPI from "../../../api/User/productsAPI";
 const cx = classNames.bind(styles);
 function Products() {
+  const type = useParams().type;
+  const category = useParams().category;
+  const [searchParams, setSearchParams] = useSearchParams();
+  let query = searchParams;
+  const forcePage = Math.ceil(searchParams.get("page") - 1);
+  console.log(query.min);
+  let params = "";
+  if (type && category) {
+    params = `${type} + /${category}`;
+  }
+  if (type) {
+    params = `${type}`;
+  }
   document.title = "Collections";
   const [grids, setGrids] = useState(false);
-  console.log(grids);
+  const [products, setProducts] = useState([]);
+  const [collections, setCollections] = useState([]);
+  const [producers, setProducers] = useState([]);
+  const [producer, setProducer] = useState();
+  const [limit, setLimit] = useState(6);
+  const [sort, setSort] = useState();
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(500000);
+  useEffect(() => {
+    window.scrollTo({ top: 200, behavior: "smooth" });
+    const fetchProducts = async () => {
+      const result = await productsAPI.index(params, query);
+      setProducts(result.data);
+    };
+    fetchProducts();
+    fetchCollection();
+    fetchProducer();
+  }, [params, query]);
+  const fetchCollection = async () => {
+    const result = await modalAPI.getAll("collections");
+    setCollections(result.data);
+  };
+  const fetchProducer = async () => {
+    const result = await producersApi.getAll();
+    setProducers(result.data);
+  };
+  const handlePage = async (e) => {
+    const newPage = e.selected + 1;
+    setSearchParams({
+      page: newPage,
+    });
+    // switch (limit) {
+    //   case limit:
+    //     if (limit === 6) {
+    //       setSearchParams({
+    //         page: newPage,
+    //       });
+    //     } else {
+    //       setSearchParams({
+    //         limit: limit,
+    //         page: newPage,
+    //       });
+    //     }
+    //     break;
+    // }
+    // switch (sort) {
+    //   case sort != undefined:
+    //     setSearchParams({
+    //       sort: sort,
+    //       page: newPage,
+    //     });
+    //     break;
+    //   case !sort:
+    //     setSearchParams({
+    //       page: newPage,
+    //     });
+    //     break;
+    // }
+    // switch (producer) {
+    //   case producer !== "undefined":
+    //     console.log("123");
+    //     break;
+    //   case producer === "undefined":
+    //     setSearchParams({
+    //       page: newPage,
+    //     });
+    //     break;
+    // }
+    // if (min && max) {
+    //   setSearchParams({
+    //     min: min,
+    //     max: max,
+    //     page: newPage,
+    //   });
+    // } else {
+    //   setSearchParams({ page: newPage });
+    // }
+  };
+  const handleProducer = (e) => {
+    setProducer(e.target.value);
+    const producer = e.target.value;
+    setSearchParams({
+      producer: producer,
+    });
+  };
+  const handleFilter = (e) => {
+    const begin = min;
+    const final = max;
+    setSearchParams({
+      min: begin,
+      max: final,
+    });
+  };
+  const handleLimit = async (e) => {
+    setSort("Position");
+    setLimit(e.target.value);
+    const limit = e.target.value;
+    setSearchParams({
+      limit: limit,
+    });
+  };
+  const handleSort = (e) => {
+    setLimit(6);
+    setSort(e.target.value);
+    const bySort = e.target.value;
+    setSearchParams({
+      sort: bySort,
+    });
+  };
   return (
     <div className={cx("wrapper")}>
       <div className="container">
@@ -18,74 +144,92 @@ function Products() {
             <div className={cx("menu-left")}>
               <div className="row">
                 <div className="col-lg-12">
-                  <div className={cx("price")}>
+                  <div className={cx("collections")}>
+                    <h4>Collections</h4>
                     <ul>
-                      <li>
-                        <h5>Price</h5>
-                      </li>
+                      {collections
+                        ? collections.map((item, index) => (
+                            <li key={index} className={cx("name-collection")}>
+                              <h4>
+                                <Link to={`/collections/${item.collections}`}>
+                                  {item.collections}{" "}
+                                </Link>
+                              </h4>
+                              <ul className={cx("category")}>
+                                {item.categories.map((i, index) => (
+                                  <li key={index}>
+                                    <Link
+                                      to={`/collections/${item.collections}/${i.category}`}
+                                    >
+                                      {i.category}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+                          ))
+                        : null}
                     </ul>
                   </div>
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("manufacturer")}>
+                    <h4>Brand</h4>
                     <ul>
-                      <li>
-                        <h5>Manufacturer</h5>
-                        <ul>
-                          <li>Adidas</li>
-                          <li>Gucci</li>
-                        </ul>
-                      </li>
+                      {producers.producers
+                        ? producers.producers.map((item, index) => (
+                            <li key={index}>
+                              <input
+                                type="checkbox"
+                                name="producer"
+                                id="producer"
+                                value={item.name}
+                                onChange={handleProducer}
+                              />
+                              {item.name}
+                            </li>
+                          ))
+                        : null}
                     </ul>
                   </div>
                 </div>
                 <div className="col-lg-12">
-                  <div className={cx("collections")}>
-                    <ul>
-                      <li>
-                        <h5>Collections</h5>
-                        <ul>
-                          <li>Men</li>
-                          <li>Men</li>
-                          <li>Men</li>
-                        </ul>
-                      </li>
-                    </ul>
+                  <div className={cx("price")}>
+                    <h4>Price ( VND )</h4>
+                    <div className="show-price">
+                      ${Number(min).toLocaleString()} - $
+                      {Number(max).toLocaleString()}
+                    </div>
+                    <div className={cx("process")}></div>
+                    <div className={cx("toolbar")}>
+                      <div className={cx("range-min")}>
+                        <input
+                          type="range"
+                          name="min"
+                          id="min"
+                          value={min}
+                          min={0}
+                          max={500000}
+                          onChange={(e) => setMin(e.target.value)}
+                        />
+                      </div>
+                      <div className={cx("range-max")}>
+                        <input
+                          type="range"
+                          name="max"
+                          id="max"
+                          value={max}
+                          min={500000}
+                          max={2000000}
+                          onChange={(e) => setMax(e.target.value)}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="col-lg-12">
-                  <div className={cx("category")}>
-                    <ul>
-                      <li>
-                        <h5>Category</h5>
-                        <ul>
-                          <li>Men</li>
-                          <li>Men</li>
-                          <li>Men</li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="col-lg-12">
-                  <div className={cx("color")}>
-                    <ul>
-                      <li>
-                        <h5>Color</h5>
-                        <ul>
-                          <li>
-                            <Link>
-                              <label
-                                htmlFor=""
-                                style={{ backgroundColor: "red" }}
-                              >
-                                <span></span>
-                              </label>
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
+                  <div className={cx("filter")}>
+                    <button onClick={handleFilter}>Filter</button>
                   </div>
                 </div>
               </div>
@@ -96,14 +240,16 @@ function Products() {
               <div className="row">
                 <div className="col-lg-12">
                   <label htmlFor="">
-                    <Link to={routesConfig.home}>Home </Link>{" "}
+                    <Link to={routesConfig.home}>HOME </Link>{" "}
                     <i className="fa fa-long-arrow-right"></i>{" "}
-                    <Link to={"/collections"}>Collection</Link>
+                    <Link to={`/${type}`}>
+                      {type ? type.toLocaleUpperCase() : "COLLECTIONS"}
+                    </Link>
                   </label>
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("title")}>
-                    <h5>Collection</h5>
+                    <h5>{type ? type.toLocaleUpperCase() : "COLLECTIONS"}</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -112,7 +258,7 @@ function Products() {
                       <div className="row">
                         <div className="col-lg-10 col-md-9 col-sm-8 col-8">
                           {" "}
-                          6 items
+                          {limit} items
                         </div>
                         <div className="col-lg-2 col-md-3 col-sm-4 col-4">
                           <div className="row">
@@ -120,10 +266,15 @@ function Products() {
                               Show
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                              <select name="" id="">
-                                <option value="9">9</option>
-                                <option value="9">15</option>
-                                <option value="9">30</option>
+                              <select
+                                name="limit"
+                                id="limit"
+                                value={limit}
+                                onChange={handleLimit}
+                              >
+                                <option value="6">6</option>
+                                <option value="12">12</option>
+                                <option value="24">24</option>
                               </select>
                             </div>
                           </div>
@@ -151,7 +302,12 @@ function Products() {
                               Sort By
                             </div>
                             <div className="col-lg-7 col-md-7 col-sm-7 col-6">
-                              <select name="" id="">
+                              <select
+                                name="sort"
+                                id="sort"
+                                value={sort}
+                                onChange={handleSort}
+                              >
                                 <option value="default">Position</option>
                                 <option value="name">Name</option>
                                 <option value="price">Price</option>
@@ -163,114 +319,143 @@ function Products() {
                     </div>
                   </div>
                 </div>
-                {grids ? null : (
-                  <div className="row">
-                    <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-                      <div className={cx("product-item")}>
-                        <Link to={"#"}>
-                          <div className={cx("thumnal-container")}>
-                            <div className={cx("image-product")}>
-                              <img
-                                src={
-                                  "https://res.cloudinary.com/dfszyazkj/image/upload/v1697122502/blogs/lpkm08n9qpbnin0fbkhp.webp"
-                                }
-                                alt=""
-                              />
-                              <div className={cx("quick-view")}>
-                                <span>View</span>
+                {grids ? (
+                  <div className={cx("grid-1")}>
+                    {products.products
+                      ? products.products.map((item, index) => (
+                          <div className="row" key={index}>
+                            <div className="col-lg-4 col-md-6 col-sm-6 col-6">
+                              <div className={cx("product-item")}>
+                                <Link to={"#"}>
+                                  <div className={cx("thumnal-container")}>
+                                    <div className={cx("image-product")}>
+                                      <img src={item.image[0].url} alt="" />
+                                      <div className={cx("quick-view")}>
+                                        <span>View</span>
+                                      </div>
+                                    </div>
+                                    <div className={cx("product-flag")}>
+                                      {type === "new-products" ? (
+                                        <span>NEW</span>
+                                      ) : null}
+                                    </div>
+                                    {type === "sale" ? (
+                                      <>
+                                        <div
+                                          className={cx("product-flag-sale")}
+                                        >
+                                          <span>Sale</span>
+                                        </div>
+                                        <div className={cx("sale")}>
+                                          <span>-{item.promotion}%</span>
+                                        </div>
+                                      </>
+                                    ) : null}
+                                  </div>
+                                </Link>
                               </div>
                             </div>
-                            <div className={cx("product-flag")}>
-                              <span>NEW</span>
-                            </div>
-                          </div>
-                        </Link>
-                        <div className={cx("product-description")}>
-                          <div className={cx("name-product")}>123</div>
-                          <div className={cx("price-product")}>$ 123</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-                      <div className={cx("product-item")}>
-                        <Link to={"#"}>
-                          <div className={cx("thumnal-container")}>
-                            <div className={cx("image-product")}>
-                              <img
-                                src={
-                                  "https://res.cloudinary.com/dfszyazkj/image/upload/v1697122502/blogs/lpkm08n9qpbnin0fbkhp.webp"
-                                }
-                                alt=""
-                              />
-                              <div className={cx("quick-view")}>
-                                <span>View</span>
+                            <div className="col-lg-8 col-md-6 col-sm-6 col-6">
+                              <div className={cx("name-product")}>
+                                {item.name}
+                              </div>
+                              <div className={cx("price-products")}>
+                                {type === "sale" ? (
+                                  <div className={cx("price-product")}>
+                                    <div className={cx("old-price")}>
+                                      {item.old_price}
+                                    </div>
+                                    <div className={cx("now-price")}>
+                                      {item.price}
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div className={cx("price-product")}>
+                                    ${item.price}
+                                  </div>
+                                )}
+                              </div>
+                              <div className={cx("price-description")}>
+                                {Parser(item.description)}
                               </div>
                             </div>
-                            <div className={cx("product-flag")}>
-                              <span>NEW</span>
-                            </div>
                           </div>
-                        </Link>
-                        <div className={cx("product-description")}>
-                          <div className={cx("name-product")}>123</div>
-                          <div className={cx("price-product")}>$ 123</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-                      <div className={cx("product-item")}>
-                        <Link to={"#"}>
-                          <div className={cx("thumnal-container")}>
-                            <div className={cx("image-product")}>
-                              <img
-                                src={
-                                  "https://res.cloudinary.com/dfszyazkj/image/upload/v1697122502/blogs/lpkm08n9qpbnin0fbkhp.webp"
-                                }
-                                alt=""
-                              />
-                              <div className={cx("quick-view")}>
-                                <span>View</span>
+                        ))
+                      : null}
+                  </div>
+                ) : (
+                  <div className={cx("grid-3")}>
+                    <div className="row">
+                      {products.products
+                        ? products.products.map((item, index) => (
+                            <div
+                              className="col-lg-4 col-md-6 col-sm-6 col-6"
+                              key={index}
+                            >
+                              <div className={cx("product-item")}>
+                                <Link to={"#"}>
+                                  <div className={cx("thumnal-container")}>
+                                    <div className={cx("image-product")}>
+                                      <img src={item.image[0].url} alt="" />
+                                      <div className={cx("quick-view")}>
+                                        <span>View</span>
+                                      </div>
+                                    </div>
+                                    <div className={cx("product-flag")}>
+                                      {type === "new-products" ? (
+                                        <span>NEW</span>
+                                      ) : null}
+                                    </div>
+                                    {type === "sale" ? (
+                                      <>
+                                        <div
+                                          className={cx("product-flag-sale")}
+                                        >
+                                          <span>Sale</span>
+                                        </div>
+                                        <div className={cx("sale")}>
+                                          <span>-{item.promotion}%</span>
+                                        </div>
+                                      </>
+                                    ) : null}
+                                  </div>
+                                </Link>
+                                <div className={cx("product-description")}>
+                                  <div className={cx("name-product")}>
+                                    {item.name}
+                                  </div>
+                                  {type === "sale" ? (
+                                    <div className={cx("price-product")}>
+                                      <div className={cx("old-price")}>
+                                        ${item.old_price}
+                                      </div>
+                                      <div className={cx("now-price")}>
+                                        ${item.price}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div className={cx("price-product")}>
+                                      $ {item.price}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             </div>
-                            <div className={cx("product-flag")}>
-                              <span>NEW</span>
-                            </div>
-                          </div>
-                        </Link>
-                        <div className={cx("product-description")}>
-                          <div className={cx("name-product")}>123</div>
-                          <div className={cx("price-product")}>$ 123</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-3 col-md-4 col-sm-6 col-6">
-                      <div className={cx("product-item")}>
-                        <Link to={"#"}>
-                          <div className={cx("thumnal-container")}>
-                            <div className={cx("image-product")}>
-                              <img
-                                src={
-                                  "https://res.cloudinary.com/dfszyazkj/image/upload/v1697122502/blogs/lpkm08n9qpbnin0fbkhp.webp"
-                                }
-                                alt=""
-                              />
-                              <div className={cx("quick-view")}>
-                                <span>View</span>
-                              </div>
-                            </div>
-                            <div className={cx("product-flag")}>
-                              <span>NEW</span>
-                            </div>
-                          </div>
-                        </Link>
-                        <div className={cx("product-description")}>
-                          <div className={cx("name-product")}>123</div>
-                          <div className={cx("price-product")}>$ 123</div>
-                        </div>
-                      </div>
+                          ))
+                        : null}
                     </div>
                   </div>
                 )}
+              </div>{" "}
+              <div className={cx("panigate")}>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel=">"
+                  onPageChange={handlePage}
+                  pageCount={products.totalPage || 1}
+                  previousLabel="<"
+                  forcePage={searchParams.get("page") - 1}
+                />
               </div>
             </div>
           </div>

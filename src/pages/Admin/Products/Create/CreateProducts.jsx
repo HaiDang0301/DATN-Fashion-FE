@@ -455,7 +455,13 @@ function CreateProducts() {
                               >
                                 <option value="default">Default</option>
                                 {colors.map((item, index) => (
-                                  <option value={item.colors} key={index}>
+                                  <option
+                                    value={item.colors}
+                                    key={index}
+                                    style={{
+                                      backgroundColor: `${item.colors}`,
+                                    }}
+                                  >
                                     {item.colors}
                                   </option>
                                 ))}
