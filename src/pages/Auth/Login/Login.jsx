@@ -38,30 +38,28 @@ function Login() {
               autoClose: 5000,
               theme: "light",
             });
+            setTimeout(() => {
+              navigate(routesConfig.AdminHome);
+            }, 3000);
             if (save === true) {
               localStorage.setItem("token", res.data.token);
             } else {
               sessionStorage.setItem("token", res.data.token);
             }
-            setTimeout(() => {
-              navigate(routesConfig.AdminHome);
-            }, 3000);
           } else {
             toast.success("Loggin Succes", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
             });
-            if (save === true) {
-              localStorage.setItem("token", res.data.token);
-              localStorage.setItem("full_name", res.data.others.full_name);
-            } else {
-              sessionStorage.setItem("token", res.data.token);
-              sessionStorage.setItem("full_name", res.data.others.full_name);
-            }
             setTimeout(() => {
               navigate(routesConfig.home);
             }, 3000);
+            if (save === true) {
+              localStorage.setItem("token", res.data.token);
+            } else {
+              sessionStorage.setItem("token", res.data.token);
+            }
           }
         }
       })

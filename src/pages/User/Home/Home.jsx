@@ -152,7 +152,9 @@ function Home() {
                       <div className={cx("title")}>
                         <h1>{item.title}</h1>
                         <label>{Parser(item.description)}</label>
-                        <button className="btn btn-primary">Shop now</button>
+                        <Link to={"/collections"} className="btn btn-primary">
+                          Shop now
+                        </Link>
                       </div>
                     </Carousel.Caption>
                   ) : (
@@ -160,7 +162,9 @@ function Home() {
                       <div className={cx("title")}>
                         <h1>{item.title}</h1>
                         <label>{Parser(item.description)}</label>
-                        <button className="btn btn-primary">Shop now</button>
+                        <Link to={"/collections"} className="btn btn-primary">
+                          Shop now
+                        </Link>
                       </div>
                     </Carousel.Caption>
                   )}
@@ -219,7 +223,14 @@ function Home() {
                         <Link to={"#"}>
                           <div className={cx("thumnal-container")}>
                             <div className={cx("image-product")}>
-                              <img src={item.image[0].url} alt="" />
+                              {item.image[0] ? (
+                                <img src={item.image[0].url} alt="" />
+                              ) : (
+                                <img
+                                  src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
+                                  alt=""
+                                />
+                              )}
                               <div className={cx("quick-view")}>
                                 <span>View</span>
                               </div>
@@ -247,9 +258,9 @@ function Home() {
         <div className={cx("title-attachment")}>
           <h1>SAVE IN STYLE</h1>
           <h2>WITH THE DISCOUNT CLOTHING!</h2>
-          <button>
+          <Link to={"/collections"} className="btn">
             <span>VIEW COLLECTIONS</span>
-          </button>
+          </Link>
         </div>
       </div>
       <div className={cx("special-products")}>
@@ -269,7 +280,14 @@ function Home() {
                         <Link to={"#"}>
                           <div className={cx("thumnal-container")}>
                             <div className={cx("image-product")}>
-                              <img src={item.image[0].url} alt="" />
+                              {item.image[0] ? (
+                                <img src={item.image[0].url} alt="" />
+                              ) : (
+                                <img
+                                  src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
+                                  alt=""
+                                />
+                              )}
                               <div className={cx("quick-view")}>
                                 <span>View</span>
                               </div>
@@ -305,9 +323,9 @@ function Home() {
         <div className={cx("title-attachment")}>
           <h1>BUY THE MOST STYLISH APPAREL</h1>
           <h2>FOR THE WHOLE FAMILY!</h2>
-          <button>
+          <Link to={"/collections"} className="btn">
             <span>VIEW COLLECTIONS</span>
-          </button>
+          </Link>
         </div>
       </div>
       <div className={cx("blogs")}>

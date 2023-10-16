@@ -1,5 +1,5 @@
 import producersApi from "../../../api/Admin/producersAPI";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -13,6 +13,7 @@ import styles from "./Producers.module.scss";
 const cx = className.bind(styles);
 function AdminProducers() {
   document.title = "Admin | Producers";
+  const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
   const [producers, setProducers] = useState([]);
   const [id, setId] = useState();
@@ -47,10 +48,10 @@ function AdminProducers() {
     });
   };
   const handlePage = (e) => {
-    const newPage = e.selected + 1;
-    setSearchParams({
-      page: newPage,
-    });
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
   const handleSelect = (e) => {
     const search = e.target.value;
@@ -179,7 +180,7 @@ function AdminProducers() {
                 onPageChange={handlePage}
                 pageCount={producers.totalPage || 1}
                 previousLabel="<"
-                renderOnZeroPageCount={null}
+                forcePage={searchParams.get("page") - 1}
               />
             </div>
           </div>

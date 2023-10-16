@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../../../assets/logo.png";
 import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import modalAPI from "../../../api/Admin/modalAPI";
 const cx = classNames.bind(styles);
 function Header() {
@@ -13,7 +12,9 @@ function Header() {
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
   const [language, setLanguage] = useState("ENG");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [cart, setCart] = useState(0);
+  const [nameProduct, setNameProduct] = useState();
   const [checkLogin, setCheckLogin] = useState(false);
   const [check, setCheck] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
@@ -26,8 +27,6 @@ function Header() {
     if (token) {
       setCheckLogin(true);
     }
-  }, []);
-  useEffect(() => {
     const params = "collections";
     const fetchAPI = async () => {
       const result = await modalAPI.getAll(params);
@@ -41,6 +40,10 @@ function Header() {
     setTimeout(() => {
       navigate(routesConfig.login);
     }, 100);
+  };
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    navigate(`/collections?name=${nameProduct}`);
   };
   return (
     <header className={cx("header-setion")}>
@@ -116,6 +119,9 @@ function Header() {
                               <Link to={routesConfig.Profile}>My Account</Link>
                             </li>
                             <li>
+                              <Link to={routesConfig.blogs}>Blogs</Link>
+                            </li>
+                            <li>
                               <Link to={"#"}>Contact</Link>
                             </li>
                             <li>
@@ -139,8 +145,9 @@ function Header() {
                             name="search"
                             id="search"
                             placeholder="Enter the product name"
+                            onChange={(e) => setNameProduct(e.target.value)}
                           />
-                          <Link to={"#"}>
+                          <Link to={"#"} onClick={handleSearch}>
                             <i className="fa fa-search"></i>
                           </Link>
                         </div>
@@ -174,10 +181,10 @@ function Header() {
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <Link to={routesConfig.home}>Home</Link>
               </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+              <div className="col-lg-2 col-md-2 col-sm-3 col-2">
                 <ul className={cx("collections")}>
                   <li>
-                    <Link to={"#"}>Collection</Link>
+                    <Link to={"/collections"}>Collection</Link>
                     <ul className={cx("collection")}>
                       {data
                         ? data.map((item, index) => (
@@ -185,7 +192,7 @@ function Header() {
                               key={index}
                               to={`/collections/${item.collections}`}
                             >
-                              <li>{item.collections}</li>
+                              <li key={index}>{item.collections}</li>
                             </Link>
                           ))
                         : null}
@@ -193,16 +200,16 @@ function Header() {
                   </li>
                 </ul>
               </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <ul className={cx("categories")}>
-                  <Link>
-                    <li>Category</li>
+              <div className="col-lg-2 col-md-2 col-sm-1 col-2">
+                <ul className={cx("new-product")}>
+                  <Link to={"/collections/new-products"}>
+                    <li>New</li>
                   </Link>
                   <ul className={cx("category")}>
                     {data
                       ? data.map((item) =>
                           item.categories.map((i, index) => (
-                            <Link to={"#"} key={index}>
+                            <Link to={`/collections/${i.category}`} key={index}>
                               <li>{i.category}</li>
                             </Link>
                           ))
@@ -212,13 +219,13 @@ function Header() {
                 </ul>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"#"}>Sale</Link>
+                <Link to={"/collections/sale"}>Sale</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.blogs}>Blog</Link>
+                <Link to={"#"}>Delivery</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.blogs}>Delivery</Link>
+                <Link to={"#"}>About Us</Link>
               </div>
             </div>
           </div>
@@ -250,7 +257,7 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to={""}>
+              <Link to={"/collections/sale"}>
                 <i className="fa fa-tag"> Sale</i>
               </Link>
             </li>
@@ -324,13 +331,14 @@ function Header() {
             <div className={cx(searchMobile ? "show-search" : "hiden-search")}>
               <input
                 type="search"
-                name=""
-                id=""
+                name="search"
+                id="search"
                 placeholder="Enter the product name"
+                onChange={(e) => setNameProduct(e.target.value)}
               />
-              <button>
+              <Link onClick={handleSearch}>
                 <i className="fa fa-search"></i>
-              </button>
+              </Link>
             </div>
           </div>
           <div className={cx("cart-mobile")}>
@@ -343,7 +351,9 @@ function Header() {
         </div>
         <div className={cx("logo-mobile")}>
           <div className="container">
-            <img src={logo} alt="" />
+            <Link to={routesConfig.home}>
+              <img src={logo} alt="" />
+            </Link>
           </div>
         </div>
         <div className={cx("menu-collections")}>
@@ -351,7 +361,7 @@ function Header() {
             <ul className={cx("collection-mobile")}>
               <li>
                 <Link
-                  to={"#"}
+                  to={"/collections"}
                   onClick={(e) => {
                     setShowCollection(!showCollection);
                   }}
@@ -366,7 +376,10 @@ function Header() {
                 <ul className={cx(showCollection ? "show-lv2" : "hiden-lv2")}>
                   {data
                     ? data.map((item, index) => (
-                        <Link key={index} to={"#"}>
+                        <Link
+                          key={index}
+                          to={`/collections/${item.collections}`}
+                        >
                           <li>{item.collections}</li>
                         </Link>
                       ))

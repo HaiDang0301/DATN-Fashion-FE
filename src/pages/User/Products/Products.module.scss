@@ -1,0 +1,253 @@
+.wrapper {
+  height: max-content;
+  margin-top: 30px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.menu-left {
+  h4 {
+    color: #070707;
+    font-weight: bold;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    position: relative;
+    display: block;
+    font-size: 14px;
+    line-height: 21px;
+  }
+  ul {
+    padding: 0px;
+    margin: 0px;
+  }
+  li {
+    color: #8a8a8f;
+    list-style-type: none;
+    font-size: 14px;
+  }
+}
+.manufacturer {
+  margin-top: 15px;
+}
+.collections {
+  margin-top: 15px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.category {
+  a {
+    color: #8a8a8f;
+    font-size: 14px;
+  }
+}
+.color {
+  margin-top: 20px;
+  label {
+    border-radius: 100%;
+    height: 20px;
+    padding: 0;
+    min-width: 20px !important;
+  }
+  span {
+    font-size: 0;
+  }
+}
+.color-name {
+  margin-top: 10px;
+  display: flex;
+  label {
+    margin-left: 10%;
+  }
+}
+.sizes {
+  a {
+    text-align: center;
+    width: 50px;
+    text-decoration: none;
+    border: 1px solid black;
+    color: #333333;
+  }
+}
+.process {
+  margin-top: 20px;
+  height: 5px;
+  background-color: #ccc;
+}
+.toolbar {
+  position: relative;
+  top: -5px;
+  input {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    pointer-events: none;
+    background: none;
+    appearance: none;
+  }
+}
+input[type="range"]::-webkit-slider-thumb {
+  height: 17px;
+  width: 17px;
+  background: #fff;
+  -webkit-appearance: none;
+  pointer-events: auto;
+  background: #0fc94a;
+  border-radius: 100%;
+}
+.filter {
+  margin-top: 50px;
+  button {
+    padding: 5px 15px;
+    border: none;
+    background-color: orangered;
+  }
+}
+.products {
+  a {
+    color: black;
+    text-decoration: none;
+  }
+}
+.title {
+  margin-top: 15px;
+  border-bottom: 1px solid black;
+}
+.quick-access {
+  margin-top: 30px;
+  padding-bottom: 10px;
+}
+.sorter {
+  select {
+    width: 100%;
+  }
+  button {
+    border: none;
+    background-color: black;
+    color: white;
+    padding: 1px 5px;
+  }
+}
+.product-item {
+  margin-top: 10px;
+}
+.thumnal-container {
+  position: relative;
+  overflow: hidden;
+}
+.image-product {
+  position: relative;
+  &:hover {
+    .quick-view {
+      display: block;
+      transform: translateY(-9%);
+      transition: all ease-in-out 1s;
+    }
+  }
+  img {
+    width: 95%;
+    height: 400px;
+  }
+}
+.quick-view {
+  background-color: #051829;
+  color: white;
+  position: absolute;
+  bottom: 0%;
+  width: 95%;
+  text-align: center;
+  transform: translateY(100%);
+  transition: all ease-in-out 1s;
+}
+.new-products {
+  overflow: hidden;
+}
+.special-products {
+  overflow: hidden;
+}
+.product-flag {
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  text-align: center;
+  background-color: palevioletred;
+  width: max-content;
+  color: white;
+  span {
+    padding: 0px 10px;
+  }
+}
+.product-flag-sale {
+  position: absolute;
+  top: 4%;
+  left: 4%;
+  text-align: center;
+  background-color: olive;
+  width: max-content;
+  color: white;
+  span {
+    padding: 0px 10px;
+  }
+}
+.sale {
+  position: absolute;
+  top: 4%;
+  right: 10%;
+  text-align: center;
+  background-color: #051829;
+  width: max-content;
+  color: white;
+  span {
+    padding: 0px 10px;
+  }
+}
+.name-product {
+  margin-top: 10px;
+  color: #333333;
+  font-size: 15px;
+  text-transform: capitalize;
+  text-decoration: none;
+  font-weight: 400;
+}
+.price-product {
+  display: flex;
+  font-size: 15px;
+  color: #ed5190;
+  font-weight: 600;
+}
+.old-price {
+  font-size: 15px;
+  text-decoration: line-through;
+  color: #333333;
+}
+.now-price {
+  margin-left: 5%;
+}
+.panigate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  ul {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+  }
+  a {
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .menu-left {
+    display: none;
+  }
+}

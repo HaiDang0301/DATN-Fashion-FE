@@ -118,16 +118,16 @@ function ModalContent(props) {
                       <tr>
                         <td>{index + 1}</td>
                         <td>
-                          <input
-                            type="text"
-                            name={props.title.toLowerCase()}
-                            id={props.title.toLowerCase()}
-                            className={cx("input")}
-                            value={
-                              item.collections || item.colors || item.sizes
-                            }
-                            onChange={(e) => {}}
-                          />
+                          {props.colors ? (
+                            <label
+                              htmlFor=""
+                              style={{ backgroundColor: `${item.colors}` }}
+                            >
+                              {item.colors}
+                            </label>
+                          ) : (
+                            <label>{item.collections || item.sizes}</label>
+                          )}
                         </td>
                         <td>
                           <div className={cx("action")}>
@@ -182,6 +182,14 @@ function ModalContent(props) {
                         />{" "}
                         <label htmlFor="checkShow">Show Home Page</label>
                       </>
+                    ) : null}
+                    {props.colors ? (
+                      <Link
+                        to={"https://www.computerhope.com/htmcolor.htm"}
+                        target="blank"
+                      >
+                        Access the link to view color code
+                      </Link>
                     ) : null}
                   </div>
                 </div>

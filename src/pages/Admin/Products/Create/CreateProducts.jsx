@@ -455,7 +455,13 @@ function CreateProducts() {
                               >
                                 <option value="default">Default</option>
                                 {colors.map((item, index) => (
-                                  <option value={item.colors} key={index}>
+                                  <option
+                                    value={item.colors}
+                                    key={index}
+                                    style={{
+                                      backgroundColor: `${item.colors}`,
+                                    }}
+                                  >
                                     {item.colors}
                                   </option>
                                 ))}
@@ -463,7 +469,10 @@ function CreateProducts() {
                             </div>
                           </div>
                           <div className="col-lg-2">
-                            <ModalContent title="Color"></ModalContent>
+                            <ModalContent
+                              title="Color"
+                              colors={true}
+                            ></ModalContent>
                           </div>
                         </div>
                       </div>

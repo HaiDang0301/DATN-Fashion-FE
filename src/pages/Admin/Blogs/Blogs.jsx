@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -14,6 +14,7 @@ const cx = className.bind(styles);
 function AdminBlogs() {
   document.title = "Admin | Blogs";
   const date = new Date();
+  const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
   const [blogs, setBlogs] = useState([]);
   const [id, setId] = useState("");
@@ -60,18 +61,10 @@ function AdminBlogs() {
     }
   };
   const handlePage = (e) => {
-    const newPage = e.selected + 1;
-    if (begin && final) {
-      setSearchParams({
-        begin: begin,
-        final: final,
-        page: newPage,
-      });
-    } else {
-      setSearchParams({
-        page: newPage,
-      });
-    }
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
   const handleWeek = () => {
     setBgweek(true);
@@ -312,7 +305,7 @@ function AdminBlogs() {
               onPageChange={handlePage}
               pageCount={blogs.totalPage || 1}
               previousLabel="<"
-              renderOnZeroPageCount={null}
+              forcePage={searchParams.get("page") - 1}
             />
           </div>
         </div>

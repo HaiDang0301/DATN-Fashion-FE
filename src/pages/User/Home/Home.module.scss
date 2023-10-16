@@ -12,7 +12,7 @@
   label {
     width: 100%;
   }
-  button {
+  a {
     background-color: #e7ab3c;
     text-decoration: none;
     color: white;
@@ -218,15 +218,13 @@
     font-size: 60px;
     line-height: 60px;
   }
-  button {
+  a {
+    padding: 10px;
+    border-radius: 0px;
     border: none;
-    height: 50px;
     color: white;
     text-decoration: none;
     background-color: rgb(121, 224, 190);
-  }
-  span {
-    padding: 35px 14px;
   }
 }
 .blogs-item {
@@ -244,7 +242,7 @@
 }
 @media only screen and (max-width: 998px) {
   .caption-left {
-    button {
+    a {
       font-size: 13px;
     }
     .title {
@@ -272,7 +270,7 @@
 }
 @media only screen and (max-width: 768px) {
   .caption-left {
-    button {
+    a {
       font-size: 13px;
     }
     .title {
@@ -285,7 +283,7 @@
     }
   }
   .caption-right {
-    button {
+    a {
       font-size: 13px;
     }
     .title {
@@ -300,10 +298,33 @@
   .collection-show {
     margin-bottom: 30px;
   }
+  .title-attachment {
+    overflow: hidden;
+    color: white;
+    top: 25%;
+    left: 10%;
+    position: absolute;
+    h1 {
+      font-size: 40px;
+      line-height: 40px;
+    }
+    h2 {
+      font-size: 40px;
+      line-height: 40px;
+    }
+    a {
+      padding: 10px;
+      border-radius: 0px;
+      border: none;
+      color: white;
+      text-decoration: none;
+      background-color: rgb(121, 224, 190);
+    }
+  }
 }
 @media only screen and (max-width: 576px) {
   .caption-left {
-    button {
+    a {
       font-size: 8px;
     }
     .title {
@@ -316,7 +337,7 @@
     }
   }
   .caption-right {
-    button {
+    a {
       font-size: 8px;
     }
     .title {
@@ -328,9 +349,33 @@
       }
     }
   }
+  .title-attachment {
+    overflow: hidden;
+    color: white;
+    top: 40%;
+    left: 10%;
+    position: absolute;
+    h1 {
+      font-size: 25px;
+      line-height: 25px;
+    }
+    h2 {
+      font-size: 25px;
+      line-height: 25px;
+    }
+    a {
+      font-size: 25px;
+      padding: 10px;
+      border-radius: 0px;
+      border: none;
+      color: white;
+      text-decoration: none;
+      background-color: rgb(121, 224, 190);
+    }
+  }
 }
 @media only screen and (max-width: 320px) {
-  button {
+  a {
     font-size: 5px;
   }
   .title {
@@ -350,6 +395,30 @@
     }
     a {
       font-size: 15px;
+    }
+  }
+  .title-attachment {
+    overflow: hidden;
+    color: white;
+    top: 35%;
+    left: 10%;
+    position: absolute;
+    h1 {
+      font-size: 15px;
+      line-height: 15px;
+    }
+    h2 {
+      font-size: 15px;
+      line-height: 15px;
+    }
+    a {
+      font-size: 15px;
+      padding: 15px;
+      border-radius: 0px;
+      border: none;
+      color: white;
+      text-decoration: none;
+      background-color: rgb(121, 224, 190);
     }
   }
 }
