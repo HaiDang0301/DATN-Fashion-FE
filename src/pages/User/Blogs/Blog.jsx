@@ -39,25 +39,10 @@ function Blogs() {
   const handlePage = (e) => {
     setAPI(!api);
     window.scrollTo({ top: 0, behavior: "smooth" });
-    const author = searchParams.get("author");
-    const hashtag = searchParams.get("hashtag");
-    const newPage = e.selected + 1;
-    if (author) {
-      setSearchParams({
-        author: author,
-        page: newPage,
-      });
-      if (hashtag) {
-        setSearchParams({
-          hashtag: hashtag,
-          page: newPage,
-        });
-      }
-    } else {
-      setSearchParams({
-        page: newPage,
-      });
-    }
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
   const handleHashtag = () => {
     setAPI(!api);

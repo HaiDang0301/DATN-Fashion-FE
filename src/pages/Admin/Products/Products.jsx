@@ -4,7 +4,7 @@ import Table from "react-bootstrap/Table";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { ToastContainer, toast } from "react-toastify";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import routesConfig from "../../../config/routes";
 import className from "classnames/bind";
@@ -16,6 +16,7 @@ import producersApi from "../../../api/Admin/producersAPI";
 const cx = className.bind(styles);
 function AdminProducts() {
   document.title = "Admin | Products";
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [reload, setReload] = useState(false);
   const [name, setName] = useState("");
@@ -155,35 +156,10 @@ function AdminProducts() {
     });
   };
   const handlePage = (e) => {
-    const newPage = e.selected + 1;
-    const collection = searchParams.get("collection");
-    const producer = searchParams.get("producer");
-    const price = searchParams.get("price");
-    if (searchParams) {
-      if (collection) {
-        setSearchParams({
-          collection: collection,
-          page: newPage,
-        });
-      }
-      if (producer) {
-        setSearchParams({
-          producer: producer,
-          page: newPage,
-        });
-      }
-      if (price) {
-        setSearchParams({
-          price: price,
-          page: newPage,
-        });
-      }
-    }
-    if (!collection && !producer && !price) {
-      setSearchParams({
-        page: newPage,
-      });
-    }
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
   const handleDelete = async () => {
     const destroy = await productsAPI

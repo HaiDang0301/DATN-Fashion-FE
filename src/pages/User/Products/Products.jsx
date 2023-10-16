@@ -1,4 +1,9 @@
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Parser from "html-react-parser";
 import col from "../../../assets/col.jpg";
@@ -12,20 +17,10 @@ import producersApi from "../../../api/Admin/producersAPI";
 import productsAPI from "../../../api/User/productsAPI";
 const cx = classNames.bind(styles);
 function Products() {
+  document.title = "Collections";
   const type = useParams().type;
   const category = useParams().category;
   const [searchParams, setSearchParams] = useSearchParams();
-  let query = searchParams;
-  const forcePage = Math.ceil(searchParams.get("page") - 1);
-  console.log(query.min);
-  let params = "";
-  if (type && category) {
-    params = `${type} + /${category}`;
-  }
-  if (type) {
-    params = `${type}`;
-  }
-  document.title = "Collections";
   const [grids, setGrids] = useState(false);
   const [products, setProducts] = useState([]);
   const [collections, setCollections] = useState([]);
@@ -35,6 +30,16 @@ function Products() {
   const [sort, setSort] = useState();
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(500000);
+  const [checked, setChecked] = useState([]);
+  const navigate = useNavigate();
+  let query = searchParams;
+  let params = "";
+  if (type && category) {
+    params = `${type} + /${category}`;
+  }
+  if (type) {
+    params = `${type}`;
+  }
   useEffect(() => {
     window.scrollTo({ top: 200, behavior: "smooth" });
     const fetchProducts = async () => {
@@ -54,58 +59,17 @@ function Products() {
     setProducers(result.data);
   };
   const handlePage = async (e) => {
-    const newPage = e.selected + 1;
-    setSearchParams({
-      page: newPage,
-    });
-    // switch (limit) {
-    //   case limit:
-    //     if (limit === 6) {
-    //       setSearchParams({
-    //         page: newPage,
-    //       });
-    //     } else {
-    //       setSearchParams({
-    //         limit: limit,
-    //         page: newPage,
-    //       });
-    //     }
-    //     break;
-    // }
-    // switch (sort) {
-    //   case sort != undefined:
-    //     setSearchParams({
-    //       sort: sort,
-    //       page: newPage,
-    //     });
-    //     break;
-    //   case !sort:
-    //     setSearchParams({
-    //       page: newPage,
-    //     });
-    //     break;
-    // }
-    // switch (producer) {
-    //   case producer !== "undefined":
-    //     console.log("123");
-    //     break;
-    //   case producer === "undefined":
-    //     setSearchParams({
-    //       page: newPage,
-    //     });
-    //     break;
-    // }
-    // if (min && max) {
-    //   setSearchParams({
-    //     min: min,
-    //     max: max,
-    //     page: newPage,
-    //   });
-    // } else {
-    //   setSearchParams({ page: newPage });
-    // }
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
-  const handleProducer = (e) => {
+  const handleProducer = (e, value) => {
+    if (checked.includes[value]) {
+      setChecked(checked.filter((item) => item !== value));
+    } else {
+      setChecked([value]);
+    }
     setProducer(e.target.value);
     const producer = e.target.value;
     setSearchParams({
@@ -113,6 +77,7 @@ function Products() {
     });
   };
   const handleFilter = (e) => {
+    setChecked([]);
     const begin = min;
     const final = max;
     setSearchParams({
@@ -183,8 +148,9 @@ function Products() {
                                 type="checkbox"
                                 name="producer"
                                 id="producer"
+                                checked={checked.includes(item.name)}
                                 value={item.name}
-                                onChange={handleProducer}
+                                onChange={(e) => handleProducer(e, item.name)}
                               />
                               {item.name}
                             </li>

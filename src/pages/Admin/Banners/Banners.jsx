@@ -1,6 +1,6 @@
 import ReactPaginate from "react-paginate";
 import Parser from "html-react-parser";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -14,6 +14,7 @@ import bannerApi from "../../../api/Admin/bannerAPI";
 const cx = className.bind(styles);
 function AdminBanners() {
   document.title = "Admin | Banners";
+  const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
   const [banners, setBanners] = useState([]);
   const [id, setId] = useState();
@@ -47,10 +48,10 @@ function AdminBanners() {
     });
   };
   const handlePage = (e) => {
-    const newPage = e.selected + 1;
-    setSearchParams({
-      page: newPage,
-    });
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
   };
   if (!banners) return null;
   return (

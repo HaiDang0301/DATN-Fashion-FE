@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../../../assets/logo.png";
 import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import modalAPI from "../../../api/Admin/modalAPI";
 const cx = classNames.bind(styles);
 function Header() {
@@ -13,7 +12,9 @@ function Header() {
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
   const [language, setLanguage] = useState("ENG");
+  const [searchParams, setSearchParams] = useSearchParams();
   const [cart, setCart] = useState(0);
+  const [nameProduct, setNameProduct] = useState();
   const [checkLogin, setCheckLogin] = useState(false);
   const [check, setCheck] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
@@ -26,8 +27,6 @@ function Header() {
     if (token) {
       setCheckLogin(true);
     }
-  }, []);
-  useEffect(() => {
     const params = "collections";
     const fetchAPI = async () => {
       const result = await modalAPI.getAll(params);
@@ -41,6 +40,10 @@ function Header() {
     setTimeout(() => {
       navigate(routesConfig.login);
     }, 100);
+  };
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    navigate(`/collections?name=${nameProduct}`);
   };
   return (
     <header className={cx("header-setion")}>
@@ -142,8 +145,9 @@ function Header() {
                             name="search"
                             id="search"
                             placeholder="Enter the product name"
+                            onChange={(e) => setNameProduct(e.target.value)}
                           />
-                          <Link to={"#"}>
+                          <Link to={"#"} onClick={handleSearch}>
                             <i className="fa fa-search"></i>
                           </Link>
                         </div>
@@ -330,10 +334,11 @@ function Header() {
                 name="search"
                 id="search"
                 placeholder="Enter the product name"
+                onChange={(e) => setNameProduct(e.target.value)}
               />
-              <button>
+              <Link onClick={handleSearch}>
                 <i className="fa fa-search"></i>
-              </button>
+              </Link>
             </div>
           </div>
           <div className={cx("cart-mobile")}>
