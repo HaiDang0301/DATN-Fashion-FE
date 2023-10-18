@@ -26,7 +26,7 @@ function Products() {
   const [collections, setCollections] = useState([]);
   const [producers, setProducers] = useState([]);
   const [producer, setProducer] = useState();
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(8);
   const [sort, setSort] = useState();
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(500000);
@@ -94,7 +94,7 @@ function Products() {
     });
   };
   const handleSort = (e) => {
-    setLimit(6);
+    setLimit(8);
     setSort(e.target.value);
     const bySort = e.target.value;
     setSearchParams({
@@ -238,7 +238,7 @@ function Products() {
                                 value={limit}
                                 onChange={handleLimit}
                               >
-                                <option value="6">6</option>
+                                <option value="8">8</option>
                                 <option value="12">12</option>
                                 <option value="24">24</option>
                               </select>
@@ -368,7 +368,7 @@ function Products() {
                       {products.products
                         ? products.products.map((item, index) => (
                             <div
-                              className="col-lg-4 col-md-6 col-sm-6 col-6"
+                              className="col-lg-3 col-md-6 col-sm-6 col-6"
                               key={index}
                             >
                               <div className={cx("product-item")}>
