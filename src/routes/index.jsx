@@ -21,6 +21,7 @@ import AdminBanners from "../pages/Admin/Banners/Banners";
 import CreateBanners from "../pages/Admin/Banners/Create/CreateBanners";
 import UpdateBanners from "../pages/Admin/Banners/Update/Update";
 import Products from "../pages/User/Products/Products";
+import ProductDetail from "../pages/User/ProductDetail/ProductDetail";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -61,6 +62,10 @@ const publicRoutes = [
   {
     path: routesConfig.Products,
     component: Products,
+  },
+  {
+    path: routesConfig.ProductDetail,
+    component: ProductDetail,
   },
 ];
 const privateRoutes = [

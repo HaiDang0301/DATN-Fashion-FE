@@ -50,7 +50,6 @@ function Products() {
     fetchCollection();
     fetchProducer();
   }, [params, query, category]);
-  console.log(params);
   const fetchCollection = async () => {
     const result = await modalAPI.getAll("collections");
     setCollections(result.data);
@@ -293,7 +292,13 @@ function Products() {
                           <div className="row" key={index}>
                             <div className="col-lg-4 col-md-6 col-sm-6 col-6">
                               <div className={cx("product-item")}>
-                                <Link to={"#"}>
+                                <Link
+                                  to={
+                                    params
+                                      ? `/collections/${params}/products/${item.slug}`
+                                      : `/collections/products/${item.slug}`
+                                  }
+                                >
                                   <div className={cx("thumnal-container")}>
                                     <div className={cx("image-product")}>
                                       {item.image[0] ? (
@@ -367,7 +372,13 @@ function Products() {
                               key={index}
                             >
                               <div className={cx("product-item")}>
-                                <Link to={"#"}>
+                                <Link
+                                  to={
+                                    params
+                                      ? `/collections/${params}/products/${item.slug}`
+                                      : `/collections/products/${item.slug}`
+                                  }
+                                >
                                   <div className={cx("thumnal-container")}>
                                     <div className={cx("image-product")}>
                                       {item.image[0] ? (

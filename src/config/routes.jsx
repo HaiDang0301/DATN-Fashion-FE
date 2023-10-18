@@ -9,6 +9,7 @@ const routesConfig = {
   blogDetail: "/blogs/:slug",
   Profile: "/user/profile",
   Products: "/collections/:type?/:category?",
+  ProductDetail: "/collections/:type?/:category?/products/:slug",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",
