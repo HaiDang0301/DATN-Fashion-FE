@@ -412,7 +412,7 @@ function Products() {
                                   <div className={cx("loading-information")}>
                                     <Skeleton
                                       count={2}
-                                      width={250}
+                                      width={180}
                                       height={20}
                                     ></Skeleton>
                                   </div>

@@ -35,7 +35,38 @@ function AdminProducts() {
         setProducts(res.data);
       });
     };
+    const fetchCollections = async () => {
+      const params = "collections";
+      await modalAPI
+        .getAll(params)
+        .then((res) => {
+          setCollections(res.data);
+        })
+        .catch((err) => {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        });
+    };
+    const fetchProducer = async () => {
+      await producersApi
+        .getAll()
+        .then((res) => {
+          setProducer(res.data);
+        })
+        .catch((err) => {
+          toast.error("Connect Server False", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        });
+    };
     fetchAPI();
+    fetchCollections();
+    fetchProducer();
   }, [params, show, reload]);
   const handleImportExcel = async () => {
     if (!fileExcel) {
@@ -101,41 +132,6 @@ function AdminProducts() {
     setSearchParams({
       name: name,
     });
-  };
-  const handleCollections = async () => {
-    const params = "collections";
-    const fetchAPI = async () => {
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setCollections(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
-        });
-    };
-    fetchAPI();
-  };
-  const handleProducer = async () => {
-    const fetchAPI = async () => {
-      await producersApi
-        .getAll()
-        .then((res) => {
-          setProducer(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
-        });
-    };
-    fetchAPI();
   };
   const handleChangeCollection = (e) => {
     const value = e.target.value;
@@ -323,8 +319,7 @@ function AdminProducts() {
                         <select
                           name=""
                           id=""
-                          onChange={handleChangeCollection}
-                          onClick={handleCollections}
+                          onChange={(e) => handleChangeCollection(e)}
                         >
                           <option value="">Default</option>
                           {collections
@@ -349,10 +344,9 @@ function AdminProducts() {
                     <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
                         <select
-                          name=""
-                          id=""
-                          onClick={handleProducer}
-                          onChange={handleChangeProducer}
+                          name="producer"
+                          id="producer"
+                          onChange={(e) => handleChangeProducer(e)}
                         >
                           <option value="">Default</option>
                           {producer.producers

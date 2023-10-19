@@ -53,8 +53,10 @@
   input {
     width: 70%;
     height: 36px;
+    padding: 0px 5px;
   }
   select {
+    padding: 0px 5px;
     width: 70%;
     height: 36px;
   }
@@ -75,10 +77,12 @@
     input {
       width: 100%;
       height: 36px;
+      padding: 0px 5px;
     }
     select {
       width: 100%;
       height: 36px;
+      padding: 0px 5px;
     }
     border-right: none;
   }

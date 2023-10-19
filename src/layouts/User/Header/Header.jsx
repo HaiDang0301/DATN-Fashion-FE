@@ -121,13 +121,19 @@ function Header() {
                         <div className={cx("quick-access")}>
                           <ul>
                             <li>
-                              <Link to={routesConfig.Profile}>My Account</Link>
+                              <Link
+                                to={
+                                  token
+                                    ? routesConfig.Profile
+                                    : routesConfig.login
+                                }
+                              >
+                                My Account
+                              </Link>
                             </li>
                             {decode.role === "admin" ? (
                               <li>
-                                <Link to={routesConfig.AdminHome}>
-                                  Admin Home
-                                </Link>
+                                <Link to={routesConfig.AdminHome}>Admin</Link>
                               </li>
                             ) : null}
                             {decode.role === "client" ? (

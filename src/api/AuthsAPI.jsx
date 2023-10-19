@@ -1,6 +1,10 @@
 import axiosConfig from "./Axiosconfig";
 
 const AuthsAPI = {
+  profile() {
+    const url = "/api/auth/profile";
+    return axiosConfig.get(url);
+  },
   register(data) {
     const url = "/api/auth/register";
     return axiosConfig.post(url, data);
