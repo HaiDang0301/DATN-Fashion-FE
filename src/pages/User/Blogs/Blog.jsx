@@ -1,5 +1,5 @@
 import Card from "react-bootstrap/Card";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import blogAPI from "../../../api/User/blogsAPI";
@@ -9,6 +9,7 @@ import styles from "./Blog.module.scss";
 const cx = className.bind(styles);
 function Blogs() {
   document.title = "Blogs";
+  const navigate = useNavigate();
   const year = new Date();
   const [api, setAPI] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();

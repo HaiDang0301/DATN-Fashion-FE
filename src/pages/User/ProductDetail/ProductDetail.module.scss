@@ -1,0 +1,293 @@
+.wrapper {
+  width: 100%;
+  height: max-content;
+  margin-bottom: 50px;
+}
+.heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid black;
+}
+.title-heading {
+  a {
+    color: black;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  text-transform: uppercase;
+}
+.product {
+  margin-top: 50px;
+}
+.thumnail {
+  img {
+    width: 100%;
+  }
+}
+.list-thumnail-image {
+  height: 880px;
+  overflow: hidden;
+  overflow-y: scroll;
+  img {
+    margin-bottom: 10px;
+  }
+}
+.image {
+  img {
+    width: 100%;
+    height: 880px;
+    object-fit: cover;
+  }
+}
+.thumnail-mobile {
+  margin-top: 10px;
+  display: none;
+  img {
+    width: 95%;
+  }
+}
+.more-information {
+  font-size: 20px;
+}
+.name-product {
+  font-size: 25px;
+  line-height: 27px;
+  text-transform: uppercase;
+  color: black;
+  margin-bottom: 5px;
+  padding-right: 50px;
+}
+.producer {
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 21px;
+  color: #070707;
+  a {
+    color: #070707;
+    text-decoration: none;
+  }
+}
+.product-code {
+  display: inline-block;
+  width: 100%;
+  font-size: 14px;
+  line-height: 21px;
+  color: #070707;
+  a {
+    color: #070707;
+    text-decoration: none;
+  }
+}
+.price {
+  display: flex;
+  color: #070707;
+  font-size: 24px;
+  line-height: 54px;
+}
+.old-price {
+  position: relative;
+  margin-right: 5%;
+  color: #ccc;
+  label {
+    text-decoration: line-through;
+  }
+}
+.now-price {
+  position: relative;
+}
+.size {
+  margin-bottom: 5px;
+}
+.btn-size {
+  button {
+    font-size: 19px;
+    margin-bottom: 5px;
+    border: 1px solid #070707;
+    background-color: white;
+    padding: 5px 5px;
+  }
+}
+.title {
+  margin-top: 5px;
+}
+.color {
+  label {
+    border: 1px solid black;
+    height: 35px;
+    width: 35px;
+    border-radius: 100%;
+    font-size: 0;
+  }
+  margin-bottom: 5px;
+}
+.minus {
+  i {
+    font-size: 10px;
+  }
+  button {
+    width: 100%;
+    &:active {
+      background-color: red;
+    }
+  }
+}
+.plus {
+  i {
+    font-size: 10px;
+  }
+  button {
+    width: 100%;
+    &:active {
+      background-color: greenyellow;
+    }
+  }
+}
+.input-quantity {
+  input {
+    width: 100%;
+    text-align: center;
+  }
+}
+.add-to-cart {
+  margin: 10px 0px;
+  button {
+    border: none;
+    background-color: #070707;
+    width: 100%;
+    color: #ccc;
+    padding: 5px 0px;
+  }
+}
+.description {
+  margin-top: 5px;
+}
+.similar-product {
+  margin-top: 20px;
+}
+.slider {
+  margin-top: 30px;
+}
+.image-smilar {
+  position: relative;
+  overflow: hidden;
+  img {
+    width: 95%;
+  }
+  a {
+    text-decoration: none;
+  }
+  &:hover {
+    .quick-view {
+      transform: translateY(-100%);
+      transition: all ease-in-out 1s;
+    }
+  }
+}
+.quick-view {
+  text-align: center;
+  color: white;
+  background-color: #070707;
+  width: 95%;
+  position: absolute;
+  transform: translateY(100%);
+}
+@media only screen and (max-width: 1400px) {
+  .list-thumnail-image {
+    height: 770px;
+  }
+  .image {
+    img {
+      height: 760px;
+    }
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .list-thumnail-image {
+    height: 640px;
+  }
+  .image {
+    img {
+      height: 630px;
+      object-fit: cover;
+    }
+  }
+  .more-information {
+    font-size: 17px;
+  }
+  .btn-size {
+    button {
+      font-size: 14px;
+    }
+  }
+}
+@media only screen and (max-width: 992px) {
+  .list-thumnail-image {
+    height: 550px;
+  }
+  .image {
+    img {
+      height: 550px;
+      object-fit: cover;
+    }
+  }
+  .more-information {
+    font-size: 14px;
+  }
+  .name-product {
+    font-size: 15px;
+  }
+  .btn-size {
+    button {
+      font-size: 11px;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .list-thumnail-image {
+    display: none;
+  }
+  .thumnail-mobile {
+    display: block;
+  }
+  .image {
+    img {
+      height: 450px;
+      object-fit: cover;
+    }
+  }
+  .more-information {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 576px) {
+  .list-thumnail-image {
+    display: none;
+  }
+  .thumnail-mobile {
+    display: block;
+  }
+  .image {
+    img {
+      height: 770px;
+      object-fit: cover;
+    }
+  }
+  .more-information {
+    font-size: 13px;
+  }
+  .price {
+    font-size: 15px;
+  }
+  .btn-size {
+    font-size: 11px;
+  }
+  .similar-product {
+    h4 {
+      font-size: 15px;
+    }
+  }
+}

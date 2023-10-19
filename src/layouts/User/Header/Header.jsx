@@ -119,10 +119,7 @@ function Header() {
                               <Link to={routesConfig.Profile}>My Account</Link>
                             </li>
                             <li>
-                              <Link to={routesConfig.blogs}>Blogs</Link>
-                            </li>
-                            <li>
-                              <Link to={"#"}>Contact</Link>
+                              <Link to={"#"}>Order</Link>
                             </li>
                             <li>
                               {checkLogin ? (
@@ -222,10 +219,10 @@ function Header() {
                 <Link to={"/collections/sale"}>Sale</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"#"}>Delivery</Link>
+                <Link to={routesConfig.blogs}>Blog</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"#"}>About Us</Link>
+                <Link to={"#"}>Contact</Link>
               </div>
             </div>
           </div>

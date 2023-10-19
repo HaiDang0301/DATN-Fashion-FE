@@ -26,10 +26,10 @@ function Products() {
   const [collections, setCollections] = useState([]);
   const [producers, setProducers] = useState([]);
   const [producer, setProducer] = useState();
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(8);
   const [sort, setSort] = useState();
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(500000);
+  const [max, setMax] = useState(500);
   const [checked, setChecked] = useState([]);
   const navigate = useNavigate();
   let query = searchParams;
@@ -50,7 +50,6 @@ function Products() {
     fetchCollection();
     fetchProducer();
   }, [params, query, category]);
-  console.log(params);
   const fetchCollection = async () => {
     const result = await modalAPI.getAll("collections");
     setCollections(result.data);
@@ -95,7 +94,7 @@ function Products() {
     });
   };
   const handleSort = (e) => {
-    setLimit(6);
+    setLimit(8);
     setSort(e.target.value);
     const bySort = e.target.value;
     setSearchParams({
@@ -162,7 +161,7 @@ function Products() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("price")}>
-                    <h4>Price ( VND )</h4>
+                    <h4>Price</h4>
                     <div className="show-price">
                       ${Number(min).toLocaleString()} - $
                       {Number(max).toLocaleString()}
@@ -176,7 +175,7 @@ function Products() {
                           id="min"
                           value={min}
                           min={0}
-                          max={500000}
+                          max={100}
                           onChange={(e) => setMin(e.target.value)}
                         />
                       </div>
@@ -186,8 +185,8 @@ function Products() {
                           name="max"
                           id="max"
                           value={max}
-                          min={500000}
-                          max={2000000}
+                          min={100}
+                          max={500}
                           onChange={(e) => setMax(e.target.value)}
                         />
                       </div>
@@ -209,7 +208,7 @@ function Products() {
                   <label htmlFor="">
                     <Link to={routesConfig.home}>HOME </Link>{" "}
                     <i className="fa fa-long-arrow-right"></i>{" "}
-                    <Link to={`/${type}`}>
+                    <Link to={type ? `/collections/${type}` : "/collections"}>
                       {type ? type.toLocaleUpperCase() : "COLLECTIONS"}
                     </Link>
                   </label>
@@ -239,7 +238,7 @@ function Products() {
                                 value={limit}
                                 onChange={handleLimit}
                               >
-                                <option value="6">6</option>
+                                <option value="8">8</option>
                                 <option value="12">12</option>
                                 <option value="24">24</option>
                               </select>
@@ -293,7 +292,13 @@ function Products() {
                           <div className="row" key={index}>
                             <div className="col-lg-4 col-md-6 col-sm-6 col-6">
                               <div className={cx("product-item")}>
-                                <Link to={"#"}>
+                                <Link
+                                  to={
+                                    params
+                                      ? `/collections/${params}/products/${item.slug}`
+                                      : `/collections/products/${item.slug}`
+                                  }
+                                >
                                   <div className={cx("thumnal-container")}>
                                     <div className={cx("image-product")}>
                                       {item.image[0] ? (
@@ -363,11 +368,17 @@ function Products() {
                       {products.products
                         ? products.products.map((item, index) => (
                             <div
-                              className="col-lg-4 col-md-6 col-sm-6 col-6"
+                              className="col-lg-3 col-md-6 col-sm-6 col-6"
                               key={index}
                             >
                               <div className={cx("product-item")}>
-                                <Link to={"#"}>
+                                <Link
+                                  to={
+                                    params
+                                      ? `/collections/${params}/products/${item.slug}`
+                                      : `/collections/products/${item.slug}`
+                                  }
+                                >
                                   <div className={cx("thumnal-container")}>
                                     <div className={cx("image-product")}>
                                       {item.image[0] ? (

@@ -63,7 +63,9 @@
   border-bottom: 1px solid #999b9c;
 }
 .logo {
-  margin-right: 5%;
+  img {
+    width: 100%;
+  }
 }
 .nav-ite {
   a {

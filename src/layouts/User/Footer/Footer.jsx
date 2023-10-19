@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import styles from "./Footer.module.scss";
 const cx = classNames.bind(styles);
 import { Link } from "react-router-dom";
-import footerlogo from "../../../assets/footerlogo.png";
+import footerlogo from "../../../assets/logo.png";
 function Footer() {
   return (
     <footer className={cx("wrapper")}>
@@ -56,42 +56,66 @@ function Footer() {
       <div className={cx("inner-footer")}>
         <div className={cx("main")}>
           <div className={cx("logo")}>
-            <Link to={"/"}>
-              <img src={footerlogo} alt="" />
-            </Link>
-          </div>
-          <div className={cx("nav-ite")}>
-            <Link to={"/"}>Men</Link>
-            <Link to={"/"}>Clothing Fashion</Link>
-            <Link to={"/"}>Winter</Link>
-            <Link to={"/"}>Summer</Link>
-            <Link to={"/"}>Collection 2023</Link>
-          </div>
-          <div className={cx("nav-item")}>
-            <Link to={"/"}>Women</Link>
-            <Link to={"/"}>Clothing Fashion</Link>
-            <Link to={"/"}>Winter</Link>
-            <Link to={"/"}>Summer</Link>
-            <Link to={"/"}>Collection 2023</Link>
-          </div>
-          <div className={cx("nav-item")}>
-            <Link to={"/"}>Baby Collection</Link>
-            <Link to={"/"}>Clothing Fashion</Link>
-            <Link to={"/"}>Winter</Link>
-            <Link to={"/"}>Summer</Link>
-            <Link to={"/"}>Collection 2023</Link>
-          </div>
-          <div className={cx("nav-item")}>
-            <Link to={"/"}>Contact</Link>
-            <Link to={"/"}>Support</Link>
-            <Link to={"/"}>FAQ</Link>
-            <Link to={"/"}>About</Link>
-            <Link to={"/"}>Delivery</Link>
+            <div className="row">
+              <div className="col-lg-2">
+                <Link to={"/"}>
+                  <img src={footerlogo} alt="" />
+                </Link>
+              </div>
+              <div className="col-lg-2">
+                <div className={cx("nav-ite")}>
+                  <Link to={"/"}>Men</Link>
+                  <Link to={"/"}>Clothing Fashion</Link>
+                  <Link to={"/"}>Winter</Link>
+                  <Link to={"/"}>Summer</Link>
+                  <Link to={"/"}>Collection 2023</Link>
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className={cx("nav-ite")}>
+                  <Link to={"/"}>Men</Link>
+                  <Link to={"/"}>Clothing Fashion</Link>
+                  <Link to={"/"}>Winter</Link>
+                  <Link to={"/"}>Summer</Link>
+                  <Link to={"/"}>Collection 2023</Link>
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className={cx("nav-ite")}>
+                  <Link to={"/"}>Men</Link>
+                  <Link to={"/"}>Clothing Fashion</Link>
+                  <Link to={"/"}>Winter</Link>
+                  <Link to={"/"}>Summer</Link>
+                  <Link to={"/"}>Collection 2023</Link>
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className={cx("nav-ite")}>
+                  <Link to={"/"}>Men</Link>
+                  <Link to={"/"}>Clothing Fashion</Link>
+                  <Link to={"/"}>Winter</Link>
+                  <Link to={"/"}>Summer</Link>
+                  <Link to={"/"}>Collection 2023</Link>
+                </div>
+              </div>
+              <div className="col-lg-2">
+                <div className={cx("nav-item")}>
+                  <Link to={"/"}>Contact</Link>
+                  <Link to={"/"}>Support</Link>
+                  <Link to={"/"}>FAQ</Link>
+                  <Link to={"/"}>About</Link>
+                  <Link to={"/"}>Delivery</Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className={cx("bottom-ft")}>
-        <p>Đồ án tốt nghiệp © 2023 | Mẫu này được thực hiện bởi Hải Đăng</p>
+        <p>
+          Đồ án tốt nghiệp © 2023 | Website phục vụ học tập không nhằm mục đích
+          kinh doanh
+        </p>
       </div>
     </footer>
   );
