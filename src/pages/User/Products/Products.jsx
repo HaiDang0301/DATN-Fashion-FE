@@ -29,7 +29,7 @@ function Products() {
   const [limit, setLimit] = useState(8);
   const [sort, setSort] = useState();
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(500000);
+  const [max, setMax] = useState(500);
   const [checked, setChecked] = useState([]);
   const navigate = useNavigate();
   let query = searchParams;
@@ -161,7 +161,7 @@ function Products() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("price")}>
-                    <h4>Price ( VND )</h4>
+                    <h4>Price</h4>
                     <div className="show-price">
                       ${Number(min).toLocaleString()} - $
                       {Number(max).toLocaleString()}
@@ -175,7 +175,7 @@ function Products() {
                           id="min"
                           value={min}
                           min={0}
-                          max={500000}
+                          max={100}
                           onChange={(e) => setMin(e.target.value)}
                         />
                       </div>
@@ -185,8 +185,8 @@ function Products() {
                           name="max"
                           id="max"
                           value={max}
-                          min={500000}
-                          max={2000000}
+                          min={100}
+                          max={500}
                           onChange={(e) => setMax(e.target.value)}
                         />
                       </div>
@@ -208,7 +208,7 @@ function Products() {
                   <label htmlFor="">
                     <Link to={routesConfig.home}>HOME </Link>{" "}
                     <i className="fa fa-long-arrow-right"></i>{" "}
-                    <Link to={`/${type}`}>
+                    <Link to={type ? `/collections/${type}` : "/collections"}>
                       {type ? type.toLocaleUpperCase() : "COLLECTIONS"}
                     </Link>
                   </label>

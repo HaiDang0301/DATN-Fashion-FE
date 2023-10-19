@@ -85,6 +85,8 @@ function Home() {
           slidesToShow: 3,
           slidesToScroll: 2,
           initialSlide: 2,
+          nextArrow: false,
+          prevArrow: false,
         },
       },
       {
@@ -92,6 +94,8 @@ function Home() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          nextArrow: false,
+          prevArrow: false,
         },
       },
     ],
@@ -187,7 +191,7 @@ function Home() {
                     key={index}
                   >
                     <div className={cx("collection-show")}>
-                      <Link>
+                      <Link to={`/collections/${item.collections}`}>
                         <img src={item.image} alt="" />
                       </Link>
                       <div className={cx("text-collection")}>
@@ -220,7 +224,9 @@ function Home() {
                 {newProduct
                   ? newProduct.map((item, index) => (
                       <div className={cx("product-item")} key={index}>
-                        <Link to={"#"}>
+                        <Link
+                          to={`/collections/new-products/products/${item.slug}`}
+                        >
                           <div className={cx("thumnal-container")}>
                             <div className={cx("image-product")}>
                               {item.image[0] ? (
@@ -277,7 +283,7 @@ function Home() {
                 {specialProducts
                   ? specialProducts.map((item, index) => (
                       <div className={cx("product-item")} key={index}>
-                        <Link to={"#"}>
+                        <Link to={`/collections/sale/products/${item.slug}`}>
                           <div className={cx("thumnal-container")}>
                             <div className={cx("image-product")}>
                               {item.image[0] ? (
