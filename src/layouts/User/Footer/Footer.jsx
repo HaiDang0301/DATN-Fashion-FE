@@ -57,12 +57,12 @@ function Footer() {
         <div className={cx("main")}>
           <div className={cx("logo")}>
             <div className="row">
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <Link to={"/"}>
                   <img src={footerlogo} alt="" />
                 </Link>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <div className={cx("nav-ite")}>
                   <Link to={"/"}>Men</Link>
                   <Link to={"/"}>Clothing Fashion</Link>
@@ -71,7 +71,7 @@ function Footer() {
                   <Link to={"/"}>Collection 2023</Link>
                 </div>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <div className={cx("nav-ite")}>
                   <Link to={"/"}>Men</Link>
                   <Link to={"/"}>Clothing Fashion</Link>
@@ -80,7 +80,7 @@ function Footer() {
                   <Link to={"/"}>Collection 2023</Link>
                 </div>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <div className={cx("nav-ite")}>
                   <Link to={"/"}>Men</Link>
                   <Link to={"/"}>Clothing Fashion</Link>
@@ -89,7 +89,7 @@ function Footer() {
                   <Link to={"/"}>Collection 2023</Link>
                 </div>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <div className={cx("nav-ite")}>
                   <Link to={"/"}>Men</Link>
                   <Link to={"/"}>Clothing Fashion</Link>
@@ -98,7 +98,7 @@ function Footer() {
                   <Link to={"/"}>Collection 2023</Link>
                 </div>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <div className={cx("nav-item")}>
                   <Link to={"/"}>Contact</Link>
                   <Link to={"/"}>Support</Link>

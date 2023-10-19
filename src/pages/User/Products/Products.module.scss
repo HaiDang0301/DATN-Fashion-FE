@@ -147,6 +147,7 @@ input[type="range"]::-webkit-slider-thumb {
     }
   }
   img {
+    object-fit: cover;
     width: 95%;
     height: 400px;
   }
@@ -244,6 +245,19 @@ input[type="range"]::-webkit-slider-thumb {
     &:hover {
       background-color: #ccc;
     }
+  }
+}
+.isloading {
+  height: 350px;
+  margin-bottom: 50px;
+}
+.img-loading {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    object-fit: cover;
   }
 }
 @media only screen and (max-width: 576px) {
