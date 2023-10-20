@@ -5,6 +5,10 @@ const AuthsAPI = {
     const url = "/api/auth/profile";
     return axiosConfig.get(url);
   },
+  update(data) {
+    const url = "/api/auth/profile";
+    return axiosConfig.put(url, data);
+  },
   register(data) {
     const url = "/api/auth/register";
     return axiosConfig.post(url, data);

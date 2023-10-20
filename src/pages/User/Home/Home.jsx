@@ -1,4 +1,5 @@
 import classNames from "classnames/bind";
+import loading from "../../../assets/loading.gif";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import Parser from "html-react-parser";
@@ -17,6 +18,7 @@ function Home() {
   const [newProduct, setNewProduct] = useState([]);
   const [specialProducts, setSpecialProducts] = useState([]);
   const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetchBanner();
     fetchCollection();
@@ -25,6 +27,9 @@ function Home() {
     fetchBlogs();
   }, []);
   const fetchBanner = async () => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
     const result = await bannerApi.index();
     setBanner(result.data);
   };
@@ -137,45 +142,51 @@ function Home() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("banner")}>
-        <Carousel
-          data-bs-theme="dark"
-          indicators={false}
-          fade={true}
-          slide={true}
-        >
-          {banner.banners
-            ? banner.banners.map((item, index) => (
-                <Carousel.Item key={index}>
-                  <img
-                    className="d-block w-100"
-                    src={item.image}
-                    alt="First slide"
-                  />
-                  {index % 2 == 0 ? (
-                    <Carousel.Caption className={cx("caption-right")}>
-                      <div className={cx("title")}>
-                        <h1>{item.title}</h1>
-                        <label>{Parser(item.description)}</label>
-                        <Link to={"/collections"} className="btn btn-primary">
-                          Shop now
-                        </Link>
-                      </div>
-                    </Carousel.Caption>
-                  ) : (
-                    <Carousel.Caption className={cx("caption-left")}>
-                      <div className={cx("title")}>
-                        <h1>{item.title}</h1>
-                        <label>{Parser(item.description)}</label>
-                        <Link to={"/collections"} className="btn btn-primary">
-                          Shop now
-                        </Link>
-                      </div>
-                    </Carousel.Caption>
-                  )}
-                </Carousel.Item>
-              ))
-            : null}
-        </Carousel>
+        {isLoading ? (
+          <div className={cx("isLoading")}>
+            <img src={loading} alt="" />
+          </div>
+        ) : (
+          <Carousel
+            data-bs-theme="dark"
+            indicators={false}
+            fade={true}
+            slide={true}
+          >
+            {banner.banners
+              ? banner.banners.map((item, index) => (
+                  <Carousel.Item key={index}>
+                    <img
+                      className="d-block w-100"
+                      src={item.image}
+                      alt="First slide"
+                    />
+                    {index % 2 == 0 ? (
+                      <Carousel.Caption className={cx("caption-right")}>
+                        <div className={cx("title")}>
+                          <h1>{item.title}</h1>
+                          <label>{Parser(item.description)}</label>
+                          <Link to={"/collections"} className="btn btn-primary">
+                            Shop now
+                          </Link>
+                        </div>
+                      </Carousel.Caption>
+                    ) : (
+                      <Carousel.Caption className={cx("caption-left")}>
+                        <div className={cx("title")}>
+                          <h1>{item.title}</h1>
+                          <label>{Parser(item.description)}</label>
+                          <Link to={"/collections"} className="btn btn-primary">
+                            Shop now
+                          </Link>
+                        </div>
+                      </Carousel.Caption>
+                    )}
+                  </Carousel.Item>
+                ))
+              : null}
+          </Carousel>
+        )}
       </div>
       <div className={cx("row-cat")}>
         <div className="container">

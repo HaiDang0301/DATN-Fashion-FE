@@ -28,8 +28,9 @@ function CategoryContent(props) {
       setResults(result.data);
     };
     fetchAPI();
+    fetchCollection();
   }, [callAPI]);
-  const handleCollection = async () => {
+  const fetchCollection = async () => {
     await modalAPI
       .getAll(params)
       .then((res) => {
@@ -195,7 +196,6 @@ function CategoryContent(props) {
                         <select
                           className={cx("collection")}
                           id="category"
-                          onClick={handleCollection}
                           onChange={handleChangeCollection}
                         >
                           <option value="">Collection</option>

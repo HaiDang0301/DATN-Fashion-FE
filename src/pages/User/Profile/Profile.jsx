@@ -1,20 +1,22 @@
 import className from "classnames/bind";
 import styles from "./Profile.module.scss";
 import { useEffect, useRef, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import AuthsAPI from "../../../api/AuthsAPI";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import routesConfig from "../../../config/routes";
 const cx = className.bind(styles);
 function Profile() {
   document.title = "Profile";
+  const navigate = useNavigate();
   const inputFiles = useRef();
   const [image, setImage] = useState();
   const [user, setUser] = useState({
-    address: [],
-    cart: [],
-    createdAt: "",
-    email: "",
+    address: [{ city: "", district: "", ward: "", address_home: "" }],
+    phone: "",
     full_name: "",
-    password: "",
+    email: "",
   });
   const [cities, setCities] = useState([]);
   const [city, setCity] = useState();
@@ -24,9 +26,7 @@ function Profile() {
   const [wards, setWards] = useState([]);
   const [ward, setWard] = useState();
   const [disabledW, setDisableW] = useState(true);
-  const [name, setName] = useState();
   const [addresshome, setAddressHome] = useState();
-  const [phone, setPhone] = useState();
   const [password, setPassword] = useState();
   useEffect(() => {
     const fetchApi = async () => {
@@ -36,6 +36,7 @@ function Profile() {
     fetchApi();
     fetchCity();
   }, []);
+  console.log(user.address);
   const handleChooseFile = () => {
     inputFiles.current.click();
   };
@@ -83,9 +84,57 @@ function Profile() {
       setDisableW(true);
     }
   };
-  if (!user) return null;
+  const handleSubmit = async () => {
+    const data = new FormData();
+    data.append("image", image);
+    data.append("full_name", user.full_name);
+    data.append("phone", user.phone);
+    if (password) {
+      data.append("password", password);
+    }
+    if (city) {
+      data.append("city", city);
+      data.append("district", district);
+      data.append("ward", ward);
+      data.append("home", addresshome);
+    }
+
+    const update = await AuthsAPI.update(data)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Update Profile Success", {
+            position: "bottom-right",
+            autoClose: 2000,
+            theme: "light",
+          });
+          localStorage.removeItem("token");
+          sessionStorage.removeItem("token");
+          setTimeout(() => {
+            navigate(routesConfig.login);
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: 5000,
+          theme: "light",
+        });
+      });
+  };
+  console.log(
+    image,
+    user.full_name,
+    user.phone,
+    user.password,
+    city,
+    district,
+    ward,
+    addresshome
+  );
   return (
     <div className={cx("wrapper")}>
+      <ToastContainer></ToastContainer>
       <div className={cx("profile")}>
         <div className="container">
           <div className="row">
@@ -94,8 +143,8 @@ function Profile() {
                 <div className={cx("img-avatar")}>
                   {image ? (
                     <img src={URL.createObjectURL(image)} alt="" />
-                  ) : user ? (
-                    <img src={user.image} alt="" />
+                  ) : user.image ? (
+                    <img src={user.image[0].url} alt="" />
                   ) : null}
                   <div className={cx("choose-image")}>
                     <button onClick={handleChooseFile}>
@@ -131,7 +180,9 @@ function Profile() {
                             name="full_name"
                             id="full_name"
                             value={user.full_name}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) =>
+                              setUser({ ...user, full_name: e.target.value })
+                            }
                           />
                         </div>
                       </div>
@@ -160,7 +211,12 @@ function Profile() {
                             name="phone"
                             id="phone"
                             value={user.phone}
-                            onChange={(e) => setPhone(e.target.value)}
+                            onChange={(e) =>
+                              setUser({
+                                ...user,
+                                phone: e.target.value,
+                              })
+                            }
                           />
                         </div>
                       </div>
@@ -169,7 +225,12 @@ function Profile() {
                           <h5>Password</h5>
                         </div>
                         <div className="col-lg-12">
-                          <input type="text" name="password" id="password" />
+                          <input
+                            type="text"
+                            name="password"
+                            id="password"
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
                         </div>
                       </div>
                     </div>
@@ -265,7 +326,9 @@ function Profile() {
               </div>
               <div className="col-lg-12">
                 <div className={cx("save-information")}>
-                  <button className="btn btn-primary">Save</button>
+                  <button className="btn btn-primary" onClick={handleSubmit}>
+                    Save
+                  </button>
                 </div>
               </div>
             </div>

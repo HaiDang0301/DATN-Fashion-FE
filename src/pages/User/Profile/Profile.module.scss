@@ -22,8 +22,9 @@
   text-align: center;
   img {
     border-radius: 100%;
-    width: 180px;
-    height: 180px;
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
   }
 }
 .full-name {
