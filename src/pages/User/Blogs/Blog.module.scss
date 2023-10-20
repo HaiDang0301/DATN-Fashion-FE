@@ -75,7 +75,8 @@
   margin-top: 30px;
   overflow: hidden;
   img {
-    height: 300px;
+    object-fit: cover;
+    height: 340px;
     &:hover {
       transform: scale(1.1);
       transition: all 1s ease-in-out;

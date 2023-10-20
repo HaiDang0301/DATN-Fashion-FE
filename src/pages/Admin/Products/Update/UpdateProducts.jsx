@@ -14,7 +14,6 @@ const cx = className.bind(styles);
 function UpdateProducts() {
   document.title = "Admin | Update Products";
   const id = useParams().id;
-  const [check, setCheck] = useState(true);
   const [isLoading, setIsloading] = useState();
   const [producers, setProducers] = useState([]);
   const [collections, setCollections] = useState([]);
@@ -44,47 +43,42 @@ function UpdateProducts() {
       setBuffer(product.data.sizes);
     };
     fetchBlog();
+    fetchSizes();
+    fetchColors();
+    fetchProducer();
+    fetchCollection();
   }, []);
-  const handleProducer = () => {
-    const fetchAPI = async () => {
-      const params = "producers";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setProducers(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchProducer = async () => {
+    const params = "producers";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setProducers(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
+      });
   };
-  const handleCollection = () => {
-    setCheck(false);
-    const fetchAPI = async () => {
-      const params = "collections";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setCollections(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchCollection = async () => {
+    const params = "collections";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setCollections(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
-  };
-  const handleCategory = () => {
-    const params = `collections?collection=${products.collections}`;
-    const fetchAPI = async () => {
+      });
+    if (collections) {
+      const params = `collections?collection=${collections}`;
       await modalAPI
         .getAll(params)
         .then((res) => {
@@ -97,46 +91,37 @@ function UpdateProducts() {
             theme: "light",
           });
         });
-    };
-    fetchAPI();
+    }
   };
-  const handleColors = () => {
-    setCheck(false);
-    const fetchAPI = async () => {
-      const params = "colors";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setColors(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchColors = async () => {
+    const params = "colors";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setColors(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
+      });
   };
-  const handleSizes = () => {
-    setCheck(false);
-    const fetchAPI = async () => {
-      const params = "sizes";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setSizes(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchSizes = async () => {
+    const params = "sizes";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setSizes(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
+      });
   };
   function handleChooseFile(e) {
     setImg(e.target.files[0]);
@@ -326,7 +311,6 @@ function UpdateProducts() {
                               <select
                                 name="producer"
                                 id="producer"
-                                onClick={handleProducer}
                                 value={products.producer}
                                 onChange={(e) => {
                                   setProducts({
@@ -360,7 +344,6 @@ function UpdateProducts() {
                               <select
                                 name="collection"
                                 id="collection"
-                                onClick={handleCollection}
                                 value={products.collections}
                                 onChange={(e) => {
                                   setProducts({
@@ -399,8 +382,6 @@ function UpdateProducts() {
                               <select
                                 name="category"
                                 id="category"
-                                onClick={handleCategory}
-                                disabled={check}
                                 value={products.category}
                                 onChange={(e) => {
                                   setProducts({
@@ -439,7 +420,6 @@ function UpdateProducts() {
                               <select
                                 name="color"
                                 id="color"
-                                onClick={handleColors}
                                 value={products.color}
                                 onChange={(e) => {
                                   setProducts({
@@ -601,7 +581,6 @@ function UpdateProducts() {
                                     <select
                                       name="size"
                                       id="size"
-                                      onClick={handleSizes}
                                       onChange={(event) =>
                                         handleFormChange(index, event)
                                       }

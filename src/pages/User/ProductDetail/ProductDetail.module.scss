@@ -28,7 +28,7 @@
   }
 }
 .list-thumnail-image {
-  height: 880px;
+  height: 600px;
   overflow: hidden;
   overflow-y: scroll;
   img {
@@ -38,8 +38,8 @@
 .image {
   img {
     width: 100%;
-    height: 880px;
-    object-fit: cover;
+    height: 600px;
+    object-fit: contain;
   }
 }
 .thumnail-mobile {
@@ -50,7 +50,7 @@
   }
 }
 .more-information {
-  font-size: 20px;
+  font-size: 17px;
 }
 .name-product {
   font-size: 25px;
@@ -211,12 +211,12 @@
   }
   .image {
     img {
-      height: 630px;
+      height: 640px;
       object-fit: cover;
     }
   }
   .more-information {
-    font-size: 17px;
+    font-size: 15px;
   }
   .btn-size {
     button {

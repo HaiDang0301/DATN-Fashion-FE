@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import loading from "../../../assets/loading.gif";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames/bind";
@@ -14,6 +15,7 @@ function Login() {
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
   const [save, setSave] = useState(false);
+  const [isloading, setIsloading] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -25,42 +27,38 @@ function Login() {
     }),
   });
   const handleSubmit = async () => {
+    setIsloading(true);
     const data = {
       email: formik.values.email,
       password: formik.values.password,
     };
     const login = await AuthsAPI.login(data)
-      .then((res) => {
-        if (res.status === 200) {
-          if (res.data.others.role === "admin") {
-            toast.success("Loggin Succes", {
-              position: "bottom-right",
-              autoClose: 5000,
-              theme: "light",
-            });
-            setTimeout(() => {
-              navigate(routesConfig.AdminHome);
-            }, 3000);
-            if (save === true) {
-              localStorage.setItem("token", res.data.token);
-            } else {
-              sessionStorage.setItem("token", res.data.token);
-            }
-          } else {
-            toast.success("Loggin Succes", {
-              position: "bottom-right",
-              autoClose: 5000,
-              theme: "light",
-            });
-            setTimeout(() => {
-              navigate(routesConfig.home);
-            }, 3000);
-            if (save === true) {
-              localStorage.setItem("token", res.data.token);
-            } else {
-              sessionStorage.setItem("token", res.data.token);
-            }
-          }
+      .then(async (res) => {
+        if (save === true) {
+          const totken = await localStorage.setItem("token", res.data.token);
+        } else {
+          const token = await sessionStorage.setItem("token", res.data.token);
+        }
+        if (res.data.others.role === "admin") {
+          toast.success("Loggin Succes", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setIsloading(false);
+          setTimeout(() => {
+            navigate(routesConfig.AdminHome);
+          }, 2000);
+        } else {
+          toast.success("Loggin Succes", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setIsloading(false);
+          setTimeout(() => {
+            navigate(routesConfig.home);
+          }, 3000);
         }
       })
       .catch((errors) => {
@@ -71,6 +69,7 @@ function Login() {
             theme: "light",
           });
         }
+        setIsloading(false);
       });
   };
   useEffect(() => {
@@ -153,7 +152,11 @@ function Login() {
                   </p>
                 </div>
                 <div className="col-lg-4">
-                  <button onClick={handleSubmit}>Login</button>
+                  {isloading ? (
+                    <img src={loading} alt="" />
+                  ) : (
+                    <button onClick={handleSubmit}>Login</button>
+                  )}
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import Parser from "html-react-parser";
 import classNames from "classnames/bind";
 import styles from "./ProductDetail.module.scss";
@@ -18,6 +19,7 @@ function ProductDetail() {
   const [image, setImage] = useState();
   const [quantity, setQuantity] = useState(1);
   const [similar, setSmilar] = useState([]);
+  const [disable, setDisable] = useState(false);
   let params = "";
   if (type && category) {
     params = `${type}/${category}`;
@@ -49,6 +51,18 @@ function ProductDetail() {
   };
   const handlePlus = () => {
     setQuantity(quantity + 1);
+  };
+  const handleAddToCart = () => {
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (!token) {
+      toast.warning("Please login to use this function", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+      setDisable(true);
+    }
   };
   function SamplePrevArrow(props) {
     const { className, onClick } = props;
@@ -112,6 +126,7 @@ function ProductDetail() {
   };
   return (
     <div className={cx("wrapper")}>
+      <ToastContainer></ToastContainer>
       <div className={cx("heading")}>
         <div className="container">
           <div className={cx("title-heading")}>
@@ -299,7 +314,9 @@ function ProductDetail() {
                   </div>
                   <div className="col-lg-12 col-12">
                     <div className={cx("add-to-cart")}>
-                      <button>ADD TO CART</button>
+                      <button onClick={handleAddToCart} disabled={disable}>
+                        ADD TO CART
+                      </button>
                     </div>
                   </div>
                   <div className="col-lg-12">

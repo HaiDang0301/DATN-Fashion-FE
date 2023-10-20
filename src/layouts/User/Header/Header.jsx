@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import jwt_decode from "jwt-decode";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../../../assets/logo.png";
 import routesConfig from "../../../config/routes";
@@ -11,6 +12,10 @@ function Header() {
   const navigate = useNavigate();
   const token =
     localStorage.getItem("token") || sessionStorage.getItem("token");
+  let decode = "";
+  if (token) {
+    decode = jwt_decode(token);
+  }
   const [language, setLanguage] = useState("ENG");
   const [searchParams, setSearchParams] = useSearchParams();
   const [cart, setCart] = useState(0);
@@ -116,11 +121,30 @@ function Header() {
                         <div className={cx("quick-access")}>
                           <ul>
                             <li>
-                              <Link to={routesConfig.Profile}>My Account</Link>
+                              <Link
+                                to={
+                                  token
+                                    ? routesConfig.Profile
+                                    : routesConfig.login
+                                }
+                              >
+                                My Account
+                              </Link>
                             </li>
-                            <li>
-                              <Link to={"#"}>Order</Link>
-                            </li>
+                            {decode.role === "admin" ? (
+                              <li>
+                                <Link to={routesConfig.AdminHome}>Admin</Link>
+                              </li>
+                            ) : null}
+                            {decode.role === "client" ? (
+                              <li>
+                                <Link to={"#"}>Order</Link>
+                              </li>
+                            ) : (
+                              <li>
+                                <Link to={"#"}>Order</Link>
+                              </li>
+                            )}
                             <li>
                               {checkLogin ? (
                                 <>
@@ -249,7 +273,7 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to={routesConfig.Profile}>
+              <Link to={token ? routesConfig.Profile : routesConfig.login}>
                 <i className="fa fa-user"> My Account</i>
               </Link>
             </li>

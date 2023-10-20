@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import loading from "../../../../assets/loading.gif";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import className from "classnames/bind";
 import styles from "./CreateProducts.module.scss";
@@ -13,7 +13,6 @@ import { toast } from "react-toastify";
 import productsAPI from "../../../../api/Admin/productsAPI";
 const cx = className.bind(styles);
 function CreateProducts() {
-  const [check, setCheck] = useState(true);
   const [isLoading, setIsloading] = useState();
   const [producers, setProducers] = useState([]);
   const [collections, setCollections] = useState([]);
@@ -25,46 +24,43 @@ function CreateProducts() {
   const [description, setDescription] = useState("");
   const [buffer, setBuffer] = useState([{ size: "", quantity: "" }]);
   document.title = "Admin | Create Products";
-  const handleProducer = () => {
-    const fetchAPI = async () => {
-      const params = "producers";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setProducers(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  useEffect(() => {
+    fetchSizes();
+    fetchColors();
+    fetchProducer();
+    fetchCollection();
+  }, []);
+  const fetchProducer = async () => {
+    const params = "producers";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setProducers(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
+      });
   };
-  const handleCollection = () => {
-    setCheck(false);
-    const fetchAPI = async () => {
-      const params = "collections";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setCollections(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchCollection = async () => {
+    const params = "collections";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setCollections(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
-  };
-  const handleCategory = () => {
-    const params = `collections?collection=${formik.values.collection}`;
-    const fetchAPI = async () => {
+      });
+    if (collections) {
+      const params = `collections?collection=${formik.values.collection}`;
       await modalAPI
         .getAll(params)
         .then((res) => {
@@ -77,46 +73,37 @@ function CreateProducts() {
             theme: "light",
           });
         });
-    };
-    fetchAPI();
+    }
   };
-  const handleColors = () => {
-    setCheck(false);
-    const fetchAPI = async () => {
-      const params = "colors";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setColors(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchColors = async () => {
+    const params = "colors";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setColors(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
+      });
   };
-  const handleSizes = () => {
-    setCheck(false);
-    const fetchAPI = async () => {
-      const params = "sizes";
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setSizes(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
+  const fetchSizes = async () => {
+    const params = "sizes";
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setSizes(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
         });
-    };
-    fetchAPI();
+      });
   };
   function handleChooseFile(e) {
     setImg(e.target.files[0]);
@@ -354,7 +341,6 @@ function CreateProducts() {
                               <select
                                 name="producer"
                                 id="producer"
-                                onClick={handleProducer}
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                               >
@@ -381,7 +367,6 @@ function CreateProducts() {
                               <select
                                 name="collection"
                                 id="collection"
-                                onClick={handleCollection}
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                               >
@@ -418,8 +403,6 @@ function CreateProducts() {
                                 id="category"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
-                                onClick={handleCategory}
-                                disabled={check}
                               >
                                 <option value="default">Default</option>
                                 {categories
@@ -449,7 +432,6 @@ function CreateProducts() {
                               <select
                                 name="color"
                                 id="color"
-                                onClick={handleColors}
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                               >
@@ -559,7 +541,6 @@ function CreateProducts() {
                                     <select
                                       name="size"
                                       id="size"
-                                      onClick={handleSizes}
                                       onChange={(event) =>
                                         handleFormChange(index, event)
                                       }

@@ -4,6 +4,9 @@ import {
   useSearchParams,
   useNavigate,
 } from "react-router-dom";
+import loading from "../../../assets/loading.gif";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import ReactPaginate from "react-paginate";
 import Parser from "html-react-parser";
 import col from "../../../assets/col.jpg";
@@ -31,6 +34,7 @@ function Products() {
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(500);
   const [checked, setChecked] = useState([]);
+  const [isLoading, setIsloading] = useState(true);
   const navigate = useNavigate();
   let query = searchParams;
   let params = "";
@@ -46,6 +50,9 @@ function Products() {
       const result = await productsAPI.index(params, query);
       setProducts(result.data);
     };
+    setTimeout(() => {
+      setIsloading(false);
+    }, 1500);
     fetchProducts();
     fetchCollection();
     fetchProducer();
@@ -65,6 +72,7 @@ function Products() {
     navigate(newUrl);
   };
   const handleProducer = (e, value) => {
+    setIsloading(true);
     if (checked.includes[value]) {
       setChecked(checked.filter((item) => item !== value));
     } else {
@@ -78,6 +86,7 @@ function Products() {
   };
   const handleFilter = (e) => {
     setChecked([]);
+    setIsloading(true);
     const begin = min;
     const final = max;
     setSearchParams({
@@ -116,7 +125,10 @@ function Products() {
                         ? collections.map((item, index) => (
                             <li key={index} className={cx("name-collection")}>
                               <h4>
-                                <Link to={`/collections/${item.collections}`}>
+                                <Link
+                                  to={`/collections/${item.collections}`}
+                                  onClick={(e) => setIsloading(true)}
+                                >
                                   {item.collections}{" "}
                                 </Link>
                               </h4>
@@ -125,6 +137,9 @@ function Products() {
                                   <li key={index}>
                                     <Link
                                       to={`/collections/${item.collections}/${i.category}`}
+                                      onClick={(e) => {
+                                        setIsloading(true);
+                                      }}
                                     >
                                       {i.category}
                                     </Link>
@@ -288,144 +303,81 @@ function Products() {
                 {grids ? (
                   <div className={cx("grid-1")}>
                     {products.products
-                      ? products.products.map((item, index) => (
-                          <div className="row" key={index}>
-                            <div className="col-lg-4 col-md-6 col-sm-6 col-6">
-                              <div className={cx("product-item")}>
-                                <Link
-                                  to={
-                                    params
-                                      ? `/collections/${params}/products/${item.slug}`
-                                      : `/collections/products/${item.slug}`
-                                  }
-                                >
-                                  <div className={cx("thumnal-container")}>
-                                    <div className={cx("image-product")}>
-                                      {item.image[0] ? (
-                                        <img src={item.image[0].url} alt="" />
-                                      ) : (
-                                        <img
-                                          src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
-                                          alt=""
-                                        />
-                                      )}
-                                      <div className={cx("quick-view")}>
-                                        <span>View</span>
-                                      </div>
-                                    </div>
-                                    <div className={cx("product-flag")}>
-                                      {type === "new-products" ? (
-                                        <span>NEW</span>
-                                      ) : null}
-                                    </div>
-                                    {type === "sale" ? (
-                                      <>
-                                        <div
-                                          className={cx("product-flag-sale")}
-                                        >
-                                          <span>Sale</span>
-                                        </div>
-                                        <div className={cx("sale")}>
-                                          <span>-{item.promotion}%</span>
-                                        </div>
-                                      </>
-                                    ) : null}
+                      ? products.products.map((item, index) =>
+                          isLoading ? (
+                            <div className={cx("isloading")} key={index}>
+                              <div className="row">
+                                <div className="col-lg-4 col-md-6 col-sm-6 col-6">
+                                  <div className={cx("img-loading")}>
+                                    <img src={loading} alt="" />
                                   </div>
-                                </Link>
+                                </div>
+                                <div className="col-lg-8 col-md-6 col-sm-6 col-6">
+                                  <Skeleton count={7} width={440}></Skeleton>
+                                </div>
                               </div>
                             </div>
-                            <div className="col-lg-8 col-md-6 col-sm-6 col-6">
-                              <div className={cx("name-product")}>
-                                {item.name}
-                              </div>
-                              <div className={cx("price-products")}>
-                                {type === "sale" ? (
-                                  <div className={cx("price-product")}>
-                                    <div className={cx("old-price")}>
-                                      {Number(item.old_price).toLocaleString()}
-                                    </div>
-                                    <div className={cx("now-price")}>
-                                      {Number(item.price).toLocaleString()}
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <div className={cx("price-product")}>
-                                    {Number(item.price).toLocaleString()}
-                                  </div>
-                                )}
-                              </div>
-                              <div className={cx("price-description")}>
-                                {Parser(item.description)}
-                              </div>
-                            </div>
-                          </div>
-                        ))
-                      : null}
-                  </div>
-                ) : (
-                  <div className={cx("grid-3")}>
-                    <div className="row">
-                      {products.products
-                        ? products.products.map((item, index) => (
-                            <div
-                              className="col-lg-3 col-md-6 col-sm-6 col-6"
-                              key={index}
-                            >
-                              <div className={cx("product-item")}>
-                                <Link
-                                  to={
-                                    params
-                                      ? `/collections/${params}/products/${item.slug}`
-                                      : `/collections/products/${item.slug}`
-                                  }
-                                >
-                                  <div className={cx("thumnal-container")}>
-                                    <div className={cx("image-product")}>
-                                      {item.image[0] ? (
-                                        <img src={item.image[0].url} alt="" />
-                                      ) : (
-                                        <img
-                                          src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
-                                          alt=""
-                                        />
-                                      )}
-                                      <div className={cx("quick-view")}>
-                                        <span>View</span>
+                          ) : (
+                            <div className="row" key={index}>
+                              <div className="col-lg-4 col-md-6 col-sm-6 col-6">
+                                <div className={cx("product-item")}>
+                                  <Link
+                                    to={
+                                      params
+                                        ? `/collections/${params}/products/${item.slug}`
+                                        : `/collections/products/${item.slug}`
+                                    }
+                                  >
+                                    <div className={cx("thumnal-container")}>
+                                      <div className={cx("image-product")}>
+                                        {item.image[0] ? (
+                                          <img src={item.image[0].url} alt="" />
+                                        ) : (
+                                          <img
+                                            src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
+                                            alt=""
+                                          />
+                                        )}
+                                        <div className={cx("quick-view")}>
+                                          <span>View</span>
+                                        </div>
                                       </div>
-                                    </div>
-                                    <div className={cx("product-flag")}>
-                                      {type === "new-products" ? (
-                                        <span>NEW</span>
+                                      <div className={cx("product-flag")}>
+                                        {type === "new-products" ? (
+                                          <span>NEW</span>
+                                        ) : null}
+                                      </div>
+                                      {type === "sale" ? (
+                                        <>
+                                          <div
+                                            className={cx("product-flag-sale")}
+                                          >
+                                            <span>Sale</span>
+                                          </div>
+                                          <div className={cx("sale")}>
+                                            <span>-{item.promotion}%</span>
+                                          </div>
+                                        </>
                                       ) : null}
                                     </div>
-                                    {type === "sale" ? (
-                                      <>
-                                        <div
-                                          className={cx("product-flag-sale")}
-                                        >
-                                          <span>Sale</span>
-                                        </div>
-                                        <div className={cx("sale")}>
-                                          <span>-{item.promotion}%</span>
-                                        </div>
-                                      </>
-                                    ) : null}
-                                  </div>
-                                </Link>
-                                <div className={cx("product-description")}>
-                                  <div className={cx("name-product")}>
-                                    {item.name}
-                                  </div>
+                                  </Link>
+                                </div>
+                              </div>
+                              <div className="col-lg-8 col-md-6 col-sm-6 col-6">
+                                <div className={cx("name-product")}>
+                                  {item.name}
+                                </div>
+                                <div className={cx("price-products")}>
                                   {type === "sale" ? (
                                     <div className={cx("price-product")}>
                                       <div className={cx("old-price")}>
-                                        $
+                                        ${" "}
                                         {Number(
                                           item.old_price
                                         ).toLocaleString()}
                                       </div>
                                       <div className={cx("now-price")}>
-                                        ${Number(item.price).toLocaleString()}
+                                        $ {Number(item.price).toLocaleString()}
                                       </div>
                                     </div>
                                   ) : (
@@ -434,9 +386,110 @@ function Products() {
                                     </div>
                                   )}
                                 </div>
+                                <div className={cx("price-description")}>
+                                  {Parser(item.description)}
+                                </div>
                               </div>
                             </div>
-                          ))
+                          )
+                        )
+                      : null}
+                  </div>
+                ) : (
+                  <div className={cx("grid-3")}>
+                    <div className="row">
+                      {products.products
+                        ? products.products.map((item, index) =>
+                            isLoading ? (
+                              <div
+                                className="col-lg-3 col-md-6 col-sm-6 col-6"
+                                key={index}
+                              >
+                                <div className={cx("isloading")}>
+                                  <div className={cx("img-loading")}>
+                                    <img src={loading} alt="" />
+                                  </div>
+                                  <div className={cx("loading-information")}>
+                                    <Skeleton
+                                      count={2}
+                                      width={180}
+                                      height={20}
+                                    ></Skeleton>
+                                  </div>
+                                </div>
+                              </div>
+                            ) : (
+                              <div
+                                className="col-lg-3 col-md-6 col-sm-6 col-6"
+                                key={index}
+                              >
+                                <div className={cx("product-item")}>
+                                  <Link
+                                    to={
+                                      params
+                                        ? `/collections/${params}/products/${item.slug}`
+                                        : `/collections/products/${item.slug}`
+                                    }
+                                  >
+                                    <div className={cx("thumnal-container")}>
+                                      <div className={cx("image-product")}>
+                                        {item.image[0] ? (
+                                          <img src={item.image[0].url} alt="" />
+                                        ) : (
+                                          <img
+                                            src="https://s2s.co.th/wp-content/uploads/2019/09/photo-icon-Copy-7.jpg"
+                                            alt=""
+                                          />
+                                        )}
+                                        <div className={cx("quick-view")}>
+                                          <span>View</span>
+                                        </div>
+                                      </div>
+                                      <div className={cx("product-flag")}>
+                                        {type === "new-products" ? (
+                                          <span>NEW</span>
+                                        ) : null}
+                                      </div>
+                                      {type === "sale" ? (
+                                        <>
+                                          <div
+                                            className={cx("product-flag-sale")}
+                                          >
+                                            <span>Sale</span>
+                                          </div>
+                                          <div className={cx("sale")}>
+                                            <span>-{item.promotion}%</span>
+                                          </div>
+                                        </>
+                                      ) : null}
+                                    </div>
+                                  </Link>
+                                  <div className={cx("product-description")}>
+                                    <div className={cx("name-product")}>
+                                      {item.name}
+                                    </div>
+                                    {type === "sale" ? (
+                                      <div className={cx("price-product")}>
+                                        <div className={cx("old-price")}>
+                                          $
+                                          {Number(
+                                            item.old_price
+                                          ).toLocaleString()}
+                                        </div>
+                                        <div className={cx("now-price")}>
+                                          ${Number(item.price).toLocaleString()}
+                                        </div>
+                                      </div>
+                                    ) : (
+                                      <div className={cx("price-product")}>
+                                        $ {Number(item.price).toLocaleString()}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            )
+                          )
                         : null}
                     </div>
                   </div>
