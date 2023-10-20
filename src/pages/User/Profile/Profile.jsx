@@ -19,24 +19,41 @@ function Profile() {
     email: "",
   });
   const [cities, setCities] = useState([]);
-  const [city, setCity] = useState();
   const [districts, setDistricts] = useState([]);
-  const [district, setDistrict] = useState();
   const [disabledD, setDisableD] = useState(true);
   const [wards, setWards] = useState([]);
-  const [ward, setWard] = useState();
   const [disabledW, setDisableW] = useState(true);
-  const [addresshome, setAddressHome] = useState();
+  const [disabledH, setDisableH] = useState(true);
   const [password, setPassword] = useState();
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await AuthsAPI.profile();
-      setUser(result.data);
+      const result = await AuthsAPI.profile().then((res) => {
+        setUser(res.data);
+      });
+    };
+    const fetchCity = async () => {
+      setDisableD(true);
+      const city = await axios
+        .get(`https://provinces.open-api.vn/api/?depth=2`)
+        .then(async (item) => {
+          setCities(item.data);
+        })
+        .then(async (d) => {
+          const district = await axios.get(
+            `https://provinces.open-api.vn/api/d/?depth=2`
+          );
+          setDistricts(district.data);
+        })
+        .then(async (w) => {
+          const ward = await axios.get(
+            `https://provinces.open-api.vn/api/w/?depth=2`
+          );
+          setWards(ward.data);
+        });
     };
     fetchApi();
     fetchCity();
   }, []);
-  console.log(user.address);
   const handleChooseFile = () => {
     inputFiles.current.click();
   };
@@ -44,24 +61,20 @@ function Profile() {
     const file = e.target.files[0];
     setImage(file);
   };
-  const fetchCity = async () => {
-    setDisableD(true);
-    const result = await axios
-      .get("https://provinces.open-api.vn/api/?depth=2")
-      .then(async (item) => {
-        setCities(item.data);
-      });
-  };
   const changeCity = async (e) => {
     setDisableD(false);
+    setUser({
+      ...user,
+      address: [
+        { city: e.target.value, district: "", ward: "", address_home: "" },
+      ],
+    });
     const city = await e.target.value;
     if (city) {
       const result = await axios.get(
         `https://provinces.open-api.vn/api/p/${city}?depth=2`
       );
       setDistricts(result.data.districts);
-      setCity(e.target.value);
-      setDistrict(result.data.districts[0].code);
     } else {
       setDistricts();
       setDisableD(true);
@@ -70,19 +83,42 @@ function Profile() {
     }
   };
   const changeDistrict = async (e) => {
+    setUser({
+      ...user,
+      address: [
+        {
+          city: user.address[0].city,
+          district: e.target.value,
+          ward: "",
+          address_home: "",
+        },
+      ],
+    });
     const district = await e.target.value;
     if (district) {
       const result = await axios.get(
         `https://provinces.open-api.vn/api/d/${district}?depth=2`
       );
       setWards(result.data.wards);
-      setDistrict(e.target.value);
-      setWard(result.data.wards[0].code);
       setDisableW(false);
     } else {
       setWards();
       setDisableW(true);
     }
+  };
+  const changeWard = (e) => {
+    setUser({
+      ...user,
+      address: [
+        {
+          city: user.address[0].city,
+          district: user.address[0].district,
+          ward: e.target.value,
+          address_home: "",
+        },
+      ],
+    });
+    setDisableH(false);
   };
   const handleSubmit = async () => {
     const data = new FormData();
@@ -92,13 +128,10 @@ function Profile() {
     if (password) {
       data.append("password", password);
     }
-    if (city) {
-      data.append("city", city);
-      data.append("district", district);
-      data.append("ward", ward);
-      data.append("home", addresshome);
-    }
-
+    data.append("city", user.address[0].city);
+    data.append("district", user.address[0].district);
+    data.append("ward", user.address[0].ward);
+    data.append("home", user.address[0].address_home);
     const update = await AuthsAPI.update(data)
       .then((res) => {
         if (res.status === 200) {
@@ -122,16 +155,6 @@ function Profile() {
         });
       });
   };
-  console.log(
-    image,
-    user.full_name,
-    user.phone,
-    user.password,
-    city,
-    district,
-    ward,
-    addresshome
-  );
   return (
     <div className={cx("wrapper")}>
       <ToastContainer></ToastContainer>
@@ -226,7 +249,7 @@ function Profile() {
                         </div>
                         <div className="col-lg-12">
                           <input
-                            type="text"
+                            type="password"
                             name="password"
                             id="password"
                             onChange={(e) => setPassword(e.target.value)}
@@ -245,6 +268,7 @@ function Profile() {
                           <select
                             name="city"
                             id="city"
+                            value={user.address[0].city}
                             onChange={(e) => changeCity(e)}
                           >
                             <option value=""></option>
@@ -266,6 +290,7 @@ function Profile() {
                           <select
                             name="district"
                             id="district"
+                            value={user.address[0].district}
                             disabled={disabledD}
                             onChange={(e) => {
                               changeDistrict(e);
@@ -290,9 +315,10 @@ function Profile() {
                           <select
                             name="ward"
                             id="ward"
+                            value={user.address[0].ward}
                             disabled={disabledW}
                             onChange={(e) => {
-                              setWard(e.target.value);
+                              changeWard(e);
                             }}
                           >
                             {wards
@@ -311,12 +337,24 @@ function Profile() {
                         </div>
                         <div className="col-lg-12">
                           <input
+                            disabled={disabledH}
                             type="text"
                             name="home"
                             id="home"
-                            onChange={(e) => {
-                              setAddressHome(e.target.value);
-                            }}
+                            value={user.address[0].address_home}
+                            onChange={(e) =>
+                              setUser({
+                                ...user,
+                                address: [
+                                  {
+                                    city: user.address[0].city,
+                                    district: user.address[0].district,
+                                    ward: user.address[0].ward,
+                                    address_home: e.target.value,
+                                  },
+                                ],
+                              })
+                            }
                           />
                         </div>
                       </div>
