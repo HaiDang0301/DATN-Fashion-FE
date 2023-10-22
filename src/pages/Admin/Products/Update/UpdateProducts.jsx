@@ -14,7 +14,7 @@ const cx = className.bind(styles);
 function UpdateProducts() {
   document.title = "Admin | Update Products";
   const id = useParams().id;
-  let sizeID = [];
+  const [sizeID, setSizeID] = useState();
   const [isLoading, setIsloading] = useState();
   const [producers, setProducers] = useState([]);
   const [collections, setCollections] = useState([]);
@@ -141,17 +141,16 @@ function UpdateProducts() {
     let data = [...buffer];
     data[index][event.target.name] = event.target.value;
     setBuffer(data);
-    if (id) {
-      sizeID.push(...buffer, data);
-      console.log(sizeID);
-    }
+    setSizeID(id);
   };
-
   const handleSubmit = async () => {
     setIsloading(true);
     const data = new FormData();
     for (let i = 0; i < files.length; i++) {
       data.append("image", files[i]);
+    }
+    if (sizeID) {
+      data.append("sizeID", sizeID);
     }
     data.append("name", products.name);
     data.append("producer", products.producer);
