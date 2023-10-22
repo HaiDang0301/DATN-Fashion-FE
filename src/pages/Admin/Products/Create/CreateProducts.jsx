@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/tinymce.min.js"></script>;
 import loading from "../../../../assets/loading.gif";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,7 +17,9 @@ function CreateProducts() {
   const [isLoading, setIsloading] = useState();
   const [producers, setProducers] = useState([]);
   const [collections, setCollections] = useState([]);
+  const [collection, setCollection] = useState();
   const [categories, setCategories] = useState([]);
+  const [disable, setDisable] = useState(true);
   const [colors, setColors] = useState([]);
   const [sizes, setSizes] = useState([]);
   const [img, setImg] = useState();
@@ -59,21 +62,6 @@ function CreateProducts() {
           theme: "light",
         });
       });
-    if (collections) {
-      const params = `collections?collection=${formik.values.collection}`;
-      await modalAPI
-        .getAll(params)
-        .then((res) => {
-          setCategories(res.data);
-        })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: "5000",
-            theme: "light",
-          });
-        });
-    }
   };
   const fetchColors = async () => {
     const params = "colors";
@@ -104,6 +92,23 @@ function CreateProducts() {
           theme: "light",
         });
       });
+  };
+  const handleChangeCollection = async (e) => {
+    setCollection(e);
+    const params = `collections?collection=${e}`;
+    await modalAPI
+      .getAll(params)
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        toast.error("Connect Server False", {
+          position: "bottom-right",
+          autoClose: "5000",
+          theme: "light",
+        });
+      });
+    setDisable(false);
   };
   function handleChooseFile(e) {
     setImg(e.target.files[0]);
@@ -162,7 +167,7 @@ function CreateProducts() {
     data.append("name", formik.values.name);
     data.append("productCode", formik.values.product_code);
     data.append("producer", formik.values.producer);
-    data.append("collections", formik.values.collection);
+    data.append("collections", collection);
     data.append("category", formik.values.category);
     data.append("color", formik.values.color);
     data.append("importPrice", formik.values.import_price);
@@ -344,7 +349,7 @@ function CreateProducts() {
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                               >
-                                <option value="default">Default</option>
+                                <option value=""></option>
                                 {producers.producers
                                   ? producers.producers.map((item, index) => (
                                       <option value={item.name} key={index}>
@@ -368,9 +373,12 @@ function CreateProducts() {
                                 name="collection"
                                 id="collection"
                                 onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
+                                onChange={(e) => {
+                                  formik.handleChange,
+                                    handleChangeCollection(e.target.value);
+                                }}
                               >
-                                <option value="default">Default</option>
+                                <option value=""></option>
                                 {collections.map((item, index) => (
                                   <option value={item.collections} key={index}>
                                     {item.collections}
@@ -403,8 +411,9 @@ function CreateProducts() {
                                 id="category"
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
+                                disabled={disable}
                               >
-                                <option value="default">Default</option>
+                                <option value=""></option>
                                 {categories
                                   ? categories.map((item) =>
                                       item.categories.map((i, index) => (
@@ -435,7 +444,7 @@ function CreateProducts() {
                                 onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                               >
-                                <option value="default">Default</option>
+                                <option value=""></option>
                                 {colors.map((item, index) => (
                                   <option
                                     value={item.colors}
@@ -545,7 +554,7 @@ function CreateProducts() {
                                         handleFormChange(index, event)
                                       }
                                     >
-                                      <option value="default">Default</option>
+                                      <option value=""></option>
                                       {sizes.map((item) => (
                                         <option
                                           value={item.sizes}
@@ -622,14 +631,10 @@ function CreateProducts() {
                         init={{
                           height: 500,
                           menubar: false,
+                          promotion: false,
                           plugins: [
-                            "a11ychecker",
                             "advlist",
-                            "advcode",
-                            "advtable",
                             "autolink",
-                            "checklist",
-                            "export",
                             "lists",
                             "link",
                             "image",
@@ -638,9 +643,7 @@ function CreateProducts() {
                             "anchor",
                             "searchreplace",
                             "visualblocks",
-                            "powerpaste",
                             "fullscreen",
-                            "formatpainter",
                             "insertdatetime",
                             "media",
                             "table",

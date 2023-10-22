@@ -319,9 +319,7 @@ function UpdateProducts() {
                                   });
                                 }}
                               >
-                                <option value={products.producer}>
-                                  {products.producer}
-                                </option>
+                                <option value=""></option>
                                 {producers.producers
                                   ? producers.producers.map((item, index) => (
                                       <option value={item.name} key={index}>
@@ -352,9 +350,7 @@ function UpdateProducts() {
                                   });
                                 }}
                               >
-                                <option value={products.collections}>
-                                  {products.collections}
-                                </option>
+                                <option value=""></option>
                                 {collections.map((item, index) => (
                                   <option value={item.collections} key={index}>
                                     {item.collections}
@@ -390,9 +386,7 @@ function UpdateProducts() {
                                   });
                                 }}
                               >
-                                <option value={products.category}>
-                                  {products.category}
-                                </option>
+                                <option value=""></option>
                                 {categories
                                   ? categories.map((item) =>
                                       item.categories.map((i, index) => (
@@ -428,9 +422,7 @@ function UpdateProducts() {
                                   });
                                 }}
                               >
-                                <option value={products.color}>
-                                  {products.color}
-                                </option>
+                                <option value=""></option>
                                 {colors.map((item, index) => (
                                   <option
                                     value={item.colors}
@@ -581,13 +573,12 @@ function UpdateProducts() {
                                     <select
                                       name="size"
                                       id="size"
+                                      value={item.size}
                                       onChange={(event) =>
                                         handleFormChange(index, event)
                                       }
                                     >
-                                      <option value={item.size}>
-                                        {item.size}
-                                      </option>
+                                      <option value=""></option>
                                       {sizes.map((item) => (
                                         <option
                                           value={item.sizes}
@@ -637,7 +628,7 @@ function UpdateProducts() {
                                       placeholder="0"
                                       value={item.quantity}
                                       onChange={(event) =>
-                                        handleFormChange(index, event)
+                                        handleFormChange(index, event, item._id)
                                       }
                                     />
                                   </div>
@@ -665,16 +656,12 @@ function UpdateProducts() {
                         }}
                         value={products.description}
                         init={{
+                          promotion: true,
                           height: 500,
                           menubar: false,
                           plugins: [
-                            "a11ychecker",
                             "advlist",
-                            "advcode",
-                            "advtable",
                             "autolink",
-                            "checklist",
-                            "export",
                             "lists",
                             "link",
                             "image",
@@ -683,9 +670,7 @@ function UpdateProducts() {
                             "anchor",
                             "searchreplace",
                             "visualblocks",
-                            "powerpaste",
                             "fullscreen",
-                            "formatpainter",
                             "insertdatetime",
                             "media",
                             "table",

@@ -35,9 +35,9 @@ function Login() {
     const login = await AuthsAPI.login(data)
       .then(async (res) => {
         if (save === true) {
-          const totken = await localStorage.setItem("token", res.data.token);
+          await localStorage.setItem("token", res.data.token);
         } else {
-          const token = await sessionStorage.setItem("token", res.data.token);
+          await sessionStorage.setItem("token", res.data.token);
         }
         if (res.data.others.role === "admin") {
           toast.success("Loggin Succes", {

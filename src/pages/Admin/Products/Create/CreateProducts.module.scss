@@ -2,6 +2,9 @@
   a {
     background-color: #337ab7;
   }
+  select {
+    overflow-y: scroll;
+  }
 }
 .save {
   text-align: center;
@@ -134,4 +137,7 @@
   i {
     color: red;
   }
+}
+.mce-notification {
+  display: none !important;
 }

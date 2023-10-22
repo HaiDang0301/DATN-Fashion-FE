@@ -28,21 +28,15 @@ function Profile() {
   const [disabledH, setDisableH] = useState(true);
   const [password, setPassword] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
   useEffect(() => {
-    if (!token) {
-      navigate(routesConfig.login);
-    }
     const fetchApi = async () => {
-      const result = await AuthsAPI.profile().then((res) => {
+      await AuthsAPI.profile().then((res) => {
         setUser(res.data);
-        console.log(res.data);
       });
     };
     const fetchCity = async () => {
       setDisableD(true);
-      const city = await axios
+      await axios
         .get(`https://provinces.open-api.vn/api/?depth=2`)
         .then(async (item) => {
           setCities(item.data);
@@ -64,8 +58,7 @@ function Profile() {
     fetchCity();
     setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
-    console.log(user);
+    }, 2000);
   }, []);
   const handleChooseFile = () => {
     inputFiles.current.click();
@@ -177,7 +170,9 @@ function Profile() {
               <div className={cx("avatar")}>
                 <div className={cx("img-avatar")}>
                   {isLoading ? (
-                    <img src={loading} alt="" />
+                    <div className={cx("img-loading")}>
+                      <img src={loading} alt="" />
+                    </div>
                   ) : (
                     <div>
                       {image ? (

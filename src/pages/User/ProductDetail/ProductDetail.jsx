@@ -13,9 +13,9 @@ function ProductDetail() {
   const type = useParams().type;
   const category = useParams().category;
   const slug = useParams().slug;
-  const titleslug = useParams().slug.split("-").join(" ");
-  document.title = `${titleslug} - FASHION`;
   const [product, setProduct] = useState([]);
+  document.title = `${product.name} - FASHION`;
+  const titleslug = product.name;
   const [image, setImage] = useState();
   const [quantity, setQuantity] = useState(1);
   const [similar, setSmilar] = useState([]);

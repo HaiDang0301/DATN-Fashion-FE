@@ -104,7 +104,11 @@ function ModalContent(props) {
               id="uncontrolled-tab-example"
               className="mb-3"
             >
-              <Tab eventKey={props.title} title={`List of ${props.title}`}>
+              <Tab
+                eventKey={props.title}
+                title={`List of ${props.title}`}
+                className={cx("table-content")}
+              >
                 <Table striped bordered hover className={cx("table")}>
                   <thead>
                     <tr>
