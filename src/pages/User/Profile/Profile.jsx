@@ -177,7 +177,9 @@ function Profile() {
               <div className={cx("avatar")}>
                 <div className={cx("img-avatar")}>
                   {isLoading ? (
-                    <img src={loading} alt="" />
+                    <div className={cx("img-loading")}>
+                      <img src={loading} alt="" />
+                    </div>
                   ) : (
                     <div>
                       {image ? (

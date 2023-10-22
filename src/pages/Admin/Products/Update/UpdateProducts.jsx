@@ -14,6 +14,7 @@ const cx = className.bind(styles);
 function UpdateProducts() {
   document.title = "Admin | Update Products";
   const id = useParams().id;
+  let sizeID = [];
   const [isLoading, setIsloading] = useState();
   const [producers, setProducers] = useState([]);
   const [collections, setCollections] = useState([]);
@@ -136,11 +137,16 @@ function UpdateProducts() {
     data.splice(index, 1);
     setBuffer(data);
   };
-  const handleFormChange = (index, event) => {
+  const handleFormChange = (index, event, id) => {
     let data = [...buffer];
     data[index][event.target.name] = event.target.value;
     setBuffer(data);
+    if (id) {
+      sizeID.push(...buffer, data);
+      console.log(sizeID);
+    }
   };
+
   const handleSubmit = async () => {
     setIsloading(true);
     const data = new FormData();
@@ -637,7 +643,7 @@ function UpdateProducts() {
                                       placeholder="0"
                                       value={item.quantity}
                                       onChange={(event) =>
-                                        handleFormChange(index, event)
+                                        handleFormChange(index, event, item._id)
                                       }
                                     />
                                   </div>
