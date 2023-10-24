@@ -6,12 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import AuthsAPI from "../../../api/AuthsAPI";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import routesConfig from "../../../config/routes";
 const cx = className.bind(styles);
 function Profile() {
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   document.title = "Profile";
-  const navigate = useNavigate();
   const inputFiles = useRef();
   const [image, setImage] = useState();
   const [user, setUser] = useState({
@@ -30,7 +29,7 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchApi = async () => {
-      await AuthsAPI.profile().then((res) => {
+      await AuthsAPI.profile(token).then((res) => {
         setUser(res.data);
       });
     };
@@ -58,7 +57,7 @@ function Profile() {
     fetchCity();
     setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
   }, []);
   const handleChooseFile = () => {
     inputFiles.current.click();
@@ -145,11 +144,6 @@ function Profile() {
             autoClose: 2000,
             theme: "light",
           });
-          // localStorage.removeItem("token");
-          // sessionStorage.removeItem("token");
-          // setTimeout(() => {
-          //   navigate(routesConfig.login);
-          // }, 2000);
         }
       })
       .catch((err) => {
@@ -233,7 +227,9 @@ function Profile() {
                             name="email"
                             disabled={true}
                             value={user.email}
-                            onChange={(e) => {}}
+                            onChange={(e) => {
+                              "";
+                            }}
                           />
                         </div>
                       </div>
@@ -246,7 +242,7 @@ function Profile() {
                             type="text"
                             name="phone"
                             id="phone"
-                            value={user.phone}
+                            value={user.phone || ""}
                             onChange={(e) =>
                               setUser({
                                 ...user,

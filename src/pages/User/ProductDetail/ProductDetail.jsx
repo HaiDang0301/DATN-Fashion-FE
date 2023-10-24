@@ -7,9 +7,12 @@ import routesConfig from "../../../config/routes";
 import { useEffect, useState } from "react";
 import productsAPI from "../../../api/User/productsAPI";
 import Slider from "react-slick";
+import cartAPI from "../../../api/User/cartAPI";
+import { useDispatch } from "react-redux";
+import { increase } from "../../../features/AddToCart/AddToCart";
 const cx = classNames.bind(styles);
 function ProductDetail() {
-  window.scrollTo({ top: 300, behavior: "smooth" });
+  const dispatch = useDispatch();
   const type = useParams().type;
   const category = useParams().category;
   const slug = useParams().slug;
@@ -20,6 +23,7 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [similar, setSmilar] = useState([]);
   const [disable, setDisable] = useState(false);
+  const [size, setSize] = useState();
   let params = "";
   if (type && category) {
     params = `${type}/${category}`;
@@ -36,6 +40,7 @@ function ProductDetail() {
       const result = await productsAPI.index(params);
       setSmilar(result.data);
     };
+    window.scrollTo({ top: 300, behavior: "smooth" });
     fetchProduct();
     fetchSmilar();
   }, [slug]);
@@ -52,7 +57,11 @@ function ProductDetail() {
   const handlePlus = () => {
     setQuantity(quantity + 1);
   };
-  const handleAddToCart = () => {
+  const handleSize = (size) => {
+    setDisable(false);
+    setSize(size);
+  };
+  const handleAddToCart = async () => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
@@ -62,6 +71,74 @@ function ProductDetail() {
         theme: "light",
       });
       setDisable(true);
+    } else {
+      if (!size) {
+        toast.warning("Please choose the product size", {
+          position: "bottom-right",
+          autoClose: 5000,
+          theme: "light",
+        });
+      } else {
+        const data = {
+          product_id: product._id,
+          product_name: product.name,
+          image: product.image[0].url,
+          size: size,
+          quantity: quantity,
+          price: product.price,
+        };
+        await cartAPI
+          .store(data)
+          .then((res) => {
+            if (res.status === 200) {
+              toast.success("Add products to successful shopping cart", {
+                position: "bottom-right",
+                autoClose: 5000,
+                theme: "light",
+              });
+            }
+            const action = increase();
+            dispatch(action);
+            setDisable(true);
+          })
+          .catch((err) => {
+            if (err.response.status === 409) {
+              toast.error("Products already in the cart", {
+                position: "bottom-right",
+                autoClose: 5000,
+                theme: "light",
+              });
+              setDisable(true);
+            }
+            if (err.response.status === 403) {
+              toast.error(
+                "The number of products in the warehouse is not enough",
+                {
+                  position: "bottom-right",
+                  autoClose: 5000,
+                  theme: "light",
+                }
+              );
+              setDisable(true);
+            }
+            if (err.response.status === 404) {
+              toast.error("Can't Find Product", {
+                position: "bottom-right",
+                autoClose: 5000,
+                theme: "light",
+              });
+              setDisable(true);
+            }
+            if (err.response.status === 500) {
+              toast.error("Connect Server False", {
+                position: "bottom-right",
+                autoClose: 5000,
+                theme: "light",
+              });
+              setDisable(true);
+            }
+          });
+      }
     }
   };
   function SamplePrevArrow(props) {
@@ -96,7 +173,6 @@ function ProductDetail() {
           slidesToShow: 4,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
         },
       },
       {
@@ -257,8 +333,17 @@ function ProductDetail() {
                               className="col-lg-4 col-md-6 col-sm-4 col-2"
                               key={index}
                             >
-                              <div className={cx("btn-size")}>
-                                <button>Size {item.size}</button>
+                              <div
+                                className={cx(
+                                  item.size === size ? "change-bg" : "btn-size"
+                                )}
+                              >
+                                <button onClick={(e) => handleSize(item.size)}>
+                                  Size {item.size}
+                                </button>
+                                <div className={cx("check")}>
+                                  <i className="fa fa-check"></i>
+                                </div>
                               </div>
                             </div>
                           ))
@@ -313,7 +398,11 @@ function ProductDetail() {
                     </div>
                   </div>
                   <div className="col-lg-12 col-12">
-                    <div className={cx("add-to-cart")}>
+                    <div
+                      className={cx(
+                        disable ? "disable-add-to-cart" : "add-to-cart"
+                      )}
+                    >
                       <button onClick={handleAddToCart} disabled={disable}>
                         ADD TO CART
                       </button>
@@ -346,7 +435,10 @@ function ProductDetail() {
                                   : `/collections/products/${item.slug}`
                               }
                               onClick={(e) => {
-                                setImage(null);
+                                setImage(null),
+                                  setSize(null),
+                                  setDisable(false),
+                                  setQuantity(1);
                               }}
                             >
                               <img src={item.image[0].url} alt="" />
