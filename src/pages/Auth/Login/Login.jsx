@@ -69,6 +69,13 @@ function Login() {
             theme: "light",
           });
         }
+        if (errors.response.status === 403) {
+          toast.error("Your account has not been verified", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
         setIsloading(false);
       });
   };

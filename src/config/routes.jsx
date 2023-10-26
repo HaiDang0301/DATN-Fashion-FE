@@ -2,14 +2,16 @@ const routesConfig = {
   //  User
   home: "/",
   register: "/auth/register",
+  verify: "/auth/verify/:token",
   login: "/auth/login",
   forgetpw: "/auth/forget-password",
   resetpw: "/auth/reset-password/:token",
   blogs: "/blogs",
   blogDetail: "/blogs/:slug",
-  Profile: "/user/profile",
+  Profile: "/account/profile",
   Products: "/collections/:type?/:category?",
   ProductDetail: "/collections/:type?/:category?/products/:slug",
+  CartDetail: "/my-cart",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",

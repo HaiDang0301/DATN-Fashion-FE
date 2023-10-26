@@ -255,10 +255,10 @@ function Products() {
                         </div>
                         <div className="col-lg-2 col-md-3 col-sm-4 col-4">
                           <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-6 col-4">
                               Show
                             </div>
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-6 col-4">
                               <select
                                 name="limit"
                                 id="limit"

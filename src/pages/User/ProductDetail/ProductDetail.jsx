@@ -17,6 +17,7 @@ function ProductDetail() {
   const category = useParams().category;
   const slug = useParams().slug;
   const [product, setProduct] = useState([]);
+  const [id, setID] = useState();
   document.title = `${product.name} - FASHION`;
   const titleslug = product.name;
   const [image, setImage] = useState();
@@ -44,7 +45,8 @@ function ProductDetail() {
     fetchProduct();
     fetchSmilar();
   }, [slug]);
-  const handleImage = (url) => {
+  const handleImage = (url, id) => {
+    setID(id);
     setImage(url);
   };
   const handleMinus = () => {
@@ -232,10 +234,20 @@ function ProductDetail() {
                             ? product.image.map((item, index) => (
                                 <Link
                                   to={"#"}
-                                  onClick={(e) => handleImage(item.url)}
+                                  onClick={(e) =>
+                                    handleImage(item.url, item.public_id)
+                                  }
                                   key={index}
                                 >
-                                  <img src={item.url} alt="" />
+                                  <img
+                                    src={item.url}
+                                    alt=""
+                                    className={cx(
+                                      id === item.public_id
+                                        ? "box-image"
+                                        : "box-none"
+                                    )}
+                                  />
                                 </Link>
                               ))
                             : null}

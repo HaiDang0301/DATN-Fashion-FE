@@ -265,3 +265,11 @@ input[type="range"]::-webkit-slider-thumb {
     display: none;
   }
 }
+@media only screen and (max-width: 320px) {
+  .wrapper {
+    font-size: 10px;
+  }
+  a {
+    font-size: 15px;
+  }
+}

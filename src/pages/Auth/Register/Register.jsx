@@ -63,10 +63,10 @@ function Register() {
         email: formik.values.email,
         password: formik.values.password,
       };
-      const register = await AuthsAPI.register(data)
+      await AuthsAPI.register(data)
         .then((res) => {
-          if (res.data === "Successful account registration") {
-            toast.success("Successful account registration", {
+          if (res.status === 200) {
+            toast.success("Please go to Gmail to verify your account", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",

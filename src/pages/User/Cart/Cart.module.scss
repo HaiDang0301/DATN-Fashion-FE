@@ -1,0 +1,156 @@
+.wrapper {
+  margin-bottom: 30px;
+}
+.title {
+  text-align: center;
+  margin-top: 30px;
+}
+.title-heading {
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+}
+.quantity {
+  text-align: center;
+}
+.total {
+  float: right;
+  button {
+    border: none;
+    background-color: white;
+    &:hover {
+      color: red;
+    }
+    &:active {
+      color: red;
+    }
+  }
+}
+.cart-detail {
+  height: max-content;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid black;
+  i {
+    font-size: 12px;
+    padding: 0px 7px;
+  }
+}
+.change-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .minus {
+    width: max-content;
+    height: 25px;
+    border: 1px solid black;
+    background-color: white;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+    border-right: none;
+    font-size: 15px;
+    font-weight: 100;
+  }
+  .plus {
+    width: max-content;
+    border: 1px solid black;
+    height: 25px;
+    background-color: white;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+    border-left: none;
+    font-size: 15px;
+    font-weight: 100;
+  }
+  input {
+    border: 1px solid black;
+    width: 20%;
+    height: 25px;
+  }
+}
+.checkout {
+  margin-top: 20px;
+  height: max-content;
+}
+.checkout-form {
+  border: 1px solid black;
+  height: 100%;
+  span {
+    color: black;
+    font-size: 14px;
+  }
+}
+.title-shipping {
+  padding: 10px 0px;
+  span {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
+}
+.address {
+  padding-top: 10px;
+  margin: 10px 0px;
+  span {
+    font-size: 13px;
+  }
+  input {
+    width: 100%;
+  }
+  select {
+    width: 100%;
+  }
+}
+.email {
+  margin: 10px 0px;
+}
+.city {
+  margin: 10px 0px;
+}
+.district {
+  margin: 10px 0px;
+}
+.subtotal {
+  padding: 10px 0px;
+  border-top: 1px solid #ccc;
+}
+.money {
+  float: right;
+}
+.discount {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.discount-money {
+  float: right;
+}
+.grand-money {
+  padding: 10px 0px;
+}
+.btn-checkout {
+  float: right;
+  margin: 10px 0px;
+  button {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid black;
+    color: white;
+    background-color: black;
+    padding: 5px 10px;
+  }
+}
+@media only screen and (max-width: 376px) {
+  .wrapper {
+    font-size: 11px;
+  }
+  .minus {
+    display: none;
+  }
+  .plus {
+    display: none;
+  }
+  .change-quantity {
+    input {
+      width: 50%;
+    }
+  }
+}

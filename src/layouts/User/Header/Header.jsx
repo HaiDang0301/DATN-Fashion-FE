@@ -62,9 +62,11 @@ function Header() {
       navigate(routesConfig.login);
     }, 100);
   };
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const handleSearch = async () => {
     navigate(`/collections?name=${nameProduct}`);
+  };
+  const handleCart = () => {
+    navigate(routesConfig.CartDetail);
   };
   return (
     <header className={cx("header-setion")}>
@@ -184,9 +186,9 @@ function Header() {
                             placeholder="Enter the product name"
                             onChange={(e) => setNameProduct(e.target.value)}
                           />
-                          <Link to={"#"} onClick={handleSearch}>
+                          <button to={"#"} onClick={handleSearch}>
                             <i className="fa fa-search"></i>
-                          </Link>
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -199,53 +201,59 @@ function Header() {
                         </span>
                       </div>
                       <div className={cx("cart-detailt")}>
-                        <div className={cx("product-item")}>
-                          <div className="container">
-                            {cart
-                              ? cart.map((item, index) => (
-                                  <div className="row" key={index}>
-                                    <div className="col-lg-4">
-                                      <img src={item.image} alt="" />
-                                    </div>
-                                    <div className="col-lg-8">
-                                      <div className="row">
-                                        <div className="col-lg-12">
-                                          <span>
-                                            Product Name : {item.product_name}
-                                          </span>
-                                        </div>
-                                        <div className="col-lg-12">
-                                          <span>Size : {item.size}</span>
-                                        </div>
-                                        <div className="col-lg-12">
-                                          <span>
-                                            Quantity : {item.quantity}
-                                          </span>
-                                        </div>
-                                        <div className="col-lg-12">
-                                          <span>
-                                            Price :{" "}
-                                            {Number(
-                                              item.price
-                                            ).toLocaleString()}
-                                          </span>
-                                        </div>
-                                        <div className="col-lg-12">
-                                          <span>
-                                            Total Price: $
-                                            {Number(
-                                              item.price * item.quantity
-                                            ).toLocaleString()}
-                                          </span>
+                        {cart.length > 0 ? (
+                          <div className={cx("product-item")}>
+                            <div className="container">
+                              {cart
+                                ? cart.map((item, index) => (
+                                    <div className="row" key={index}>
+                                      <div className="col-lg-4">
+                                        <img src={item.image} alt="" />
+                                      </div>
+                                      <div className="col-lg-8">
+                                        <div className="row">
+                                          <div className="col-lg-12">
+                                            <span>
+                                              Product Name : {item.product_name}
+                                            </span>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <span>Size : {item.size}</span>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <span>
+                                              Quantity : {item.quantity}
+                                            </span>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <span>
+                                              Price :{" "}
+                                              {Number(
+                                                item.price
+                                              ).toLocaleString()}
+                                            </span>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <span>
+                                              Total Price: $
+                                              {Number(
+                                                item.price * item.quantity
+                                              ).toLocaleString()}
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                ))
-                              : null}
+                                  ))
+                                : null}
+                            </div>
+                            <button onClick={handleCart}>
+                              Proceed to order
+                            </button>
                           </div>
-                        </div>
-                        <button>Proceed to order</button>
+                        ) : (
+                          "No Product"
+                        )}
                       </div>
                     </div>
                   </div>
@@ -361,7 +369,7 @@ function Header() {
             <li>
               <Link to={"#"} onClick={(e) => setCheck(!check)}>
                 <i className="fa fa-language">
-                  Your Language <i className="fa fa-angle-down"></i>
+                  {"  "} Language <i className="fa fa-angle-down"></i>
                 </i>
               </Link>
               <ul className={cx(check ? "show-language" : "hiden-language")}>
@@ -417,13 +425,13 @@ function Header() {
                 placeholder="Enter the product name"
                 onChange={(e) => setNameProduct(e.target.value)}
               />
-              <Link onClick={handleSearch}>
+              <button onClick={handleSearch}>
                 <i className="fa fa-search"></i>
-              </Link>
+              </button>
             </div>
           </div>
           <div className={cx("cart-mobile")}>
-            <Link>
+            <Link to={routesConfig.CartDetail}>
               <i className="fa fa-shopping-cart">
                 <span>
                   {quantity ? (quantity < 99 ? quantity : 99 + "+") : 0}

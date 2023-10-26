@@ -13,6 +13,14 @@ const AuthsAPI = {
     const url = "/api/auth/register";
     return axiosConfig.post(url, data);
   },
+  verify(params) {
+    const url = `/api/auth/verify/${params}`;
+    return axiosConfig.post(url);
+  },
+  newsletter() {
+    const url = `/api/auth/newsletter`;
+    return axiosConfig.post(url);
+  },
   login(data) {
     const url = "/api/auth/login";
     return axiosConfig.post(url, data);
