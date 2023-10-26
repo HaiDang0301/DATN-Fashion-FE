@@ -9,5 +9,13 @@ const cartAPI = {
     const url = "/api/user/carts";
     return axiosConfig.post(url, data);
   },
+  destroy(data) {
+    const url = "/api/user/carts";
+    return axiosConfig.delete(url, { data });
+  },
+  orders(data) {
+    const url = "/api/user/carts/orders";
+    return axiosConfig.post(url, data);
+  },
 };
 export default cartAPI;

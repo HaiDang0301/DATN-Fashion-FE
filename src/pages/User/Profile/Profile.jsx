@@ -1,5 +1,4 @@
 import className from "classnames/bind";
-import Sketon from "react-loading-skeleton";
 import loading from "../../../assets/loading.gif";
 import styles from "./Profile.module.scss";
 import { useEffect, useRef, useState } from "react";
@@ -29,9 +28,8 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchApi = async () => {
-      await AuthsAPI.profile(token).then((res) => {
-        setUser(res.data);
-      });
+      const result = await AuthsAPI.profile(token);
+      setUser(result.data);
     };
     const fetchCity = async () => {
       setDisableD(true);
@@ -128,7 +126,9 @@ function Profile() {
     const data = new FormData();
     data.append("image", image);
     data.append("full_name", user.full_name);
-    data.append("phone", user.phone);
+    if (user.phone) {
+      data.append("phone", user.phone);
+    }
     if (password) {
       data.append("password", password);
     }

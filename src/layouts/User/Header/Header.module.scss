@@ -409,6 +409,36 @@
     text-decoration: none;
   }
 }
+.product_name {
+  span {
+    font-size: 15px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+}
+.size {
+  span {
+    font-size: 12px;
+    color: #333;
+  }
+}
+.quantity {
+  span {
+    font-size: 12px;
+    color: #333;
+  }
+}
+.price {
+  span {
+    font-size: 12px;
+    color: #333;
+  }
+}
+.total-price {
+  span {
+    font-size: 12px;
+    color: #333;
+  }
+}
 .cart-mobile {
   width: 25%;
   height: 50px;

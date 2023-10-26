@@ -19,6 +19,7 @@ function Header() {
     decode = jwt_decode(token);
   }
   const increase = useSelector((quantity) => quantity.increase);
+  const decrease = useSelector((quantity) => quantity.decrease);
   const [language, setLanguage] = useState("ENG");
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState();
@@ -54,7 +55,7 @@ function Header() {
     };
     fetchCart();
     fetchAPI();
-  }, [increase]);
+  }, [increase, decrease]);
   const handleLogout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
@@ -207,39 +208,47 @@ function Header() {
                               {cart
                                 ? cart.map((item, index) => (
                                     <div className="row" key={index}>
-                                      <div className="col-lg-4">
+                                      <div className="col-lg-4 col-md-4 col-sm-4">
                                         <img src={item.image} alt="" />
                                       </div>
-                                      <div className="col-lg-8">
+                                      <div className="col-lg-8 col-md-4 col-sm-4">
                                         <div className="row">
                                           <div className="col-lg-12">
-                                            <span>
-                                              Product Name : {item.product_name}
-                                            </span>
+                                            <div className={cx("product_name")}>
+                                              <span>{item.product_name}</span>
+                                            </div>
                                           </div>
                                           <div className="col-lg-12">
-                                            <span>Size : {item.size}</span>
+                                            <div className={cx("size")}>
+                                              <span>Size : {item.size}</span>
+                                            </div>
                                           </div>
                                           <div className="col-lg-12">
-                                            <span>
-                                              Quantity : {item.quantity}
-                                            </span>
+                                            <div className={cx("quantity")}>
+                                              <span>
+                                                Quantity : {item.quantity}
+                                              </span>
+                                            </div>
                                           </div>
                                           <div className="col-lg-12">
-                                            <span>
-                                              Price :{" "}
-                                              {Number(
-                                                item.price
-                                              ).toLocaleString()}
-                                            </span>
+                                            <div className={cx("price")}>
+                                              <span>
+                                                Price :{" "}
+                                                {Number(
+                                                  item.price
+                                                ).toLocaleString()}
+                                              </span>
+                                            </div>
                                           </div>
                                           <div className="col-lg-12">
-                                            <span>
-                                              Total Price: $
-                                              {Number(
-                                                item.price * item.quantity
-                                              ).toLocaleString()}
-                                            </span>
+                                            <div className={cx("total-price")}>
+                                              <span>
+                                                Total Price: $
+                                                {Number(
+                                                  item.price * item.quantity
+                                                ).toLocaleString()}
+                                              </span>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>

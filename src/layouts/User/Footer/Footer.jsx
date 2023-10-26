@@ -3,9 +3,47 @@ import styles from "./Footer.module.scss";
 const cx = classNames.bind(styles);
 import { Link } from "react-router-dom";
 import footerlogo from "../../../assets/logo.png";
+import AuthsAPI from "../../../api/AuthsAPI";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 function Footer() {
+  const [email, setEmail] = useState();
+  const [disabled, setDisable] = useState(false);
+  const handleNewsletter = async () => {
+    const data = { email: email };
+    await AuthsAPI.newsletter(data)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Subscribe newsletter Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setDisable(true);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          toast.error("Please check out your email", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setDisable(true);
+        }
+        if (err.response.status === 500) {
+          toast.error("Connect Server Errors", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setDisable(true);
+        }
+      });
+  };
   return (
     <footer className={cx("wrapper")}>
+      <ToastContainer></ToastContainer>
       <div className={cx("footer-top")}>
         <div className={cx("ft")}>
           <div className="row">
@@ -23,13 +61,20 @@ function Footer() {
                       type="email"
                       name="email"
                       id="email"
+                      disabled={disabled}
                       placeholder="Enter your email"
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
 
                   <div className="col-lg-3 col-md-3 col-sm-3 col-4">
                     <div className={cx("btn-resign")}>
-                      <button>Subscribe</button>
+                      <button
+                        onClick={(e) => handleNewsletter()}
+                        disabled={disabled}
+                      >
+                        Subscribe
+                      </button>
                     </div>
                   </div>
                 </div>

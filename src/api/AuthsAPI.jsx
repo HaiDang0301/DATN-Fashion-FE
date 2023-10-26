@@ -17,9 +17,9 @@ const AuthsAPI = {
     const url = `/api/auth/verify/${params}`;
     return axiosConfig.post(url);
   },
-  newsletter() {
+  newsletter(data) {
     const url = `/api/auth/newsletter`;
-    return axiosConfig.post(url);
+    return axiosConfig.post(url, data);
   },
   login(data) {
     const url = "/api/auth/login";

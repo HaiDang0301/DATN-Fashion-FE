@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 const AddToCartSlice = createSlice({
   name: "AddToCart",
-  initialState: 0,
+  initialState: false,
   reducers: {
     increase: (quantity) => {
       return quantity + 1;
     },
+    decrease: (quantity) => {
+      return quantity - 1;
+    },
   },
 });
 const { actions, reducer } = AddToCartSlice;
-export const { increase } = actions;
+export const { increase, decrease } = actions;
 export default reducer;
