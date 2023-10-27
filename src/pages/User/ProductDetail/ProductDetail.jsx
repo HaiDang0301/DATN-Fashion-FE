@@ -9,7 +9,7 @@ import productsAPI from "../../../api/User/productsAPI";
 import Slider from "react-slick";
 import cartAPI from "../../../api/User/cartAPI";
 import { useDispatch } from "react-redux";
-import { increase } from "../../../features/AddToCart/AddToCart";
+import { resetCart } from "../../../features/AddToCart/AddToCart";
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ function ProductDetail() {
                 theme: "light",
               });
             }
-            const action = increase();
+            const action = resetCart();
             dispatch(action);
             setDisable(true);
           })

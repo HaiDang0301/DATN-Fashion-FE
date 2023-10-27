@@ -18,8 +18,7 @@ function Header() {
   if (token) {
     decode = jwt_decode(token);
   }
-  const increase = useSelector((quantity) => quantity.increase);
-  const decrease = useSelector((quantity) => quantity.decrease);
+  const status = useSelector((status) => status.resetCart);
   const [language, setLanguage] = useState("ENG");
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState();
@@ -55,7 +54,7 @@ function Header() {
     };
     fetchCart();
     fetchAPI();
-  }, [increase, decrease]);
+  }, [status]);
   const handleLogout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");

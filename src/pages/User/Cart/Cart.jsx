@@ -6,8 +6,7 @@ import AuthsAPI from "../../../api/AuthsAPI";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { reducers } from "../../../features/ChangeCart/ChangeCart";
-import { decrease } from "../../../features/AddToCart/AddToCart";
+import { resetCart } from "../../../features/AddToCart/AddToCart";
 const cx = className.bind(styles);
 function CartDetail() {
   document.title = "My Cart";
@@ -34,7 +33,7 @@ function CartDetail() {
   const [disabledD, setDisableD] = useState(true);
   const [wards, setWards] = useState([]);
   const [disable, setDisable] = useState(false);
-  const status = useSelector((products) => products.reducers);
+  const [status, setStatus] = useState(false);
   const [user, setUser] = useState({
     address: { city: "", district: "", ward: "", address_home: "" },
     phone: "",
@@ -169,16 +168,6 @@ function CartDetail() {
     });
     setTotal(total);
   };
-  const handleChange = (event, index) => {
-    let data = [...carts];
-    carts[index][event.target.name] = event.target.value;
-    setCarts(data);
-    let total = 0;
-    carts.map((item) => {
-      total += item.quantity * item.price;
-    });
-    setTotal(total);
-  };
   const handleDestroy = (product_id) => {
     const data = { product_id: product_id };
     cartAPI
@@ -190,9 +179,9 @@ function CartDetail() {
             autoClose: 5000,
             theme: "light",
           });
-          const actions = reducers();
+          const actions = resetCart();
           dispatch(actions);
-          console.log(actions);
+          setStatus(!status);
         }
       })
       .catch((err) => {
@@ -235,10 +224,9 @@ function CartDetail() {
               { position: "bottom-right", autoClose: 5000, theme: "light" }
             );
             setDisable(true);
-            const actions = reducers();
-            const actions1 = decrease();
+            setStatus(!status);
+            const actions = resetCart();
             dispatch(actions);
-            dispatch(actions1);
           }
         })
         .catch((err) => {
@@ -260,98 +248,90 @@ function CartDetail() {
           <div className="row">
             <div className="col-lg-12">
               <div className={cx("title")}>
-                <h5>Your Cart ({quantity ? quantity : 0} items)</h5>
+                <h5>You have {quantity ? quantity : 0} items in your cart </h5>
               </div>
             </div>
             <div className="col-lg-8 col-md-7 col-sm-12">
               {carts
                 ? carts.map((item, index) => (
-                    <div className={cx("item")} key={index}>
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <div className="row">
-                            <div className="col-lg-3 col-md-4 col-sm-4 col-4">
-                              <div className={cx("image")}>
-                                <img src={item.image} alt="" />
+                    <div className={cx("box-item")} key={index}>
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-lg-7">
+                            <div className="row">
+                              <div className="col-lg-4">
+                                <div className={cx("image")}>
+                                  <img src={item.image} alt="" />
+                                </div>
+                              </div>
+                              <div className="col-lg-8">
+                                <div className={cx("information")}>
+                                  <div className="row">
+                                    <div className="col-lg-12">
+                                      {item.product_name}
+                                    </div>
+                                    <div className="col-lg-12">
+                                      Size : {item.size}
+                                    </div>
+                                    <div className="col-lg-12">
+                                      Price : $
+                                      {Number(item.price).toLocaleString()}
+                                    </div>
+                                    <div className="col-lg-12">
+                                      Total Price : $
+                                      {Number(
+                                        item.price * item.quantity
+                                      ).toLocaleString()}
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
-                            <div className="col-lg-9 col-md-8 col-sm-8 col-8">
-                              <div className="row">
-                                <div className="col-lg-12">
+                          </div>
+                          <div className="col-lg-4">
+                            <div className="row g-0">
+                              <div className="col-lg-1">
+                                <div className={cx("quantity")}>
+                                  {item.quantity}
+                                </div>
+                              </div>
+                              <div className="col-lg-1">
+                                <div className={cx("change-quantity")}>
                                   <div className="row">
-                                    <div className="col-lg-10 col-md-10 col-sm-10 col-10">
-                                      <div className={cx("product-name")}>
-                                        {item.product_name}
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                                      <div className={cx("destroy")}>
+                                    <div className="col-lg-12">
+                                      <div className={cx("btn-minus")}>
                                         <button
                                           onClick={(e) =>
-                                            handleDestroy(item.product_id)
-                                          }
-                                        >
-                                          <i className="fa fa-close"></i>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="col-lg-12">
-                                  <div className={cx("size")}>
-                                    Size : {item.size}
-                                  </div>
-                                </div>
-                                <div className="col-lg-12">
-                                  <div className="row g-0">
-                                    <div className="col-lg-1 col-md-1 col-sm-1 col-1">
-                                      <div className={cx("minus")}>
-                                        <button
-                                          onClick={(event) =>
                                             handleMinus(index, item.quantity)
                                           }
                                         >
-                                          <i className="fa fa-minus"></i>
+                                          <i className="fa fa-sort-up"></i>
                                         </button>
                                       </div>
                                     </div>
-                                    <div className="col-lg-1 col-md-1 col-sm-1 col-1">
-                                      <div className={cx("input")}>
-                                        <input
-                                          type="text"
-                                          name="quantity"
-                                          id="quantity"
-                                          value={item.quantity}
-                                          onChange={(event) =>
-                                            handleChange(event, index)
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-1 col-md-1 col-sm-1 col-1">
-                                      <div className={cx("minus")}>
+                                    <div className="col-lg-12">
+                                      <div className={cx("btn-plus")}>
                                         <button
                                           onClick={(e) =>
                                             handlePlus(index, item.quantity)
                                           }
                                         >
-                                          <i className="fa fa-plus"></i>
+                                          <i className="fa fa-sort-down"></i>
                                         </button>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                                <div className="col-lg-12">
-                                  <div className={cx("price")}>
-                                    Price : ${item.price}
-                                  </div>
-                                </div>
-                                <div className="col-lg-12">
-                                  <div className={cx("total-price")}>
-                                    Total Price : ${item.price * item.quantity}
-                                  </div>
-                                </div>
                               </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-1">
+                            <div className={cx("destroy")}>
+                              <button
+                                onClick={(e) => handleDestroy(item.product_id)}
+                              >
+                                <i className="fa fa-close"></i>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -598,20 +578,15 @@ function CartDetail() {
                       </div>
                     </div>
                   </div>
-                  <div className={cx("choose-checkout")}>
-                    <div className={cx("btn-order")}>
-                      <button
-                        disabled={disable}
-                        onClick={(e) => {
-                          handleOrder();
-                        }}
-                      >
-                        Order
-                      </button>
-                    </div>
-                    <div className={cx("btn-checkout")}>
-                      <button>CHECK OUT</button>
-                    </div>
+                  <div className={cx("btn-checkout")}>
+                    <button
+                      disabled={disable}
+                      onClick={(e) => {
+                        handleOrder();
+                      }}
+                    >
+                      CHECK OUT
+                    </button>
                   </div>
                 </div>
               </div>

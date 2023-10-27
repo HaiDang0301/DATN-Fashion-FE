@@ -3,14 +3,11 @@ const AddToCartSlice = createSlice({
   name: "AddToCart",
   initialState: false,
   reducers: {
-    increase: (quantity) => {
-      return quantity + 1;
-    },
-    decrease: (quantity) => {
-      return quantity - 1;
+    resetCart: (status) => {
+      return !status;
     },
   },
 });
 const { actions, reducer } = AddToCartSlice;
-export const { increase, decrease } = actions;
+export const { resetCart } = actions;
 export default reducer;
