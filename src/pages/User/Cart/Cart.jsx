@@ -55,7 +55,7 @@ function CartDetail() {
       }
       setCarts(result.data.carts);
     };
-    const fetchApi = async () => {
+    const fetchProfile = async () => {
       const result = await AuthsAPI.profile(token);
       setUser(result.data);
       if (result.data.registered === true) {
@@ -84,7 +84,7 @@ function CartDetail() {
           setWards(ward.data);
         });
     };
-    fetchApi();
+    fetchProfile();
     fetchCity();
     fetchCart();
   }, [status]);
@@ -214,6 +214,7 @@ function CartDetail() {
         phone: user.phone,
         address: user.address,
         carts: carts,
+        totalMoney: total - (total * discount) / 100,
       };
       cartAPI
         .orders(data)
@@ -257,52 +258,56 @@ function CartDetail() {
                     <div className={cx("box-item")} key={index}>
                       <div className="container">
                         <div className="row">
-                          <div className="col-lg-7">
-                            <div className="row">
-                              <div className="col-lg-4">
-                                <div className={cx("image")}>
-                                  <img src={item.image} alt="" />
+                          <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+                            <div className={cx("image")}>
+                              <img src={item.image} alt="" />
+                            </div>
+                          </div>
+                          <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div className={cx("information")}>
+                              <div className="row">
+                                <div className="col-lg-12">
+                                  <div className={cx("product-name")}>
+                                    {item.product_name}
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="col-lg-8">
-                                <div className={cx("information")}>
-                                  <div className="row">
-                                    <div className="col-lg-12">
-                                      {item.product_name}
-                                    </div>
-                                    <div className="col-lg-12">
-                                      Size : {item.size}
-                                    </div>
-                                    <div className="col-lg-12">
-                                      Price : $
-                                      {Number(item.price).toLocaleString()}
-                                    </div>
-                                    <div className="col-lg-12">
-                                      Total Price : $
-                                      {Number(
-                                        item.price * item.quantity
-                                      ).toLocaleString()}
-                                    </div>
+                                <div className="col-lg-12">
+                                  <div className={cx("size")}>
+                                    Size : {item.size}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12">
+                                  <div className={cx("price")}>
+                                    Price : $
+                                    {Number(item.price).toLocaleString()}
+                                  </div>
+                                </div>
+                                <div className="col-lg-12">
+                                  <div className={cx("total-price")}>
+                                    Total Price : $
+                                    {Number(
+                                      item.price * item.quantity
+                                    ).toLocaleString()}
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div className="col-lg-4">
+                          <div className="col-lg-3 col-md-3 col-sm-3 col-3">
                             <div className="row g-0">
-                              <div className="col-lg-1">
+                              <div className="col-lg-1 col-md-1 col-sm-1 col-1">
                                 <div className={cx("quantity")}>
                                   {item.quantity}
                                 </div>
                               </div>
-                              <div className="col-lg-1">
+                              <div className="col-lg-1 col-md-1 col-sm-1 col-1">
                                 <div className={cx("change-quantity")}>
                                   <div className="row">
                                     <div className="col-lg-12">
-                                      <div className={cx("btn-minus")}>
+                                      <div className={cx("btn-plus")}>
                                         <button
                                           onClick={(e) =>
-                                            handleMinus(index, item.quantity)
+                                            handlePlus(index, item.quantity)
                                           }
                                         >
                                           <i className="fa fa-sort-up"></i>
@@ -310,10 +315,10 @@ function CartDetail() {
                                       </div>
                                     </div>
                                     <div className="col-lg-12">
-                                      <div className={cx("btn-plus")}>
+                                      <div className={cx("btn-minus")}>
                                         <button
                                           onClick={(e) =>
-                                            handlePlus(index, item.quantity)
+                                            handleMinus(index, item.quantity)
                                           }
                                         >
                                           <i className="fa fa-sort-down"></i>
@@ -325,7 +330,7 @@ function CartDetail() {
                               </div>
                             </div>
                           </div>
-                          <div className="col-lg-1">
+                          <div className="col-lg-1 col-md-1 col-sm-1 col-1">
                             <div className={cx("destroy")}>
                               <button
                                 onClick={(e) => handleDestroy(item.product_id)}

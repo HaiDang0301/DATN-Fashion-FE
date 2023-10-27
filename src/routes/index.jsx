@@ -24,6 +24,8 @@ import Products from "../pages/User/Products/Products";
 import ProductDetail from "../pages/User/ProductDetail/ProductDetail";
 import CartDetail from "../pages/User/Cart/Cart";
 import Verify from "../pages/Auth/Verify/Verify";
+import Orders from "../pages/User/Orders/Orders";
+import OrdersDetail from "../pages/User/OrdersDetail/OrderDetail";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -77,6 +79,14 @@ const publicRoutes = [
   {
     path: routesConfig.CartDetail,
     component: CartDetail,
+  },
+  {
+    path: routesConfig.Orders,
+    component: Orders,
+  },
+  {
+    path: routesConfig.OrdersDetail,
+    component: OrdersDetail,
   },
 ];
 const privateRoutes = [

@@ -9,6 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import modalAPI from "../../../api/Admin/modalAPI";
 import cartAPI from "../../../api/User/cartAPI";
 import { useSelector } from "react-redux";
+import orderAPI from "../../../api/User/orderAPI";
 const cx = classNames.bind(styles);
 function Header() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ function Header() {
   const [language, setLanguage] = useState("ENG");
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState();
+  const [orders, setOrders] = useState([]);
   const [nameProduct, setNameProduct] = useState();
   const [checkLogin, setCheckLogin] = useState(false);
   const [check, setCheck] = useState(false);
@@ -42,7 +44,6 @@ function Header() {
     };
     const fetchCart = async () => {
       const result = await cartAPI.index(token);
-
       if (result.data) {
         let sum = 0;
         result.data.carts.map((quantity) => {
@@ -52,6 +53,11 @@ function Header() {
         setCart(result.data.carts);
       }
     };
+    const fetchOrder = async () => {
+      const result = await orderAPI.index(token);
+      setOrders(result.data.length);
+    };
+    fetchOrder();
     fetchCart();
     fetchAPI();
   }, [status]);
@@ -156,7 +162,14 @@ function Header() {
                             ) : null}
                             {decode.role === "client" ? (
                               <li>
-                                <Link to={"#"}>Order</Link>
+                                <div className={cx("order")}>
+                                  <Link to={routesConfig.Orders}>Order</Link>
+                                  {orders ? (
+                                    <div className={cx("total-order")}>
+                                      <span>{orders}</span>
+                                    </div>
+                                  ) : null}
+                                </div>
                               </li>
                             ) : (
                               <li>
@@ -351,6 +364,11 @@ function Header() {
             <li>
               <Link to={token ? routesConfig.Profile : routesConfig.login}>
                 <i className="fa fa-user"> My Account</i>
+              </Link>
+            </li>
+            <li>
+              <Link to={token ? routesConfig.Orders : routesConfig.login}>
+                <i className="fa fa-shopping-cart"> My Orders</i>
               </Link>
             </li>
             <li>

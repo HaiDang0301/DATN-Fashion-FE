@@ -12,6 +12,8 @@ const routesConfig = {
   Products: "/collections/:type?/:category?",
   ProductDetail: "/collections/:type?/:category?/products/:slug",
   CartDetail: "/my-cart",
+  Orders: "/my-orders",
+  OrdersDetail: "/my-orders/:id",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",
