@@ -44,7 +44,7 @@ function Header() {
     };
     const fetchCart = async () => {
       const result = await cartAPI.index(token);
-      if (result.data) {
+      if (result.data.carts) {
         let sum = 0;
         result.data.carts.map((quantity) => {
           sum += Number(quantity.quantity);

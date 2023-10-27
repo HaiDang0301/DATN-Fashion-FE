@@ -12,7 +12,6 @@ function OrdersDetail() {
     const fetchOrder = async () => {
       const result = await orderAPI.show(id);
       setOrders(result.data);
-      console.log(result.data);
     };
     fetchOrder();
   }, []);
