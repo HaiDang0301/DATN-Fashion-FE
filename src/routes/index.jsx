@@ -22,6 +22,10 @@ import CreateBanners from "../pages/Admin/Banners/Create/CreateBanners";
 import UpdateBanners from "../pages/Admin/Banners/Update/Update";
 import Products from "../pages/User/Products/Products";
 import ProductDetail from "../pages/User/ProductDetail/ProductDetail";
+import CartDetail from "../pages/User/Cart/Cart";
+import Verify from "../pages/Auth/Verify/Verify";
+import Orders from "../pages/User/Orders/Orders";
+import OrdersDetail from "../pages/User/OrdersDetail/OrderDetail";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -38,6 +42,11 @@ const publicRoutes = [
   {
     path: routesConfig.register,
     component: Register,
+    layout: null,
+  },
+  {
+    path: routesConfig.verify,
+    component: Verify,
     layout: null,
   },
   {
@@ -66,6 +75,18 @@ const publicRoutes = [
   {
     path: routesConfig.ProductDetail,
     component: ProductDetail,
+  },
+  {
+    path: routesConfig.CartDetail,
+    component: CartDetail,
+  },
+  {
+    path: routesConfig.Orders,
+    component: Orders,
+  },
+  {
+    path: routesConfig.OrdersDetail,
+    component: OrdersDetail,
   },
 ];
 const privateRoutes = [

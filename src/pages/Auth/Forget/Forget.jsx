@@ -38,8 +38,10 @@ function ForgetPw() {
     };
     const forget = await AuthsAPI.forget(data)
       .then((res) => {
-        if (res.data.message === "Create a successful reset password") {
-          toast.success("Success please check the email", {
+        if (
+          res.data.message === "Please go to Gmail to authenticate your account"
+        ) {
+          toast.success("Please go to Gmail to authenticate your account", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",

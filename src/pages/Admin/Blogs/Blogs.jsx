@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import blogAPI from "../../../api/Admin/blogsAPI";
 import className from "classnames/bind";
 import styles from "./Blogs.module.scss";
+import formatDate from "../../../formatDate/formatDate";
 const cx = className.bind(styles);
 function AdminBlogs() {
   document.title = "Admin | Blogs";
@@ -21,9 +22,7 @@ function AdminBlogs() {
   const [begin, setBegin] = useState("");
   const [final, setFinal] = useState("");
   const [show, setShow] = useState(false);
-  const [bgweek, setBgweek] = useState(false);
-  const [bgmonth, setBgmonth] = useState(false);
-  const [bgyear, setBgyear] = useState(false);
+  const [background, setBackground] = useState();
   const handleClose = () => setShow(false);
   const params = searchParams;
   useEffect(() => {
@@ -66,79 +65,45 @@ function AdminBlogs() {
     const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
     navigate(newUrl);
   };
-  const handleWeek = () => {
-    setBgweek(true);
-    setBgmonth(false);
-    setBgyear(false);
-    const lastWeek =
+  const handleWeek = (week) => {
+    setBackground(week);
+    const lastWeek = formatDate(
       date.getFullYear() +
-      "-" +
-      0 +
-      (date.getMonth() + 1) +
-      "-" +
-      (date.getDate() - 7);
-    const now =
+        "-" +
+        0 +
+        (date.getMonth() + 1) +
+        "-" +
+        (date.getDate() - 7)
+    );
+    const now = formatDate(
       date.getFullYear() +
-      "-" +
-      0 +
-      (date.getMonth() + 1) +
-      "-" +
-      date.getDate();
+        "-" +
+        0 +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getDate()
+    );
     setFinal(now);
     setBegin(lastWeek);
   };
-  const handleMonth = () => {
-    setBgmonth(true);
-    setBgweek(false);
-    setBgyear(false);
-    if (
-      date.getDate() === 1 ||
-      date.getDate() === 3 ||
-      date.getDate() === 5 ||
-      date.getDate() === 7 ||
-      date.getDate() === 8 ||
-      date.getDate() === 10 ||
-      date.getDate() === 12
-    ) {
-      const finalMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 31;
-      const beginMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 0 + 1;
-      setFinal(finalMonth);
-      setBegin(beginMonth);
-      console.log(finalMonth);
-    } else if (date.getDate !== 2) {
-      const finalMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 30;
-      const beginMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 0 + 1;
-      setFinal(finalMonth);
-      setBegin(beginMonth);
-      console.log(finalMonth);
-    }
-    if (date.getFullYear() % 4 === 0 && date.getMonth() === 2) {
-      const finalMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 29;
-      const beginMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 0 + 1;
-      setFinal(finalMonth);
-      setBegin(beginMonth);
-    }
-    if (date.getFullYear() % 4 !== 0 && date.getMonth() === 2) {
-      const finalMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 28;
-      const beginMonth =
-        date.getFullYear() + "-" + 0 + (date.getMonth() + 1) + "-" + 0 + 1;
-      setFinal(finalMonth);
-      setBegin(beginMonth);
-    }
+  const handleMonth = (month) => {
+    setBackground(month);
+    const finalMonth = formatDate(
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+    );
+    const beginMonth = formatDate(
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + 0 + 1
+    );
+    console.log(beginMonth);
+    setFinal(finalMonth);
+    setBegin(beginMonth);
   };
-  const handleYear = () => {
-    setBgmonth(false);
-    setBgweek(false);
-    setBgyear(true);
-    const finalYear = date.getFullYear() + "-" + 12 + "-" + 31;
-    const beginYear = date.getFullYear() + "-" + 0 + 1 + "-" + 0 + 1;
+  const handleYear = (year) => {
+    setBackground(year);
+    const finalYear = formatDate(date.getFullYear() + "-" + 12 + "-" + 31);
+    const beginYear = formatDate(
+      date.getFullYear() + "-" + 0 + 1 + "-" + 0 + 1
+    );
     setFinal(finalYear);
     setBegin(beginYear);
   };
@@ -209,8 +174,10 @@ function AdminBlogs() {
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("item")}>
                     <button
-                      className={cx(bgweek ? "click-button" : "button")}
-                      onClick={handleWeek}
+                      className={cx(
+                        background === "week" ? "click-button" : "button"
+                      )}
+                      onClick={(e) => handleWeek("week")}
                     >
                       Week
                     </button>
@@ -219,8 +186,10 @@ function AdminBlogs() {
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("item")}>
                     <button
-                      className={cx(bgmonth ? "click-button" : "button")}
-                      onClick={handleMonth}
+                      className={cx(
+                        background === "month" ? "click-button" : "button"
+                      )}
+                      onClick={(e) => handleMonth("month")}
                     >
                       Month
                     </button>
@@ -229,8 +198,10 @@ function AdminBlogs() {
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("item")}>
                     <button
-                      className={cx(bgyear ? "click-button" : "button")}
-                      onClick={handleYear}
+                      className={cx(
+                        background === "year" ? "click-button" : "button"
+                      )}
+                      onClick={(e) => handleYear("year")}
                     >
                       Year
                     </button>

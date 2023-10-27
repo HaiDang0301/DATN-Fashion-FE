@@ -1,0 +1,38 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e8b57;
+  height: 100vh;
+}
+.notification {
+  width: 50%;
+  height: max-content;
+  background-color: #3cb371;
+  text-align: center;
+}
+.notification-form {
+  padding: 20px 0px;
+  h5 {
+    color: white;
+  }
+  span {
+    color: white;
+  }
+  label {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background-color: white;
+    margin: 30px 0px;
+  }
+  i {
+    font-size: 20px;
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    color: green;
+  }
+}

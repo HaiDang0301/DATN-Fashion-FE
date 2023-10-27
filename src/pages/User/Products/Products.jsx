@@ -71,6 +71,18 @@ function Products() {
     const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
     navigate(newUrl);
   };
+  const handleCol = async () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
+    setGrids(false);
+  };
+  const handleGrid = async () => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newUrl);
+    setGrids(true);
+  };
   const handleProducer = (e, value) => {
     setIsloading(true);
     if (checked.includes[value]) {
@@ -85,7 +97,7 @@ function Products() {
     });
   };
   const handleFilter = (e) => {
-    setChecked([]);
+    setChecked([""]);
     setIsloading(true);
     const begin = min;
     const final = max;
@@ -95,7 +107,7 @@ function Products() {
     });
   };
   const handleLimit = async (e) => {
-    setSort("Position");
+    setSort("");
     setLimit(e.target.value);
     const limit = e.target.value;
     setSearchParams({
@@ -114,7 +126,7 @@ function Products() {
     <div className={cx("wrapper")}>
       <div className="container">
         <div className="row">
-          <div className="col-lg-2 col-md-3 col-sm-4 col-12">
+          <div className="col-lg-2 col-md-3 col-sm-12 col-12">
             <div className={cx("menu-left")}>
               <div className="row">
                 <div className="col-lg-12">
@@ -216,7 +228,7 @@ function Products() {
               </div>
             </div>
           </div>
-          <div className="col-lg-10 col-md-9 col-sm-8 col-12">
+          <div className="col-lg-10 col-md-9 col-sm-12 col-12">
             <div className={cx("products")}>
               <div className="row">
                 <div className="col-lg-12">
@@ -243,10 +255,10 @@ function Products() {
                         </div>
                         <div className="col-lg-2 col-md-3 col-sm-4 col-4">
                           <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-6 col-4">
                               Show
                             </div>
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                            <div className="col-lg-6 col-md-6 col-sm-6 col-4">
                               <select
                                 name="limit"
                                 id="limit"
@@ -266,16 +278,13 @@ function Products() {
                     <div className={cx("sorter")}>
                       <div className="row g-0">
                         <div className="col-lg-9 col-md-8 col-sm-6 col-4">
-                          <Link
-                            onClick={(e) => {
-                              setGrids(false);
-                            }}
-                          >
+                          <button onClick={handleCol}>
                             <img src={col} alt="" />
-                          </Link>{" "}
-                          <Link to={"#"} onClick={(e) => setGrids(true)}>
+                          </button>
+
+                          <button onClick={handleGrid}>
                             <img src={grid} alt="" />
-                          </Link>
+                          </button>
                         </div>
                         <div className="col-lg-3 col-md-4 col-sm-6 col-8">
                           <div className="row">
@@ -289,7 +298,7 @@ function Products() {
                                 value={sort}
                                 onChange={handleSort}
                               >
-                                <option value="default">Position</option>
+                                <option value=""></option>
                                 <option value="name">Name</option>
                                 <option value="price">Price</option>
                               </select>
@@ -412,7 +421,7 @@ function Products() {
                                   <div className={cx("loading-information")}>
                                     <Skeleton
                                       count={2}
-                                      width={180}
+                                      width={250}
                                       height={20}
                                     ></Skeleton>
                                   </div>

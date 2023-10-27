@@ -1,9 +1,9 @@
 import axiosConfig from "./Axiosconfig";
 
 const AuthsAPI = {
-  profile() {
+  profile(token) {
     const url = "/api/auth/profile";
-    return axiosConfig.get(url);
+    return axiosConfig.get(url, { headers: { token: token } });
   },
   update(data) {
     const url = "/api/auth/profile";
@@ -11,6 +11,14 @@ const AuthsAPI = {
   },
   register(data) {
     const url = "/api/auth/register";
+    return axiosConfig.post(url, data);
+  },
+  verify(params) {
+    const url = `/api/auth/verify/${params}`;
+    return axiosConfig.post(url);
+  },
+  newsletter(data) {
+    const url = `/api/auth/newsletter`;
     return axiosConfig.post(url, data);
   },
   login(data) {

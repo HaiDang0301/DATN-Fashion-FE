@@ -5,8 +5,11 @@ import logo from "../../../assets/logo.png";
 import routesConfig from "../../../config/routes";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import modalAPI from "../../../api/Admin/modalAPI";
+import cartAPI from "../../../api/User/cartAPI";
+import { useSelector } from "react-redux";
+import orderAPI from "../../../api/User/orderAPI";
 const cx = classNames.bind(styles);
 function Header() {
   const navigate = useNavigate();
@@ -16,14 +19,16 @@ function Header() {
   if (token) {
     decode = jwt_decode(token);
   }
+  const status = useSelector((status) => status.resetCart);
   const [language, setLanguage] = useState("ENG");
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [cart, setCart] = useState(0);
+  const [cart, setCart] = useState([]);
+  const [quantity, setQuantity] = useState();
+  const [orders, setOrders] = useState([]);
   const [nameProduct, setNameProduct] = useState();
   const [checkLogin, setCheckLogin] = useState(false);
   const [check, setCheck] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
-  const [data, setData] = useState([]);
+  const [collections, setCollections] = useState([]);
   const [show, setShow] = useState(false);
   const [searchMobile, setSearchMobile] = useState(false);
   const handleClose = () => setShow(false);
@@ -35,10 +40,27 @@ function Header() {
     const params = "collections";
     const fetchAPI = async () => {
       const result = await modalAPI.getAll(params);
-      setData(result.data);
+      setCollections(result.data);
     };
+    const fetchCart = async () => {
+      const result = await cartAPI.index(token);
+      if (result.data) {
+        let sum = 0;
+        result.data.carts.map((quantity) => {
+          sum += Number(quantity.quantity);
+        });
+        setQuantity(sum);
+        setCart(result.data.carts);
+      }
+    };
+    const fetchOrder = async () => {
+      const result = await orderAPI.index(token);
+      setOrders(result.data.length);
+    };
+    fetchOrder();
+    fetchCart();
     fetchAPI();
-  }, []);
+  }, [status]);
   const handleLogout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
@@ -46,9 +68,11 @@ function Header() {
       navigate(routesConfig.login);
     }, 100);
   };
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const handleSearch = async () => {
     navigate(`/collections?name=${nameProduct}`);
+  };
+  const handleCart = () => {
+    navigate(routesConfig.CartDetail);
   };
   return (
     <header className={cx("header-setion")}>
@@ -138,7 +162,14 @@ function Header() {
                             ) : null}
                             {decode.role === "client" ? (
                               <li>
-                                <Link to={"#"}>Order</Link>
+                                <div className={cx("order")}>
+                                  <Link to={routesConfig.Orders}>Order</Link>
+                                  {orders ? (
+                                    <div className={cx("total-order")}>
+                                      <span>{orders}</span>
+                                    </div>
+                                  ) : null}
+                                </div>
                               </li>
                             ) : (
                               <li>
@@ -168,26 +199,84 @@ function Header() {
                             placeholder="Enter the product name"
                             onChange={(e) => setNameProduct(e.target.value)}
                           />
-                          <Link to={"#"} onClick={handleSearch}>
+                          <button to={"#"} onClick={handleSearch}>
                             <i className="fa fa-search"></i>
-                          </Link>
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-2 col-md-2 col-sm-3 col-4">
-                    <ul className={cx("shopping-cart")}>
-                      <li>
-                        <Link to={"#"}>
-                          <div className={cx("cart")}>
-                            <span>{cart}</span>
+                    <div className={cx("shopping-cart")}>
+                      <div className={cx("cart")}>
+                        <span>
+                          {quantity ? (quantity < 99 ? quantity : 99 + "+") : 0}
+                        </span>
+                      </div>
+                      <div className={cx("cart-detailt")}>
+                        {cart.length > 0 ? (
+                          <div className={cx("product-item")}>
+                            <div className="container">
+                              {cart
+                                ? cart.map((item, index) => (
+                                    <div className="row" key={index}>
+                                      <div className="col-lg-4 col-md-4 col-sm-4">
+                                        <img src={item.image} alt="" />
+                                      </div>
+                                      <div className="col-lg-8 col-md-4 col-sm-4">
+                                        <div className="row">
+                                          <div className="col-lg-12">
+                                            <div className={cx("product_name")}>
+                                              <span>{item.product_name}</span>
+                                            </div>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <div className={cx("size")}>
+                                              <span>Size : {item.size}</span>
+                                            </div>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <div className={cx("quantity")}>
+                                              <span>
+                                                Quantity : {item.quantity}
+                                              </span>
+                                            </div>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <div className={cx("price")}>
+                                              <span>
+                                                Price :{" "}
+                                                {Number(
+                                                  item.price
+                                                ).toLocaleString()}
+                                              </span>
+                                            </div>
+                                          </div>
+                                          <div className="col-lg-12">
+                                            <div className={cx("total-price")}>
+                                              <span>
+                                                Total Price: $
+                                                {Number(
+                                                  item.price * item.quantity
+                                                ).toLocaleString()}
+                                              </span>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))
+                                : null}
+                            </div>
+                            <button onClick={handleCart}>
+                              Proceed to order
+                            </button>
                           </div>
-                        </Link>
-                        <ul className={cx("cart-detailt")}>
-                          <li>There are currently no orders</li>
-                        </ul>
-                      </li>
-                    </ul>
+                        ) : (
+                          "No Product"
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -207,8 +296,8 @@ function Header() {
                   <li>
                     <Link to={"/collections"}>Collection</Link>
                     <ul className={cx("collection")}>
-                      {data
-                        ? data.map((item, index) => (
+                      {collections
+                        ? collections.map((item, index) => (
                             <Link
                               key={index}
                               to={`/collections/${item.collections}`}
@@ -227,8 +316,8 @@ function Header() {
                     <li>New</li>
                   </Link>
                   <ul className={cx("category")}>
-                    {data
-                      ? data.map((item) =>
+                    {collections
+                      ? collections.map((item) =>
                           item.categories.map((i, index) => (
                             <Link to={`/collections/${i.category}`} key={index}>
                               <li>{i.category}</li>
@@ -278,6 +367,11 @@ function Header() {
               </Link>
             </li>
             <li>
+              <Link to={token ? routesConfig.Orders : routesConfig.login}>
+                <i className="fa fa-shopping-cart"> My Orders</i>
+              </Link>
+            </li>
+            <li>
               <Link to={"/collections/sale"}>
                 <i className="fa fa-tag"> Sale</i>
               </Link>
@@ -301,7 +395,7 @@ function Header() {
             <li>
               <Link to={"#"} onClick={(e) => setCheck(!check)}>
                 <i className="fa fa-language">
-                  Your Language <i className="fa fa-angle-down"></i>
+                  {"  "} Language <i className="fa fa-angle-down"></i>
                 </i>
               </Link>
               <ul className={cx(check ? "show-language" : "hiden-language")}>
@@ -357,15 +451,17 @@ function Header() {
                 placeholder="Enter the product name"
                 onChange={(e) => setNameProduct(e.target.value)}
               />
-              <Link onClick={handleSearch}>
+              <button onClick={handleSearch}>
                 <i className="fa fa-search"></i>
-              </Link>
+              </button>
             </div>
           </div>
           <div className={cx("cart-mobile")}>
-            <Link>
+            <Link to={routesConfig.CartDetail}>
               <i className="fa fa-shopping-cart">
-                <span>{cart}</span>
+                <span>
+                  {quantity ? (quantity < 99 ? quantity : 99 + "+") : 0}
+                </span>
               </i>
             </Link>
           </div>
@@ -395,8 +491,8 @@ function Header() {
                   ></i>
                 </Link>
                 <ul className={cx(showCollection ? "show-lv2" : "hiden-lv2")}>
-                  {data
-                    ? data.map((item, index) => (
+                  {collections
+                    ? collections.map((item, index) => (
                         <Link
                           key={index}
                           to={`/collections/${item.collections}`}
