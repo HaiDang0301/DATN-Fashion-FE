@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./Orders.module.scss";
 import { useEffect, useState } from "react";
 import formatDate from "../../../formatDate/formatDate";
-import orderAPI from "../../../api/User/orderAPI";
+import ordersAPI from "../../../api/User/ordersAPI";
 const cx = classNames.bind(styles);
 function Orders() {
   document.title = "My Orders";
@@ -13,7 +13,7 @@ function Orders() {
   const [orders, setOrders] = useState();
   useEffect(() => {
     const fetchOrder = async () => {
-      const result = await orderAPI.index(token);
+      const result = await ordersAPI.index(token);
       setOrders(result.data);
     };
     fetchOrder();
@@ -31,7 +31,7 @@ function Orders() {
             <thead>
               <tr>
                 <th>STT</th>
-                <th>Code Orders</th>
+                <th>Orders Code</th>
                 <th>Total Money</th>
                 <th>Status</th>
                 <th>Payment</th>
@@ -46,7 +46,19 @@ function Orders() {
                       <td>{index + 1}</td>
                       <td>{item._id.slice(-6).toUpperCase()}</td>
                       <td>${item.totalMoney}</td>
-                      <td>{item.status_delivery}</td>
+                      <td
+                        className={cx(
+                          item.status_delivery === "Cancel"
+                            ? "status_cancel"
+                            : "status_delivery"
+                        )}
+                      >
+                        <span>
+                          {item.status_delivery === "Cancel"
+                            ? item.status_delivery + " , " + item.reason_cancel
+                            : item.status_delivery}
+                        </span>
+                      </td>
                       <td>
                         {item.status_payment === false ? "Unpaid" : "Paid"}
                       </td>

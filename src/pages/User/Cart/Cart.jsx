@@ -5,7 +5,7 @@ import cartAPI from "../../../api/User/cartAPI";
 import AuthsAPI from "../../../api/AuthsAPI";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { resetCart } from "../../../features/AddToCart/AddToCart";
 const cx = className.bind(styles);
 function CartDetail() {
@@ -171,7 +171,7 @@ function CartDetail() {
   const handleDestroy = (product_id) => {
     const data = { product_id: product_id };
     cartAPI
-      .destroy(data)
+      .destroy(data, token)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Delete Success", {
@@ -295,7 +295,7 @@ function CartDetail() {
                           </div>
                           <div className="col-lg-3 col-md-3 col-sm-3 col-3">
                             <div className="row g-0">
-                              <div className="col-lg-1 col-md-1 col-sm-1 col-1">
+                              <div className="col-lg-2 col-md-6 col-sm-6 col-6">
                                 <div className={cx("quantity")}>
                                   {item.quantity}
                                 </div>

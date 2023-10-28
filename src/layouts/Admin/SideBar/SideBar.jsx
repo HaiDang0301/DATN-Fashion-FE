@@ -33,7 +33,7 @@ function SideBar() {
               <Link to={routesConfig.AdminHome}>Home</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.adminOrders}>Oders</Link>
+              <Link to={routesConfig.AdminOrders}>Oders</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={routesConfig.AdminProducts}>Products</Link>
@@ -99,9 +99,9 @@ function SideBar() {
           link={routesConfig.AdminBanners}
         ></ItemMenu>
         <ItemMenu
-          title="Order"
+          title="Orders"
           icon="fa fa-shopping-cart"
-          link={routesConfig.adminOrders}
+          link={routesConfig.AdminOrders}
         ></ItemMenu>
         <ItemMenu
           title="Clients"

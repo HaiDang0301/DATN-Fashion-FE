@@ -490,6 +490,31 @@
     font-size: 11px;
   }
 }
+.order-mobile {
+  position: relative;
+  width: max-content;
+}
+.total-order-mobile {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  top: 0%;
+  right: -25%;
+  background-color: red;
+  height: 15px;
+  width: 15px;
+  span {
+    border-radius: 100%;
+    color: white;
+    font-size: 11px;
+  }
+}
+.cart-none {
+  padding: 20px 0px;
+  text-align: center;
+}
 @media only screen and (max-width: 576px) {
   .menu {
     display: block;

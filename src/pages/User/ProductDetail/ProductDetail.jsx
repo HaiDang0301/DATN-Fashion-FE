@@ -13,6 +13,8 @@ import { resetCart } from "../../../features/AddToCart/AddToCart";
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const dispatch = useDispatch();
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   const type = useParams().type;
   const category = useParams().category;
   const slug = useParams().slug;
@@ -64,8 +66,6 @@ function ProductDetail() {
     setSize(size);
   };
   const handleAddToCart = async () => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
       toast.warning("Please login to use this function", {
         position: "bottom-right",
@@ -90,18 +90,18 @@ function ProductDetail() {
           price: product.price,
         };
         await cartAPI
-          .store(data)
+          .store(data, token)
           .then((res) => {
             if (res.status === 200) {
+              const action = resetCart();
+              dispatch(action);
+              setDisable(true);
               toast.success("Add products to successful shopping cart", {
                 position: "bottom-right",
                 autoClose: 5000,
                 theme: "light",
               });
             }
-            const action = resetCart();
-            dispatch(action);
-            setDisable(true);
           })
           .catch((err) => {
             if (err.response.status === 409) {

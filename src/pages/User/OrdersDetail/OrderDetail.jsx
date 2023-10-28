@@ -1,16 +1,18 @@
 import className from "classnames/bind";
 import styles from "./OrderDetail.module.scss";
 import { useEffect, useState } from "react";
-import orderAPI from "../../../api/User/orderAPI";
 import { useParams } from "react-router-dom";
+import ordersAPI from "../../../api/User/ordersAPI";
 const cx = className.bind(styles);
 function OrdersDetail() {
   document.title = "Order Detail";
   const id = useParams().id;
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     const fetchOrder = async () => {
-      const result = await orderAPI.show(id);
+      const result = await ordersAPI.show(id, token);
       setOrders(result.data);
     };
     fetchOrder();

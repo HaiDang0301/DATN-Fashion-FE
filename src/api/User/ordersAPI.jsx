@@ -1,13 +1,13 @@
 import axiosConfig from "../Axiosconfig";
 
-const orderAPI = {
+const ordersAPI = {
   index(token) {
     const url = "/api/user/carts/orders";
     return axiosConfig.get(url, { headers: { token: token } });
   },
-  show(id) {
+  show(id, token) {
     const url = `/api/user/carts/orders/${id}`;
-    return axiosConfig.get(url);
+    return axiosConfig.get(url, { headers: { token: token } });
   },
 };
-export default orderAPI;
+export default ordersAPI;

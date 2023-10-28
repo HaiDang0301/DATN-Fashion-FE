@@ -5,13 +5,13 @@ const cartAPI = {
     const url = "/api/user/carts";
     return axiosConfig.get(url, { headers: { token: token } });
   },
-  store(data) {
+  store(data, token) {
     const url = "/api/user/carts";
-    return axiosConfig.post(url, data);
+    return axiosConfig.post(url, data, { headers: { token: token } });
   },
-  destroy(data) {
+  destroy(data, token) {
     const url = "/api/user/carts";
-    return axiosConfig.delete(url, { data });
+    return axiosConfig.delete(url, { data, headers: { token: token } });
   },
   orders(data) {
     const url = "/api/user/carts/orders";

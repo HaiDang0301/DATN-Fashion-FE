@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import modalAPI from "../../../api/Admin/modalAPI";
 import cartAPI from "../../../api/User/cartAPI";
 import { useSelector } from "react-redux";
-import orderAPI from "../../../api/User/orderAPI";
+import ordersAPI from "../../../api/User/ordersAPI";
 const cx = classNames.bind(styles);
 function Header() {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ function Header() {
       }
     };
     const fetchOrder = async () => {
-      const result = await orderAPI.index(token);
+      const result = await ordersAPI.index(token);
       setOrders(result.data.length);
     };
     fetchOrder();
@@ -69,7 +69,7 @@ function Header() {
     }, 100);
   };
   const handleSearch = async () => {
-    navigate(`/collections?name=${nameProduct}`);
+    navigate(`/collections?name=${nameProduct.toUpperCase()}`);
   };
   const handleCart = () => {
     navigate(routesConfig.CartDetail);
@@ -273,7 +273,9 @@ function Header() {
                             </button>
                           </div>
                         ) : (
-                          "No Product"
+                          <div className={cx("cart-none")}>
+                            You have not added any product to the cart
+                          </div>
                         )}
                       </div>
                     </div>
@@ -367,9 +369,16 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to={token ? routesConfig.Orders : routesConfig.login}>
-                <i className="fa fa-shopping-cart"> My Orders</i>
-              </Link>
+              <div className={cx("order-mobile")}>
+                <Link to={routesConfig.Orders}>
+                  <i className="fa fa-shopping-cart"> Order</i>
+                </Link>
+                {orders ? (
+                  <div className={cx("total-order-mobile")}>
+                    <span>{orders}</span>
+                  </div>
+                ) : null}
+              </div>
             </li>
             <li>
               <Link to={"/collections/sale"}>
