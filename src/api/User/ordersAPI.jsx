@@ -1,9 +1,9 @@
 import axiosConfig from "../Axiosconfig";
 
 const ordersAPI = {
-  index(token) {
+  index(token, params) {
     const url = "/api/user/carts/orders";
-    return axiosConfig.get(url, { headers: { token: token } });
+    return axiosConfig.get(url, { params: params, headers: { token: token } });
   },
   show(id, token) {
     const url = `/api/user/carts/orders/${id}`;

@@ -17,12 +17,14 @@
   }
 }
 .avatar {
+  padding-top: 30px;
   color: black;
   text-align: center;
   border-bottom: 1px solid #ccc;
   img {
-    padding-top: 30px;
-    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
   }
   i {
     color: black;

@@ -1,9 +1,9 @@
 import axiosConfig from "../Axiosconfig";
 
 const ordersAPI = {
-  index() {
+  index(query) {
     const url = "/api/admin/orders";
-    return axiosConfig.get(url);
+    return axiosConfig.get(url, { params: query });
   },
   show(id) {
     const url = `/api/admin/orders/${id}`;

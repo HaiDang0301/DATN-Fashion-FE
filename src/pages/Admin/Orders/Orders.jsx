@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import ReactPaginate from "react-paginate";
 import { toast, ToastContainer } from "react-toastify";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -11,19 +12,32 @@ import formatDate from "../../../formatDate/formatDate";
 const cx = className.bind(styles);
 function AdminOrders() {
   document.title = "Admin | Orders";
-  const [orders, setOrders] = useState();
+  const [searchParam, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [orders, setOrders] = useState([]);
+  const [totalMoney, setTotalMoney] = useState();
   const [id, setID] = useState();
+  const [begin, setBegin] = useState();
+  const [final, setFinal] = useState();
   const [reason, setReason] = useState();
   const [status, setStatus] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const query = searchParam;
   useEffect(() => {
     const fetchOrders = async () => {
-      const result = await ordersAPI.index();
+      const result = await ordersAPI.index(query);
       setOrders(result.data);
+      if (result.data) {
+        let total = 0;
+        result.data.findOrders.map((item) => {
+          total += item.totalMoney;
+        });
+        setTotalMoney(total);
+      }
     };
     fetchOrders();
-  }, [status]);
+  }, [status, searchParam]);
   const handleDelivery = async (id) => {
     const data = { id: id, status: "delivery" };
     await ordersAPI
@@ -53,7 +67,7 @@ function AdminOrders() {
     setID(id);
   };
   const handleConfirm = async () => {
-    const data = { id: id, status: "cancel", reason_cancel: reason };
+    const data = { id: id, status: "cancel", reason: reason };
     await ordersAPI
       .update(data)
       .then((res) => {
@@ -101,6 +115,31 @@ function AdminOrders() {
         }
       });
   };
+  const handleChangeOrdersCode = (e) => {
+    const ordersCode = e.target.value;
+    setSearchParams({
+      orders_code: ordersCode,
+    });
+  };
+  const handleSearch = () => {
+    setSearchParams({
+      begin: begin,
+      final: final,
+    });
+  };
+  const handleSort = (e) => {
+    const sort = e.target.value;
+    setSearchParams({
+      sort: sort,
+    });
+  };
+  const handlePage = (e) => {
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", e.selected + 1);
+    const newQuery = `${window.location.pathname}?${queryParams.toString()}`;
+    navigate(newQuery);
+  };
+  if (!orders) return null;
   return (
     <div className={cx("wrapper")}>
       <ToastContainer></ToastContainer>
@@ -139,6 +178,7 @@ function AdminOrders() {
                   name="search"
                   id="search"
                   placeholder="Enter ther Orders Code"
+                  onChange={(e) => handleChangeOrdersCode(e)}
                 />
               </div>
             </div>
@@ -146,33 +186,46 @@ function AdminOrders() {
               <div className="row">
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("search-date")}>
-                    <input type="date" name="bigin" id="bigin" />
+                    <input
+                      type="date"
+                      name="bigin"
+                      id="bigin"
+                      onChange={(e) => setBegin(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="col-lg-1 col-md-1 col-sm-1 col-1">
                   <div className={cx("title")}>
-                    <label htmlFor="">to</label>
+                    <span htmlFor="">to</span>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
                   <div className={cx("search-date")}>
-                    <input type="date" name="final" id="final" />
+                    <input
+                      type="date"
+                      name="final"
+                      id="final"
+                      onChange={(e) => setFinal(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-3 col-sm-3 col-3">
                   <div className={cx("btn-search")}>
-                    <Link to={"#"}>
+                    <button onClick={(e) => handleSearch()}>
                       <i className="fa fa-search"> Search</i>
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-lg-3 col-md-2 col-sm-12 col-12">
               <div className={cx("select-sort")}>
-                <select name="sort" id="sort">
-                  <option value="default">Default</option>
-                  <option value="reduce">Sort unit price reduction</option>
+                <select name="sort" id="sort" onChange={(e) => handleSort(e)}>
+                  <option value="all_orders">All orders</option>
+                  <option value="pending">Pending</option>
+                  <option value="delivery">Delivery</option>
+                  <option value="delivered">Delivery has been delivered</option>
+                  <option value="decrease">Sort unit price reduction</option>
                   <option value="increase">Arrange unit price increase</option>
                 </select>
               </div>
@@ -193,11 +246,15 @@ function AdminOrders() {
                 </tr>
               </thead>
               <tbody>
-                {orders
-                  ? orders.map((item, index) => (
+                {orders && orders.findOrders
+                  ? orders.findOrders.map((item, index) => (
                       <tr key={index}>
                         <td>{index + 1}</td>
-                        <td>{item._id.slice(-6).toUpperCase()}</td>
+                        <td>
+                          {item.orders_code
+                            ? item.orders_code.toUpperCase()
+                            : null}
+                        </td>
                         <td>{formatDate(item.createdAt)}</td>
                         <td>{item.full_name}</td>
                         <td>${Number(item.totalMoney).toLocaleString()}</td>
@@ -261,9 +318,13 @@ function AdminOrders() {
                                 </button>
                               </div>
                               <div className="col-lg-6">
-                                <button>
-                                  <i className="fa fa-trash"></i>
-                                </button>
+                                {item.status_delivery === "Cancel" ||
+                                item.status_delivery ===
+                                  "Successful Delivery" ? (
+                                  <button>
+                                    <i className="fa fa-trash"></i>
+                                  </button>
+                                ) : null}
                               </div>
                             </div>
                           </div>
@@ -274,9 +335,24 @@ function AdminOrders() {
               </tbody>
             </Table>
           </div>
+          <div className={cx("panigate")}>
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePage}
+              pageCount={orders.totalPage || 1}
+              previousLabel="<"
+              forcePage={searchParam.get("page") - 1}
+            />
+          </div>
           <div className={cx("total-bill")}>
-            <label htmlFor="Total bills">Total bills : 0</label>
-            <label htmlFor="Total moneys">Total money : 0</label>
+            <span htmlFor="Total bills" id="bills">
+              Total bills :{" "}
+              {orders && orders.findOrders ? orders.findOrders.length : 0}
+            </span>
+            <span htmlFor="Total moneys" id="money">
+              Total money : ${totalMoney ? totalMoney : 0}
+            </span>
           </div>
         </div>
       </div>

@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { resetCart } from "../../../features/AddToCart/AddToCart";
+import { useNavigate } from "react-router-dom";
+import routesConfig from "../../../config/routes";
 const cx = className.bind(styles);
 function CartDetail() {
   document.title = "My Cart";
@@ -22,10 +24,12 @@ function CartDetail() {
       size: "",
     },
   ]);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState();
   const [total, setTotal] = useState();
   const [discount, setDiscount] = useState();
+  const [shipping, setShipping] = useState();
   const [cities, setCities] = useState([]);
   const [disabledW, setDisableW] = useState(true);
   const [disabledH, setDisableH] = useState(true);
@@ -41,6 +45,9 @@ function CartDetail() {
     email: "",
   });
   useEffect(() => {
+    if (!token) {
+      navigate(routesConfig.login);
+    }
     const fetchCart = async () => {
       const result = await cartAPI.index(token);
       if (result.data) {
@@ -52,6 +59,11 @@ function CartDetail() {
         });
         setQuantity(sum);
         setTotal(total);
+        if (total && total < 100) {
+          setShipping(10);
+        } else {
+          setShipping(0);
+        }
       }
       setCarts(result.data.carts);
     };
@@ -156,6 +168,11 @@ function CartDetail() {
         total += item.quantity * item.price;
       });
       setTotal(total);
+      if (total && total < 100) {
+        setShipping(10);
+      } else {
+        setShipping(0);
+      }
     }
   };
   const handlePlus = (index, quantity) => {
@@ -167,11 +184,15 @@ function CartDetail() {
       total += item.quantity * item.price;
     });
     setTotal(total);
+    if (total && total < 100) {
+      setShipping(10);
+    } else {
+      setShipping(0);
+    }
   };
   const handleDestroy = (product_id) => {
-    const data = { product_id: product_id };
     cartAPI
-      .destroy(data, token)
+      .destroy(product_id)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Delete Success", {
@@ -567,7 +588,31 @@ function CartDetail() {
                       </div>
                     </div>
                   ) : null}
-
+                  {shipping ? (
+                    <div className={cx("delivery-charges")}>
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <span>Delivery charges</span>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className={cx("delivery-money")}>
+                            {shipping} %
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className={cx("delivery-charges")}>
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <span>Delivery charges</span>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className={cx("delivery-money")}>Free</div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   <div className={cx("grand-money")}>
                     <div className="row">
                       <div className="col-lg-6">
@@ -577,7 +622,9 @@ function CartDetail() {
                         <div className={cx("money")}>
                           $
                           {Number(
-                            total - (total * discount) / 100
+                            total -
+                              (total * discount) / 100 +
+                              (total * shipping) / 100
                           ).toLocaleString()}
                         </div>
                       </div>

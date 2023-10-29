@@ -1,5 +1,8 @@
 .wrapper {
   margin-bottom: 30px;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 .title-heading {
   border-bottom: 1px solid black;

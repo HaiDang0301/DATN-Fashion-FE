@@ -55,7 +55,7 @@ function Header() {
     };
     const fetchOrder = async () => {
       const result = await ordersAPI.index(token);
-      setOrders(result.data.length);
+      setOrders(result.data.findOrders.length);
     };
     fetchOrder();
     fetchCart();
@@ -95,27 +95,25 @@ function Header() {
             </div>
             <div className="col-lg-2 col-md-3 col-sm-4 col-5">
               <div className={cx("language")}>
-                <label htmlFor="language" className={cx("text-language")}>
-                  <span>
-                    Your Language:
-                    <Link>
-                      {language} <i className="	fa fa-angle-down"></i>
-                    </Link>
-                  </span>
-                  <ul className={cx("choose-language")}>
-                    <Link to={"#"} onClick={(e) => setLanguage("ENG")}>
-                      <li>English</li>
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        setLanguage("VN");
-                      }}
-                    >
-                      <li>Vietnamese</li>
-                    </Link>
-                  </ul>
-                </label>
+                <span>
+                  Your Language:
+                  <Link>
+                    {language} <i className="	fa fa-angle-down"></i>
+                  </Link>
+                </span>
+                <ul className={cx("choose-language")}>
+                  <Link to={"#"} onClick={(e) => setLanguage("ENG")}>
+                    <li>English</li>
+                  </Link>
+                  <Link
+                    to={"#"}
+                    onClick={(e) => {
+                      setLanguage("VN");
+                    }}
+                  >
+                    <li>Vietnamese</li>
+                  </Link>
+                </ul>
               </div>
             </div>
           </div>
@@ -455,8 +453,8 @@ function Header() {
             <div className={cx(searchMobile ? "show-search" : "hiden-search")}>
               <input
                 type="search"
-                name="search"
-                id="search"
+                name="search-mobile"
+                id="search-mobile"
                 placeholder="Enter the product name"
                 onChange={(e) => setNameProduct(e.target.value)}
               />
@@ -469,7 +467,7 @@ function Header() {
             <Link to={routesConfig.CartDetail}>
               <i className="fa fa-shopping-cart">
                 <span>
-                  {quantity ? (quantity < 99 ? quantity : 99 + "+") : 0}
+                  {quantity ? (quantity < 99 ? quantity : 99 + "+") : null}
                 </span>
               </i>
             </Link>

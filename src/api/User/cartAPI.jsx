@@ -9,9 +9,9 @@ const cartAPI = {
     const url = "/api/user/carts";
     return axiosConfig.post(url, data, { headers: { token: token } });
   },
-  destroy(data, token) {
-    const url = "/api/user/carts";
-    return axiosConfig.delete(url, { data, headers: { token: token } });
+  destroy(product_id) {
+    const url = `/api/user/carts/${product_id}`;
+    return axiosConfig.delete(url);
   },
   orders(data) {
     const url = "/api/user/carts/orders";

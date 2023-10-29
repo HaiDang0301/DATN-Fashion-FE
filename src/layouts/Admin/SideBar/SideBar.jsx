@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import routesConfig from "../../../config/routes";
 import { Link } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import menu from "../../../assets/menu.png";
-import avatar from "../../../assets/avatar.jpg";
 import classNames from "classnames/bind";
 import styles from "./SideBar.module.scss";
 import ItemMenu from "./ItemMenu";
+import AuthsAPI from "../../../api/AuthsAPI";
 const cx = classNames.bind(styles);
 function SideBar() {
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   const [show, setShow] = useState(false);
+  const [profile, setProfile] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    const fetchAPI = async () => {
+      const result = await AuthsAPI.profile(token);
+      setProfile(result.data);
+    };
+    fetchAPI();
+  }, []);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("menu")}>
@@ -62,7 +73,10 @@ function SideBar() {
       <div className={cx("avatar")}>
         <div className={cx("img")}>
           <Link to={"#"}>
-            <img src={avatar} alt="" />
+            <img
+              src={profile && profile.image ? profile.image.url : null}
+              alt=""
+            />
           </Link>
           <p>Admin</p>
           <div className={cx("network-social")}>
@@ -92,11 +106,6 @@ function SideBar() {
           title="Home"
           icon="fa fa-home"
           link={routesConfig.AdminHome}
-        ></ItemMenu>
-        <ItemMenu
-          title="Banners"
-          icon="fa fa-audio-description"
-          link={routesConfig.AdminBanners}
         ></ItemMenu>
         <ItemMenu
           title="Orders"
@@ -138,6 +147,11 @@ function SideBar() {
           title="Blogs"
           icon="fa fa-file-text"
           link={routesConfig.AdminBlogs}
+        ></ItemMenu>
+        <ItemMenu
+          title="Banners"
+          icon="fa fa-audio-description"
+          link={routesConfig.AdminBanners}
         ></ItemMenu>
         <ItemMenu title="Setting" icon="fa fa-cogs"></ItemMenu>
       </div>
