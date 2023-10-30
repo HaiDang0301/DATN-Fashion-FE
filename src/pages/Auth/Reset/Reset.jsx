@@ -79,7 +79,7 @@ function ResetPw() {
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label htmlFor="">Password Adress</label>
+                <label id="password">Password Adress</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="password"

@@ -2,8 +2,10 @@ import { Navigate } from "react-router-dom";
 import routesConfig from "../../config/routes";
 import { toast } from "react-toastify";
 import jwt_decode from "jwt-decode";
-const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : sessionStorage.getItem("token");
   if (!token) {
     return <Navigate to={routesConfig.login}></Navigate>;
   } else {

@@ -105,7 +105,7 @@ function ProductDetail() {
           price: product.price,
         };
         await cartAPI
-          .store(data, token)
+          .store(data)
           .then((res) => {
             if (res.status === 200) {
               const action = resetCart();

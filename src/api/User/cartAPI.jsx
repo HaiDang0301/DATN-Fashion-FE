@@ -1,13 +1,13 @@
 import axiosConfig from "../Axiosconfig";
 
 const cartAPI = {
-  index(token) {
+  index() {
     const url = "/api/user/carts";
-    return axiosConfig.get(url, { headers: { token: token } });
+    return axiosConfig.get(url);
   },
-  store(data, token) {
+  store(data) {
     const url = "/api/user/carts";
-    return axiosConfig.post(url, data, { headers: { token: token } });
+    return axiosConfig.post(url, data);
   },
   destroy(product_id) {
     const url = `/api/user/carts/${product_id}`;

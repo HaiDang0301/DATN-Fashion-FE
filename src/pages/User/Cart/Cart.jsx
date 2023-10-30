@@ -68,7 +68,7 @@ function CartDetail() {
       setCarts(result.data.carts);
     };
     const fetchProfile = async () => {
-      const result = await AuthsAPI.profile(token);
+      const result = await AuthsAPI.profile();
       setUser(result.data);
       if (result.data.registered === true) {
         setDiscount(5);

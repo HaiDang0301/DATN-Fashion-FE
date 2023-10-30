@@ -1,7 +1,12 @@
 import axios from "axios";
-const token = localStorage.getItem("token") || sessionStorage.getItem("token");
 const axiosConfig = axios.create({
   baseURL: process.env.HTTP_Server,
-  headers: { token: token },
+});
+axiosConfig.interceptors.request.use(function (config) {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : sessionStorage.getItem("token");
+  config.headers["token"] = token;
+  return config;
 });
 export default axiosConfig;

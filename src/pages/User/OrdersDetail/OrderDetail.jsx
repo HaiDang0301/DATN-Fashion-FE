@@ -7,12 +7,13 @@ const cx = className.bind(styles);
 function OrdersDetail() {
   document.title = "Order Detail";
   const id = useParams().id;
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
+  const token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : sessionStorage.getItem("token");
   const [orders, setOrders] = useState([]);
   useEffect(() => {
     const fetchOrder = async () => {
-      const result = await ordersAPI.show(id, token);
+      const result = await ordersAPI.show(id);
       setOrders(result.data);
     };
     fetchOrder();

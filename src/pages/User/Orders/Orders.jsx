@@ -9,15 +9,13 @@ import ordersAPI from "../../../api/User/ordersAPI";
 const cx = classNames.bind(styles);
 function Orders() {
   document.title = "My Orders";
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
   const [orders, setOrders] = useState();
   const [searchParam, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const params = searchParam;
   useEffect(() => {
     const fetchOrder = async () => {
-      const result = await ordersAPI.index(token, params);
+      const result = await ordersAPI.index(params);
       setOrders(result.data);
     };
     fetchOrder();

@@ -80,7 +80,7 @@ function ForgetPw() {
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label htmlFor="">Email Adress</label>
+                <label id="email">Email Adress</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="email"

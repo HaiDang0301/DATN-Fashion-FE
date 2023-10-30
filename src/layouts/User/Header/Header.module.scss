@@ -29,8 +29,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  border: 1px solid #ccc;
+  label {
+    padding: 5px 10px;
+    position: relative;
+    border: 1px solid #ccc;
+  }
   ul {
     list-style-type: none;
     margin: 0px;
@@ -53,13 +56,16 @@
   display: none;
   width: 100%;
   position: absolute;
+  left: 0;
   border: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   background-color: #fff;
-  z-index: 999;
+  z-index: 99;
   li {
     border-bottom: 1px solid #ccc;
     color: #333;
+    padding: 0;
+    margin: 0;
     &:hover {
       background-color: #c5c8cb;
     }

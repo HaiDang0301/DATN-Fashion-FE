@@ -9,16 +9,13 @@ import ItemMenu from "./ItemMenu";
 import AuthsAPI from "../../../api/AuthsAPI";
 const cx = classNames.bind(styles);
 function SideBar() {
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   useEffect(() => {
     const fetchAPI = async () => {
-      const result = await AuthsAPI.profile(token);
+      const result = await AuthsAPI.profile();
       setProfile(result.data);
     };
     fetchAPI();
@@ -152,6 +149,11 @@ function SideBar() {
           title="Banners"
           icon="fa fa-audio-description"
           link={routesConfig.AdminBanners}
+        ></ItemMenu>
+        <ItemMenu
+          title="User Home"
+          icon="fa fa-users"
+          link={routesConfig.home}
         ></ItemMenu>
         <ItemMenu title="Setting" icon="fa fa-cogs"></ItemMenu>
       </div>

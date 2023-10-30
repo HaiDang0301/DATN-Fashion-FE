@@ -13,8 +13,9 @@ import ordersAPI from "../../../api/User/ordersAPI";
 const cx = classNames.bind(styles);
 function Header() {
   const navigate = useNavigate();
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
+  const token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : sessionStorage.getItem("token");
   let decode = "";
   if (token) {
     decode = jwt_decode(token);
@@ -43,7 +44,7 @@ function Header() {
       setCollections(result.data);
     };
     const fetchCart = async () => {
-      const result = await cartAPI.index(token);
+      const result = await cartAPI.index();
       if (result.data.carts) {
         let sum = 0;
         result.data.carts.map((quantity) => {
@@ -54,8 +55,10 @@ function Header() {
       }
     };
     const fetchOrder = async () => {
-      const result = await ordersAPI.index(token);
-      setOrders(result.data.findOrders.length);
+      const result = await ordersAPI.index();
+      if (result.data && result.data.findOrders) {
+        setOrders(result.data.findOrders.length);
+      }
     };
     fetchOrder();
     fetchCart();
@@ -95,25 +98,27 @@ function Header() {
             </div>
             <div className="col-lg-2 col-md-3 col-sm-4 col-5">
               <div className={cx("language")}>
-                <span>
-                  Your Language:
-                  <Link>
-                    {language} <i className="	fa fa-angle-down"></i>
-                  </Link>
-                </span>
-                <ul className={cx("choose-language")}>
-                  <Link to={"#"} onClick={(e) => setLanguage("ENG")}>
-                    <li>English</li>
-                  </Link>
-                  <Link
-                    to={"#"}
-                    onClick={(e) => {
-                      setLanguage("VN");
-                    }}
-                  >
-                    <li>Vietnamese</li>
-                  </Link>
-                </ul>
+                <label id="language">
+                  <span>
+                    Your Language:
+                    <Link>
+                      {language} <i className="	fa fa-angle-down"></i>
+                    </Link>
+                  </span>
+                  <ul className={cx("choose-language")}>
+                    <Link to={"#"} onClick={(e) => setLanguage("ENG")}>
+                      <li>English</li>
+                    </Link>
+                    <Link
+                      to={"#"}
+                      onClick={(e) => {
+                        setLanguage("VN");
+                      }}
+                    >
+                      <li>Vietnamese</li>
+                    </Link>
+                  </ul>
+                </label>
               </div>
             </div>
           </div>
@@ -157,21 +162,16 @@ function Header() {
                               <li>
                                 <Link to={routesConfig.AdminHome}>Admin</Link>
                               </li>
-                            ) : null}
-                            {decode.role === "client" ? (
+                            ) : (
                               <li>
                                 <div className={cx("order")}>
                                   <Link to={routesConfig.Orders}>Order</Link>
-                                  {orders ? (
+                                  {orders && orders.length != 0 ? (
                                     <div className={cx("total-order")}>
                                       <span>{orders}</span>
                                     </div>
                                   ) : null}
                                 </div>
-                              </li>
-                            ) : (
-                              <li>
-                                <Link to={"#"}>Order</Link>
                               </li>
                             )}
                             <li>

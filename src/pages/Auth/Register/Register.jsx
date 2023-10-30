@@ -119,7 +119,7 @@ function Register() {
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label htmlFor="">Full Name</label>
+                <label id="full_name">Full Name</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="text"
@@ -139,7 +139,7 @@ function Register() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label htmlFor="">Email Adress</label>
+                <label id="email">Email Adress</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="email"
@@ -159,7 +159,7 @@ function Register() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label htmlFor="">Password</label>
+                <label id="password">Password</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="password"
@@ -179,7 +179,7 @@ function Register() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label htmlFor="">Confirm Password</label>
+                <label id="confrim_password">Confirm Password</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="password"
