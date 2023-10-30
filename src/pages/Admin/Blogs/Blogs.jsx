@@ -146,7 +146,7 @@ function AdminBlogs() {
                 </div>
                 <div className="col-lg-1 col-md-1 col-sm-1 col-12">
                   <div className={cx("title")}>
-                    <label htmlFor="">to</label>
+                    <span htmlFor="">to</span>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4 col-12">

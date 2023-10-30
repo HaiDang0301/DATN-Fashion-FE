@@ -252,9 +252,9 @@ function AdminProducts() {
                           </div>
                           <div className="col-lg-9 col-md-10 col-sm-6 col-10">
                             <div className={cx("file-name")}>
-                              <label htmlFor="">
+                              <span htmlFor="">
                                 {fileExcel ? fileExcel.name : "No File"}
-                              </label>
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -459,9 +459,9 @@ function AdminProducts() {
           />
         </div>
         <div className={cx("total-product")}>
-          <label htmlFor="total-product">
+          <span htmlFor="total-product">
             Total products / Manufacturer Quantity
-          </label>
+          </span>
         </div>
       </div>
     </div>

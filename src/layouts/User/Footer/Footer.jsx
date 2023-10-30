@@ -142,15 +142,6 @@ function Footer() {
                 </div>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <div className={cx("nav-ite")}>
-                  <Link to={"/"}>Men</Link>
-                  <Link to={"/"}>Clothing Fashion</Link>
-                  <Link to={"/"}>Winter</Link>
-                  <Link to={"/"}>Summer</Link>
-                  <Link to={"/"}>Collection 2023</Link>
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                 <div className={cx("nav-item")}>
                   <Link to={"/"}>Contact</Link>
                   <Link to={"/"}>Support</Link>

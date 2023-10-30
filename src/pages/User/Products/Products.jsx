@@ -45,6 +45,7 @@ function Products() {
     params = `${type}`;
   }
   useEffect(() => {
+    setIsloading(true);
     window.scrollTo({ top: 200, behavior: "smooth" });
     const fetchProducts = async () => {
       const result = await productsAPI.index(params, query);
@@ -108,6 +109,7 @@ function Products() {
   };
   const handleLimit = async (e) => {
     setSort("");
+    setIsloading(true);
     setLimit(e.target.value);
     const limit = e.target.value;
     setSearchParams({
@@ -116,6 +118,7 @@ function Products() {
   };
   const handleSort = (e) => {
     setLimit(8);
+    setIsloading(true);
     setSort(e.target.value);
     const bySort = e.target.value;
     setSearchParams({
@@ -174,11 +177,10 @@ function Products() {
                               <input
                                 type="checkbox"
                                 name="producer"
-                                id="producer"
                                 checked={checked.includes(item.name)}
                                 value={item.name}
                                 onChange={(e) => handleProducer(e, item.name)}
-                              />
+                              />{" "}
                               {item.name}
                             </li>
                           ))
@@ -232,13 +234,13 @@ function Products() {
             <div className={cx("products")}>
               <div className="row">
                 <div className="col-lg-12">
-                  <label htmlFor="">
+                  <span htmlFor="">
                     <Link to={routesConfig.home}>HOME </Link>{" "}
                     <i className="fa fa-long-arrow-right"></i>{" "}
                     <Link to={type ? `/collections/${type}` : "/collections"}>
                       {type ? type.toLocaleUpperCase() : "COLLECTIONS"}
                     </Link>
-                  </label>
+                  </span>
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("title")}>
@@ -298,7 +300,7 @@ function Products() {
                                 value={sort}
                                 onChange={handleSort}
                               >
-                                <option value=""></option>
+                                <option value="new">New</option>
                                 <option value="name">Name</option>
                                 <option value="price">Price</option>
                               </select>
@@ -503,7 +505,7 @@ function Products() {
                     </div>
                   </div>
                 )}
-              </div>{" "}
+              </div>
               <div className={cx("panigate")}>
                 <ReactPaginate
                   breakLabel="..."

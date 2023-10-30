@@ -1,5 +1,16 @@
 .wrapper {
   margin-bottom: 30px;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.back {
+  float: right;
+  button {
+    border: none;
+    background: none;
+    width: 100%;
+  }
 }
 .title-heading {
   border-bottom: 1px solid black;
@@ -54,6 +65,10 @@
   position: absolute;
   top: 20%;
 }
+.info-customer {
+  text-align: center;
+  margin-top: 20px;
+}
 .destroy {
   position: absolute;
   top: 35%;
@@ -92,87 +107,6 @@
   span {
     color: black;
     font-size: 14px;
-  }
-}
-.title-shipping {
-  padding: 10px 0px;
-  span {
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  }
-}
-.address {
-  padding-top: 10px;
-  margin: 10px 0px;
-  span {
-    font-size: 13px;
-  }
-  input {
-    width: 100%;
-  }
-  select {
-    width: 100%;
-  }
-}
-.name {
-  input {
-    padding: 0px 5px;
-  }
-}
-.phone {
-  input {
-    padding: 0px 5px;
-  }
-}
-.email {
-  input {
-    padding: 0px 5px;
-  }
-  margin: 10px 0px;
-}
-.city {
-  margin: 10px 0px;
-}
-.district {
-  margin: 10px 0px;
-}
-.wards {
-  margin-bottom: 10px;
-}
-.subtotal {
-  padding: 10px 0px;
-  border-top: 1px solid #ccc;
-}
-.money {
-  float: right;
-}
-.discount {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
-}
-.discount-money {
-  float: right;
-}
-.grand-money {
-  padding: 10px 0px;
-}
-.choose-checkout {
-  display: flex;
-  text-align: end;
-}
-.btn-checkout {
-  width: 100%;
-  text-align: end;
-  margin: 10px 0px;
-  margin-right: auto;
-  button {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    border: 1px solid black;
-    color: white;
-    background-color: black;
-    padding: 5px 25px;
   }
 }
 @media only screen and (max-width: 992px) {

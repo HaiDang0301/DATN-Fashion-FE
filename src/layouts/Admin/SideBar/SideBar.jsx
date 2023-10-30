@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import routesConfig from "../../../config/routes";
 import { Link } from "react-router-dom";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import menu from "../../../assets/menu.png";
-import avatar from "../../../assets/avatar.jpg";
 import classNames from "classnames/bind";
 import styles from "./SideBar.module.scss";
 import ItemMenu from "./ItemMenu";
+import AuthsAPI from "../../../api/AuthsAPI";
 const cx = classNames.bind(styles);
 function SideBar() {
   const [show, setShow] = useState(false);
+  const [profile, setProfile] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  useEffect(() => {
+    const fetchAPI = async () => {
+      const result = await AuthsAPI.profile();
+      setProfile(result.data);
+    };
+    fetchAPI();
+  }, []);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("menu")}>
@@ -33,7 +41,7 @@ function SideBar() {
               <Link to={routesConfig.AdminHome}>Home</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.adminOrders}>Oders</Link>
+              <Link to={routesConfig.AdminOrders}>Oders</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={routesConfig.AdminProducts}>Products</Link>
@@ -62,7 +70,10 @@ function SideBar() {
       <div className={cx("avatar")}>
         <div className={cx("img")}>
           <Link to={"#"}>
-            <img src={avatar} alt="" />
+            <img
+              src={profile && profile.image ? profile.image.url : null}
+              alt=""
+            />
           </Link>
           <p>Admin</p>
           <div className={cx("network-social")}>
@@ -94,14 +105,9 @@ function SideBar() {
           link={routesConfig.AdminHome}
         ></ItemMenu>
         <ItemMenu
-          title="Banners"
-          icon="fa fa-audio-description"
-          link={routesConfig.AdminBanners}
-        ></ItemMenu>
-        <ItemMenu
-          title="Order"
+          title="Orders"
           icon="fa fa-shopping-cart"
-          link={routesConfig.adminOrders}
+          link={routesConfig.AdminOrders}
         ></ItemMenu>
         <ItemMenu
           title="Clients"
@@ -138,6 +144,16 @@ function SideBar() {
           title="Blogs"
           icon="fa fa-file-text"
           link={routesConfig.AdminBlogs}
+        ></ItemMenu>
+        <ItemMenu
+          title="Banners"
+          icon="fa fa-audio-description"
+          link={routesConfig.AdminBanners}
+        ></ItemMenu>
+        <ItemMenu
+          title="User Home"
+          icon="fa fa-users"
+          link={routesConfig.home}
         ></ItemMenu>
         <ItemMenu title="Setting" icon="fa fa-cogs"></ItemMenu>
       </div>

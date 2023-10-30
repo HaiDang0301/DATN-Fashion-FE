@@ -1,17 +1,17 @@
 import axiosConfig from "../Axiosconfig";
 
 const cartAPI = {
-  index(token) {
+  index() {
     const url = "/api/user/carts";
-    return axiosConfig.get(url, { headers: { token: token } });
+    return axiosConfig.get(url);
   },
   store(data) {
     const url = "/api/user/carts";
     return axiosConfig.post(url, data);
   },
-  destroy(data) {
-    const url = "/api/user/carts";
-    return axiosConfig.delete(url, { data });
+  destroy(product_id) {
+    const url = `/api/user/carts/${product_id}`;
+    return axiosConfig.delete(url);
   },
   orders(data) {
     const url = "/api/user/carts/orders";

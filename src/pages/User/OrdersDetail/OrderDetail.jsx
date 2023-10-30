@@ -1,17 +1,46 @@
 import className from "classnames/bind";
 import styles from "./OrderDetail.module.scss";
 import { useEffect, useState } from "react";
-import orderAPI from "../../../api/User/orderAPI";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import ordersAPI from "../../../api/User/ordersAPI";
+import Table from "react-bootstrap/Table";
+import axios from "axios";
 const cx = className.bind(styles);
 function OrdersDetail() {
   document.title = "Order Detail";
+  const navigate = useNavigate();
   const id = useParams().id;
   const [orders, setOrders] = useState([]);
+  const [city, setCity] = useState();
+  const [districts, setDistricts] = useState();
+  const [ward, setWard] = useState();
   useEffect(() => {
     const fetchOrder = async () => {
-      const result = await orderAPI.show(id);
+      const result = await ordersAPI.show(id);
       setOrders(result.data);
+      if (result.data) {
+        axios
+          .get(
+            `https://provinces.open-api.vn/api/p/${result.data.address.city}?depth=2`
+          )
+          .then((res) => {
+            setCity(res.data);
+          });
+        axios
+          .get(
+            `https://provinces.open-api.vn/api/d/${result.data.address.district}?depth=2`
+          )
+          .then((res) => {
+            setDistricts(res.data);
+          });
+        axios
+          .get(
+            `https://provinces.open-api.vn/api/w/${result.data.address.ward}?depth=2`
+          )
+          .then((res) => {
+            setWard(res.data);
+          });
+      }
     };
     fetchOrder();
   }, []);
@@ -20,6 +49,46 @@ function OrdersDetail() {
       <div className="container">
         <div className={cx("checkout")}>
           <div className="row">
+            <div className="col-lg-11">
+              <h5>Shipping</h5>
+            </div>
+            <div className="col-lg-1">
+              <div className={cx("back")}>
+                <button onClick={(e) => navigate(-1)}>
+                  <i className="fa fa-arrow-left"></i>
+                </button>
+              </div>
+            </div>
+            <div className={cx("col-lg-12")}>
+              <div className={cx("info-customer")}>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th scope="col">Order Code</th>
+                      <th scope="col">Client</th>
+                      <th scope="col">Phone Number</th>
+                      <th scope="col">City</th>
+                      <th scope="col">District</th>
+                      <th scope="col">Ward</th>
+                      <th scope="col">Adress Home</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{orders.orders_code}</td>
+                      <td>{orders.full_name}</td>
+                      <td>{orders.phone}</td>
+                      <td>{city ? city.name : null}</td>
+                      <td>{districts ? districts.name : null}</td>
+                      <td>{ward ? ward.name : null}</td>
+                      <td>
+                        {orders.address ? orders.address.address_home : null}
+                      </td>
+                    </tr>
+                  </tbody>
+                </Table>
+              </div>
+            </div>
             <div className="col-lg-12">
               <div className={cx("title")}>
                 <h5>Your Order</h5>

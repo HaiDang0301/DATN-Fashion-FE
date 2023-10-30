@@ -28,7 +28,7 @@ function Profile() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await AuthsAPI.profile(token);
+      const result = await AuthsAPI.profile();
       setUser(result.data);
     };
     const fetchCity = async () => {

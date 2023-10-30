@@ -28,5 +28,7 @@ const routesConfig = {
   AdminBanners: "/admin/banners",
   CreateBanners: "/admin/banners/create",
   UpdateBanners: "/admin/banners/:id/edit",
+  AdminOrders: "/admin/orders",
+  ViewOrders: "/admin/orders/:id",
 };
 export default routesConfig;

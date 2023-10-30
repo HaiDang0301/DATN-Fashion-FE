@@ -1,9 +1,9 @@
 import axiosConfig from "./Axiosconfig";
 
 const AuthsAPI = {
-  profile(token) {
+  profile() {
     const url = "/api/auth/profile";
-    return axiosConfig.get(url, { headers: { token: token } });
+    return axiosConfig.get(url);
   },
   update(data) {
     const url = "/api/auth/profile";

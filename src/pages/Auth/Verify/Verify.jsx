@@ -46,7 +46,7 @@ function Verify() {
                 <h5>Email has been verifired</h5>
               </div>
               <div className="col-lg-12">
-                <label htmlFor="">
+                <label id="check">
                   <i className="fa fa-check"></i>
                 </label>
               </div>

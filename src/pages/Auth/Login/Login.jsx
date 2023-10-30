@@ -32,13 +32,11 @@ function Login() {
       email: formik.values.email,
       password: formik.values.password,
     };
-    const login = await AuthsAPI.login(data)
+    await AuthsAPI.login(data)
       .then(async (res) => {
-        if (save === true) {
-          await localStorage.setItem("token", res.data.token);
-        } else {
-          await sessionStorage.setItem("token", res.data.token);
-        }
+        save
+          ? localStorage.setItem("token", res.data.token)
+          : sessionStorage.setItem("token", res.data.token);
         if (res.data.others.role === "admin") {
           toast.success("Loggin Succes", {
             position: "bottom-right",
@@ -94,7 +92,7 @@ function Login() {
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label htmlFor="">Email Adress</label>
+                <label id="email">Email Adress</label>
                 <input
                   type="email"
                   name="email"
@@ -113,7 +111,7 @@ function Login() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label htmlFor="">Password</label>
+                <label id="password">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -141,7 +139,7 @@ function Login() {
                         id=""
                         onClick={(e) => setSave(!save)}
                       />
-                      <label htmlFor="">Keep Me Logged In</label>
+                      <label id="check">Keep Me Logged In</label>
                     </div>
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-12 col-12">

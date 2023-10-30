@@ -13,6 +13,8 @@ import { resetCart } from "../../../features/AddToCart/AddToCart";
 const cx = classNames.bind(styles);
 function ProductDetail() {
   const dispatch = useDispatch();
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
   const type = useParams().type;
   const category = useParams().category;
   const slug = useParams().slug;
@@ -54,9 +56,15 @@ function ProductDetail() {
       setQuantity(1);
     } else {
       setQuantity(quantity - 1);
+      setDisable(false);
     }
   };
+  const handleQuantity = (e) => {
+    setDisable(false);
+    setQuantity(e.target.value);
+  };
   const handlePlus = () => {
+    setDisable(false);
     setQuantity(quantity + 1);
   };
   const handleSize = (size) => {
@@ -64,8 +72,6 @@ function ProductDetail() {
     setSize(size);
   };
   const handleAddToCart = async () => {
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
       toast.warning("Please login to use this function", {
         position: "bottom-right",
@@ -75,11 +81,20 @@ function ProductDetail() {
       setDisable(true);
     } else {
       if (!size) {
+        setDisable(true);
         toast.warning("Please choose the product size", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
         });
+      }
+      if (size && isNaN(quantity)) {
+        toast.warning("The quantity must be a number", {
+          position: "bottom-right",
+          autoClose: 5000,
+          theme: "light",
+        });
+        setDisable(true);
       } else {
         const data = {
           product_id: product._id,
@@ -93,15 +108,15 @@ function ProductDetail() {
           .store(data)
           .then((res) => {
             if (res.status === 200) {
+              const action = resetCart();
+              dispatch(action);
+              setDisable(true);
               toast.success("Add products to successful shopping cart", {
                 position: "bottom-right",
                 autoClose: 5000,
                 theme: "light",
               });
             }
-            const action = resetCart();
-            dispatch(action);
-            setDisable(true);
           })
           .catch((err) => {
             if (err.response.status === 409) {
@@ -212,7 +227,7 @@ function ProductDetail() {
             {type ? (
               <>
                 <Link to={`/collections/${type}`}>{type}</Link>
-                <label htmlFor="">/ {titleslug}</label>
+                <span>/ {titleslug}</span>
               </>
             ) : (
               <span>{titleslug}</span>
@@ -314,29 +329,29 @@ function ProductDetail() {
                       {product.promotion > 0 ? (
                         <>
                           <div className={cx("old-price")}>
-                            <label>
+                            <span>
                               $ {Number(product.old_price).toLocaleString()}
-                            </label>
+                            </span>
                           </div>
                           <div className={cx("now-price")}>
                             {" "}
-                            <label>
+                            <span>
                               $ {Number(product.price).toLocaleString()}
-                            </label>
+                            </span>
                           </div>
                         </>
                       ) : (
                         <div>
-                          <label>
+                          <span>
                             $ {Number(product.price).toLocaleString()}
-                          </label>
+                          </span>
                         </div>
                       )}
                     </div>
                   </div>
                   <div className="col-lg-12">
                     <div className={cx("size")}>
-                      <label>Size</label>
+                      <span>Size</span>
                     </div>
                     <div className="row">
                       {product.sizes
@@ -364,13 +379,10 @@ function ProductDetail() {
                   </div>
                   <div className="col-lg-12">
                     <div className={cx("title")}>
-                      <label>Color</label>
+                      <span>Color</span>
                     </div>
                     <div className={cx("color")}>
-                      <label
-                        htmlFor=""
-                        style={{ backgroundColor: `${product.color}` }}
-                      >
+                      <label style={{ backgroundColor: `${product.color}` }}>
                         {product.color}
                       </label>
                     </div>
@@ -396,7 +408,7 @@ function ProductDetail() {
                             name="quantity"
                             id="quantity"
                             value={quantity}
-                            onChange={(e) => setQuantity(e.target.value)}
+                            onChange={(e) => handleQuantity(e)}
                           />
                         </div>
                       </div>
@@ -447,10 +459,7 @@ function ProductDetail() {
                                   : `/collections/products/${item.slug}`
                               }
                               onClick={(e) => {
-                                setImage(null),
-                                  setSize(null),
-                                  setDisable(false),
-                                  setQuantity(1);
+                                setImage(null), setSize(null), setQuantity(1);
                               }}
                             >
                               <img src={item.image[0].url} alt="" />

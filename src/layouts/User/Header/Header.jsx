@@ -9,12 +9,13 @@ import { Link, useNavigate } from "react-router-dom";
 import modalAPI from "../../../api/Admin/modalAPI";
 import cartAPI from "../../../api/User/cartAPI";
 import { useSelector } from "react-redux";
-import orderAPI from "../../../api/User/orderAPI";
+import ordersAPI from "../../../api/User/ordersAPI";
 const cx = classNames.bind(styles);
 function Header() {
   const navigate = useNavigate();
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
+  const token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : sessionStorage.getItem("token");
   let decode = "";
   if (token) {
     decode = jwt_decode(token);
@@ -43,7 +44,7 @@ function Header() {
       setCollections(result.data);
     };
     const fetchCart = async () => {
-      const result = await cartAPI.index(token);
+      const result = await cartAPI.index();
       if (result.data.carts) {
         let sum = 0;
         result.data.carts.map((quantity) => {
@@ -54,8 +55,10 @@ function Header() {
       }
     };
     const fetchOrder = async () => {
-      const result = await orderAPI.index(token);
-      setOrders(result.data.length);
+      const result = await ordersAPI.index();
+      if (result.data && result.data.findOrders) {
+        setOrders(result.data.findOrders.length);
+      }
     };
     fetchOrder();
     fetchCart();
@@ -69,7 +72,7 @@ function Header() {
     }, 100);
   };
   const handleSearch = async () => {
-    navigate(`/collections?name=${nameProduct}`);
+    navigate(`/collections?name=${nameProduct.toUpperCase()}`);
   };
   const handleCart = () => {
     navigate(routesConfig.CartDetail);
@@ -95,7 +98,7 @@ function Header() {
             </div>
             <div className="col-lg-2 col-md-3 col-sm-4 col-5">
               <div className={cx("language")}>
-                <label htmlFor="language" className={cx("text-language")}>
+                <label id="language">
                   <span>
                     Your Language:
                     <Link>
@@ -159,21 +162,16 @@ function Header() {
                               <li>
                                 <Link to={routesConfig.AdminHome}>Admin</Link>
                               </li>
-                            ) : null}
-                            {decode.role === "client" ? (
+                            ) : (
                               <li>
                                 <div className={cx("order")}>
                                   <Link to={routesConfig.Orders}>Order</Link>
-                                  {orders ? (
+                                  {orders && orders.length != 0 ? (
                                     <div className={cx("total-order")}>
                                       <span>{orders}</span>
                                     </div>
                                   ) : null}
                                 </div>
-                              </li>
-                            ) : (
-                              <li>
-                                <Link to={"#"}>Order</Link>
                               </li>
                             )}
                             <li>
@@ -273,7 +271,9 @@ function Header() {
                             </button>
                           </div>
                         ) : (
-                          "No Product"
+                          <div className={cx("cart-none")}>
+                            You have not added any product to the cart
+                          </div>
                         )}
                       </div>
                     </div>
@@ -367,9 +367,16 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to={token ? routesConfig.Orders : routesConfig.login}>
-                <i className="fa fa-shopping-cart"> My Orders</i>
-              </Link>
+              <div className={cx("order-mobile")}>
+                <Link to={routesConfig.Orders}>
+                  <i className="fa fa-shopping-cart"> Order</i>
+                </Link>
+                {orders ? (
+                  <div className={cx("total-order-mobile")}>
+                    <span>{orders}</span>
+                  </div>
+                ) : null}
+              </div>
             </li>
             <li>
               <Link to={"/collections/sale"}>
@@ -446,8 +453,8 @@ function Header() {
             <div className={cx(searchMobile ? "show-search" : "hiden-search")}>
               <input
                 type="search"
-                name="search"
-                id="search"
+                name="search-mobile"
+                id="search-mobile"
                 placeholder="Enter the product name"
                 onChange={(e) => setNameProduct(e.target.value)}
               />
@@ -460,7 +467,7 @@ function Header() {
             <Link to={routesConfig.CartDetail}>
               <i className="fa fa-shopping-cart">
                 <span>
-                  {quantity ? (quantity < 99 ? quantity : 99 + "+") : 0}
+                  {quantity ? (quantity < 99 ? quantity : 99 + "+") : null}
                 </span>
               </i>
             </Link>
