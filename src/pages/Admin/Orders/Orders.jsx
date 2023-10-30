@@ -23,6 +23,9 @@ function AdminOrders() {
   const [status, setStatus] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const [disable, setDisable] = useState(true);
+  const [disableDelivery, setDisableDelivery] = useState(false);
+  const [disableCancel, setDisableCancel] = useState(false);
   const query = searchParam;
   useEffect(() => {
     const fetchOrders = async () => {
@@ -39,9 +42,9 @@ function AdminOrders() {
     fetchOrders();
   }, [status, searchParam]);
   const handleDelivery = async (id) => {
-    const data = { id: id, status: "delivery" };
+    const data = { status: "delivery" };
     await ordersAPI
-      .update(data)
+      .update(id, data)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Update Status Order Success", {
@@ -50,6 +53,8 @@ function AdminOrders() {
             theme: "light",
           });
           setStatus(!status);
+          setDisableDelivery(true);
+          setDisable(false);
         }
       })
       .catch((err) => {
@@ -67,9 +72,9 @@ function AdminOrders() {
     setID(id);
   };
   const handleConfirm = async () => {
-    const data = { id: id, status: "cancel", reason: reason };
+    const data = { status: "cancel", reason: reason };
     await ordersAPI
-      .update(data)
+      .update(id, data)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Update Status Order Success", {
@@ -79,6 +84,8 @@ function AdminOrders() {
           });
           setStatus(!status);
           setShow(false);
+          setDisableDelivery(true);
+          setDisable(true);
         }
       })
       .catch((err) => {
@@ -92,9 +99,9 @@ function AdminOrders() {
       });
   };
   const handleSuccess = async (id) => {
-    const data = { id: id, status: "success" };
+    const data = { status: "success" };
     await ordersAPI
-      .update(data)
+      .update(id, data)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Update Status Order Success", {
@@ -103,6 +110,9 @@ function AdminOrders() {
             theme: "light",
           });
           setStatus(!status);
+          setDisable(true);
+          setDisableDelivery(true);
+          setDisableCancel(true);
         }
       })
       .catch((err) => {
@@ -138,6 +148,30 @@ function AdminOrders() {
     queryParams.set("page", e.selected + 1);
     const newQuery = `${window.location.pathname}?${queryParams.toString()}`;
     navigate(newQuery);
+  };
+  const handleDestroy = async (id) => {
+    await ordersAPI
+      .destroy(id)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Delete Orders Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setStatus(!status);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          toast.error("Connect Sever Errors", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setStatus(!status);
+        }
+      });
   };
   if (!orders) return null;
   return (
@@ -276,27 +310,38 @@ function AdminOrders() {
                         <td>
                           <div className={cx("actions-delivery")}>
                             <div className="row g-0">
-                              <div className="col-lg-4">
+                              <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-delivery")}>
                                   <button
+                                    disabled={
+                                      item.status_delivery === "Cancel"
+                                        ? true
+                                        : disableDelivery
+                                    }
                                     onClick={(e) => handleDelivery(item._id)}
                                   >
                                     <i className="fa fa-truck"></i>
                                   </button>
                                 </div>
                               </div>
-                              <div className="col-lg-4">
+                              <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-cancel")}>
                                   <button
+                                    disabled={disableCancel}
                                     onClick={(e) => handleCancel(item._id)}
                                   >
                                     <i className="fa fa-ban"></i>
                                   </button>
                                 </div>
                               </div>
-                              <div className="col-lg-4">
+                              <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-success")}>
                                   <button
+                                    disabled={
+                                      item.status_delivery === "Cancel"
+                                        ? true
+                                        : disable
+                                    }
                                     onClick={(e) => handleSuccess(item._id)}
                                   >
                                     <i className="fa fa-check"></i>
@@ -313,7 +358,7 @@ function AdminOrders() {
                           <div className={cx("actions")}>
                             <div className="row g-0">
                               <div className="col-lg-6">
-                                <button>
+                                <button onClick={(e) => navigate(item._id)}>
                                   <i className="fa fa-eye"></i>
                                 </button>
                               </div>
@@ -321,7 +366,9 @@ function AdminOrders() {
                                 {item.status_delivery === "Cancel" ||
                                 item.status_delivery ===
                                   "Successful Delivery" ? (
-                                  <button>
+                                  <button
+                                    onClick={(e) => handleDestroy(item._id)}
+                                  >
                                     <i className="fa fa-trash"></i>
                                   </button>
                                 ) : null}

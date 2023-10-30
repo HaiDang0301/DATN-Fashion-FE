@@ -9,9 +9,13 @@ const ordersAPI = {
     const url = `/api/admin/orders/${id}`;
     return axiosConfig.get(url);
   },
-  update(data) {
-    const url = `/api/admin/orders`;
+  update(id, data) {
+    const url = `/api/admin/orders/${id}`;
     return axiosConfig.put(url, data);
+  },
+  destroy(id) {
+    const url = `api/admin/orders/${id}`;
+    return axiosConfig.delete(url);
   },
 };
 export default ordersAPI;
