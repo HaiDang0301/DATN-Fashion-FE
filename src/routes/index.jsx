@@ -28,6 +28,7 @@ import Orders from "../pages/User/Orders/Orders";
 import OrdersDetail from "../pages/User/OrdersDetail/OrderDetail";
 import AdminOrders from "../pages/Admin/Orders/Orders";
 import ViewOrders from "../pages/Admin/OrderDetail/OrderDetail";
+import Statistical from "../pages/Admin/Statistical/Statistical";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -151,6 +152,10 @@ const privateRoutes = [
   {
     path: routesConfig.ViewOrders,
     component: ViewOrders,
+  },
+  {
+    path: routesConfig.Statistical,
+    component: Statistical,
   },
 ];
 export { publicRoutes, privateRoutes };

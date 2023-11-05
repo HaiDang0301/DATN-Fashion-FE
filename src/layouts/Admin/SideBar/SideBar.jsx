@@ -50,19 +50,13 @@ function SideBar() {
               <Link to={routesConfig.AdminProducers}>Producers</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={"#"}>Enter Stonk</Link>
-            </div>
-            <div className={cx("item-mobile")}>
               <Link to={"#"}>Sales</Link>
             </div>
             <div className={cx("item-mobile")}>
               <Link to={routesConfig.AdminBlogs}>Blogs</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={"#"}>Inventory</Link>
-            </div>
-            <div className={cx("item-mobile")}>
-              <Link to={"#"}>Profit</Link>
+              <Link to={routesConfig.Statistical}>Statistical</Link>
             </div>
           </Offcanvas.Body>
         </Offcanvas>
@@ -126,19 +120,9 @@ function SideBar() {
           link={routesConfig.AdminProducts}
         ></ItemMenu>
         <ItemMenu
-          title="Sales"
-          icon="fa fa-signal"
-          link={routesConfig.adminSales}
-        ></ItemMenu>
-        <ItemMenu
-          title="Inventory"
-          icon="fa fa-list-alt"
-          link={routesConfig.adminInventory}
-        ></ItemMenu>
-        <ItemMenu
-          title="Profit"
+          title="Statistical"
           icon="fa fa-usd"
-          link={routesConfig.adminProfit}
+          link={routesConfig.Statistical}
         ></ItemMenu>
         <ItemMenu
           title="Blogs"

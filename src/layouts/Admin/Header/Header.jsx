@@ -49,8 +49,10 @@ function Header() {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item href="#">
-                  <i className="fa fa-user"></i>
-                  <span>Account</span>
+                  <Link to={routesConfig.Profile}>
+                    <i className="fa fa-user"></i>
+                    <span>Account</span>
+                  </Link>
                 </Dropdown.Item>
                 <Dropdown.Item href="#" onClick={handleLogout}>
                   <i className="fa fa-power-off"></i>

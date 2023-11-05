@@ -284,7 +284,6 @@ function UpdateProducts() {
                             <input
                               type="text"
                               name="name"
-                              id="name"
                               value={products.name}
                               placeholder="Enter the product name"
                               onChange={(e) => {
@@ -310,7 +309,6 @@ function UpdateProducts() {
                             <div className="col-lg-12">
                               <select
                                 name="producer"
-                                id="producer"
                                 value={products.producer}
                                 onChange={(e) => {
                                   setProducts({
@@ -341,7 +339,6 @@ function UpdateProducts() {
                             <div className={cx("content")}>
                               <select
                                 name="collection"
-                                id="collection"
                                 value={products.collections}
                                 onChange={(e) => {
                                   setProducts({
@@ -377,7 +374,6 @@ function UpdateProducts() {
                             <div className={cx("content")}>
                               <select
                                 name="category"
-                                id="category"
                                 value={products.category}
                                 onChange={(e) => {
                                   setProducts({
@@ -413,7 +409,6 @@ function UpdateProducts() {
                             <div className={cx("content")}>
                               <select
                                 name="color"
-                                id="color"
                                 value={products.color}
                                 onChange={(e) => {
                                   setProducts({
@@ -461,7 +456,6 @@ function UpdateProducts() {
                               <input
                                 type="text"
                                 name="import_price"
-                                id="import_price"
                                 placeholder="0"
                                 value={products.importPrice || ""}
                                 onChange={(e) => {
@@ -487,7 +481,6 @@ function UpdateProducts() {
                               <input
                                 type="text"
                                 name="price"
-                                id="price"
                                 placeholder="0"
                                 value={products.price || ""}
                                 onChange={(e) =>
@@ -517,7 +510,6 @@ function UpdateProducts() {
                               <input
                                 type="text"
                                 name="promotion"
-                                id="promotion"
                                 placeholder="0"
                                 value={products.promotion || ""}
                                 onChange={(e) => {
@@ -543,7 +535,6 @@ function UpdateProducts() {
                               <input
                                 type="date"
                                 name="out_promotion"
-                                id="out_promotion"
                                 placeholder="0"
                                 value={formatDate(products.out_of_promotion)}
                                 onChange={(e) => {
@@ -572,7 +563,6 @@ function UpdateProducts() {
                                   <div className={cx("content")}>
                                     <select
                                       name="size"
-                                      id="size"
                                       value={item.size}
                                       onChange={(event) =>
                                         handleFormChange(index, event)
@@ -624,7 +614,6 @@ function UpdateProducts() {
                                     <input
                                       type="text"
                                       name="quantity"
-                                      id="quantity"
                                       placeholder="0"
                                       value={item.quantity}
                                       onChange={(event) =>
@@ -709,7 +698,6 @@ function UpdateProducts() {
                 <input
                   type="file"
                   name="image"
-                  id="image"
                   onChange={handleChooseFile}
                   multiple
                 />
