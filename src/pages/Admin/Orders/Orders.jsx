@@ -314,7 +314,9 @@ function AdminOrders() {
                                 <div className={cx("btn-delivery")}>
                                   <button
                                     disabled={
-                                      item.status_delivery === "Cancel"
+                                      item.status_delivery === "Cancel" ||
+                                      item.status_delivery ===
+                                        "Successful Delivery"
                                         ? true
                                         : disableDelivery
                                     }
@@ -327,7 +329,13 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-cancel")}>
                                   <button
-                                    disabled={disableCancel}
+                                    disabled={
+                                      item.status_delivery === "Delivery" ||
+                                      item.status_delivery ===
+                                        "Successful Delivery"
+                                        ? true
+                                        : disableCancel
+                                    }
                                     onClick={(e) => handleCancel(item._id)}
                                   >
                                     <i className="fa fa-ban"></i>
