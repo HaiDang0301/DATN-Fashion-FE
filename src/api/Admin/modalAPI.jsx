@@ -1,6 +1,6 @@
 import axiosConfig from "../Axiosconfig";
 const modalAPI = {
-  getAll(params) {
+  index(params) {
     const url = `/api/admin/${params}`;
     return axiosConfig.get(url);
   },

@@ -1,81 +1,84 @@
-.blog-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: max-content;
+.blog-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: max-content;
 }
-.nav-blog{
+.nav-blog {
+  height: 100%;
+  width: 80%;
+  h5 {
+    font-size: 15px;
+  }
+  input {
+    width: 100%;
+    padding: 5px 25px;
+    &::placeholder {
+      text-align: start;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  textarea {
+    width: 100%;
+    padding: 5px 25px;
+    &::placeholder {
+      text-align: start;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}
+.show-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 20%;
+  }
+}
+.notification {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  i {
+    color: red;
+  }
+}
+.title {
+  margin: 20px 0px;
+}
+.description {
+  margin: 20px 0px;
+}
+.image {
+  margin: 20px 0px;
+  input {
+    padding: 0px;
+  }
+}
+.title-blogs {
+  margin-bottom: 20px;
+}
+.author {
+  margin: 20px 0px;
+}
+.editor {
+  margin-bottom: 100px;
+  height: 70vh;
+  .quill {
     height: 100%;
-    width: 80%;
-    h5{
-        font-size: 15px;
-    }
-    input{
-        width: 100%;
-        padding: 5px 25px;
-        &::placeholder{
-            text-align: start;
-        }
-        &:focus{
-            outline: none;
-        }
-    }
-    textarea{
-        width: 100%;
-        padding: 5px 25px;
-        &::placeholder{
-            text-align: start;
-        }
-        &:focus{
-            outline: none;
-        }
-    }
+  }
+  .quill-container {
+    overflow: scroll;
+    height: 100%;
+  }
 }
-.show-img{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img{
-        width: 20%;
-    }
-}
-.notification{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-    i{
-        color: red;
-    }
-}
-.title{
-    margin: 20px 0px;
-}
-.description{
-    margin: 20px 0px;
-}
-.image{
-    margin: 20px 0px;
-    input{
-        padding: 0px;
-    }
-}
-.title-blogs{
-    margin-bottom: 20px;
-}
-.author{
-    margin: 20px 0px;
-}
-.editor{
-    margin-bottom: 100px;
-    height: 70vh;
-    .quill{
-        height: 100%;
-    }
-    .quill-container{
-        overflow: scroll;
-        height: 100%;
-    }
+.hashtag {
+  margin-top: 20px;
 }

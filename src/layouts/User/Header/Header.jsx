@@ -40,7 +40,7 @@ function Header() {
     }
     const params = "collections";
     const fetchAPI = async () => {
-      const result = await modalAPI.getAll(params);
+      const result = await modalAPI.index(params);
       setCollections(result.data);
     };
     const fetchCart = async () => {

@@ -1,22 +1,22 @@
 import axiosConfig from "../Axiosconfig";
 const blogAPI = {
-  getAll(params) {
+  index(params) {
     const url = "/api/admin/blogs";
     return axiosConfig.get(url, { params: params });
   },
-  createBlog(data) {
+  create(data) {
     const url = "/api/admin/blogs";
     return axiosConfig.post(url, data);
   },
-  editBlog(id) {
+  edit(id) {
     const url = `/api/admin/blogs/${id}/edit`;
     return axiosConfig.get(url);
   },
-  updateBlog(id, data) {
+  update(id, data) {
     const url = `/api/admin/blogs/${id}`;
     return axiosConfig.put(url, data);
   },
-  deleteBlog(id) {
+  delete(id) {
     const url = `/api/admin/blogs/${id}`;
     return axiosConfig.delete(url);
   },

@@ -13,7 +13,7 @@ function BlogsDetail() {
   document.title = `${blog.title}`;
   useEffect(() => {
     const fetchDetail = async () => {
-      const blogDetail = await blogAPI.showDetail(params);
+      const blogDetail = await blogAPI.show(params);
       setBlog(blogDetail.data);
     };
     fetchDetail();

@@ -46,7 +46,7 @@ function Home() {
     setSpecialProducts(result.data);
   };
   const fetchBlogs = async () => {
-    const result = await blogAPI.getAll();
+    const result = await blogAPI.index();
     setBlogs(result.data);
   };
   function SamplePrevArrow(props) {

@@ -1,22 +1,22 @@
 import axiosConfig from "../Axiosconfig";
 const producersApi = {
-  getAll(params) {
+  index(params) {
     const url = "/api/admin/producers";
     return axiosConfig.get(url, { params: params });
   },
-  createProducer(data) {
+  create(data) {
     const url = "/api/admin/producers";
     return axiosConfig.post(url, data);
   },
-  editProducer(id) {
+  edit(id) {
     const url = `/api/admin/producers/${id}/edit`;
     return axiosConfig.get(url);
   },
-  updateProducer(id, data) {
+  update(id, data) {
     const url = `/api/admin/producers/${id}`;
     return axiosConfig.put(url, data);
   },
-  deleteProducer(id) {
+  destroy(id) {
     const url = `/api/admin/producers/${id}`;
     return axiosConfig.delete(url);
   },

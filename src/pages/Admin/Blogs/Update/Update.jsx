@@ -15,11 +15,13 @@ function UpdateBlogs() {
     title: "",
     author: "",
     description: "",
+    hashtag: "",
   });
   const [edit, setEdit] = useState(false);
+  const [hashtag, setHashTag] = useState();
   useEffect(() => {
     const fetchBlog = async () => {
-      const blog = await blogAPI.editBlog(id);
+      const blog = await blogAPI.edit(id);
       setBlog(blog.data);
     };
     fetchBlog();
@@ -36,8 +38,9 @@ function UpdateBlogs() {
     data.append("image", image);
     data.append("title", blog.title);
     data.append("author", blog.author);
+    data.append("hashtag", blog.hashtag);
     data.append("description", blog.description);
-    const updateBlog = await blogAPI.updateBlog(id, data).then((res) => {
+    await blogAPI.update(id, data).then((res) => {
       if (res.status === 200) {
         toast.success("Update Blog Success", {
           position: "bottom-right",
@@ -138,6 +141,23 @@ function UpdateBlogs() {
                     value={blog.author}
                     onChange={(e) =>
                       setBlog({ ...blog, author: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("hashtag")}>
+                    <h5>Hashtag</h5>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    placeholder="Enter the hashtag blog"
+                    value={blog.hashtag}
+                    onChange={(e) =>
+                      setBlog({ ...blog, hashtag: e.target.value })
                     }
                   />
                 </div>

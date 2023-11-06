@@ -18,7 +18,7 @@ function UpdateProducers() {
   });
   useEffect(() => {
     const fetchProducer = async () => {
-      const producers = await producersApi.editProducer(id);
+      const producers = await producersApi.edit(id);
       setProducer(producers.data);
     };
     fetchProducer();
@@ -32,7 +32,7 @@ function UpdateProducers() {
       status: producer.status,
     };
     producersApi
-      .updateProducer(id, data)
+      .update(id, data)
       .then((res) => {
         if (res.data === "Update Producer Success") {
           toast.success("Update Producer Success", {

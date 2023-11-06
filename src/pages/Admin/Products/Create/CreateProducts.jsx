@@ -36,7 +36,7 @@ function CreateProducts() {
   const fetchProducer = async () => {
     const params = "producers";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setProducers(res.data);
       })
@@ -51,7 +51,7 @@ function CreateProducts() {
   const fetchCollection = async () => {
     const params = "collections";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setCollections(res.data);
       })
@@ -66,7 +66,7 @@ function CreateProducts() {
   const fetchColors = async () => {
     const params = "colors";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setColors(res.data);
       })
@@ -81,7 +81,7 @@ function CreateProducts() {
   const fetchSizes = async () => {
     const params = "sizes";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setSizes(res.data);
       })
@@ -97,7 +97,7 @@ function CreateProducts() {
     setCollection(e);
     const params = `collections?collection=${e}`;
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setCategories(res.data);
       })
@@ -193,24 +193,40 @@ function CreateProducts() {
       formik.values.quantity ||
       description
     ) {
-      await productsAPI.store(data).then((res) => {
-        if (res.status === 200) {
-          toast.success("Add products Sucssces", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
-        }
-        setIsloading(false);
-      });
-    } else {
-      if (res.status === 200) {
-        toast.error("Please provide full information", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
+      await productsAPI
+        .store(data)
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("Add products Sucssces", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+          setIsloading(false);
+        })
+        .catch((error) => {
+          if (error.response.status === 409) {
+            toast.error("Product has existed", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+          if (error.response.status === 500) {
+            toast.error("Connect Server Errors", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
         });
-      }
+    } else {
+      toast.error("Please provide full information", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
       setIsloading(false);
     }
   };

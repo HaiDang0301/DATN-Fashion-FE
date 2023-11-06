@@ -12,6 +12,7 @@ function CreateBanners() {
   document.title = "Admin | Create Banner";
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
+  const [hashtag, setHashTag] = useState();
   const [image, setImage] = useState();
   const handleSubmit = () => {
     if (!image || !title) {
@@ -36,12 +37,21 @@ function CreateBanners() {
             });
           }
         })
-        .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
+        .catch((error) => {
+          if (error.response.status === 409) {
+            toast.error("Banner has existed", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+          if (error.response.status === 500) {
+            toast.error("Connect Server False", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
         });
     }
   };
@@ -107,7 +117,7 @@ function CreateBanners() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("description-banner")}>
-                    <h5>Title</h5>
+                    <h5>Text</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">

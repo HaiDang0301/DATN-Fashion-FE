@@ -51,7 +51,7 @@ function UpdateProducts() {
   const fetchProducer = async () => {
     const params = "producers";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setProducers(res.data);
       })
@@ -66,7 +66,7 @@ function UpdateProducts() {
   const fetchCollection = async () => {
     const params = "collections";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setCollections(res.data);
       })
@@ -80,7 +80,7 @@ function UpdateProducts() {
     if (collections) {
       const params = `collections?collection=${collections}`;
       await modalAPI
-        .getAll(params)
+        .index(params)
         .then((res) => {
           setCategories(res.data);
         })
@@ -96,7 +96,7 @@ function UpdateProducts() {
   const fetchColors = async () => {
     const params = "colors";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setColors(res.data);
       })
@@ -111,7 +111,7 @@ function UpdateProducts() {
   const fetchSizes = async () => {
     const params = "sizes";
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setSizes(res.data);
       })

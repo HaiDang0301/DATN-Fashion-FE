@@ -13,6 +13,7 @@ function CreateBlogs() {
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [hashtag, setHashTag] = useState();
   const [description, setDescription] = useState("");
   const [check, setCheck] = useState("");
   const handleChooseFile = (e) => {
@@ -25,13 +26,14 @@ function CreateBlogs() {
     data.append("title", title);
     data.append("author", author);
     data.append("description", description);
+    data.append("hashtag", hashtag);
     if (!image || !title || !author || !description) {
       setCheck(`Please provide full information !`);
     } else {
       blogAPI
-        .createBlog(data)
+        .create(data)
         .then((res) => {
-          if (res.data === "Add Blogs Success") {
+          if (res.status === 200) {
             toast.success("Add Blogs Success", {
               position: "bottom-right",
               autoClose: 5000,
@@ -40,11 +42,20 @@ function CreateBlogs() {
           }
         })
         .catch((err) => {
-          toast.error("Connect Server False", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
+          if (err.response.status === 409) {
+            toast.error("Blog has existed", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+          if (err.response.status === 500) {
+            toast.error("Connect Server False", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
         });
     }
   };
@@ -79,9 +90,9 @@ function CreateBlogs() {
                 )}
               </div>
               <div className={cx("notification")}>
-                <label>
+                <p>
                   {check ? <i className="fa fa-warning"> {check}</i> : null}
-                </label>
+                </p>
               </div>
               <div className="row">
                 <div className="col-lg-12">
@@ -93,8 +104,8 @@ function CreateBlogs() {
                       <div className="col-lg-10">
                         <input
                           type="file"
-                          name=""
-                          id=""
+                          name="image"
+                          id="image"
                           onChange={handleChooseFile}
                         />
                       </div>
@@ -123,10 +134,24 @@ function CreateBlogs() {
                 <div className="col-lg-12">
                   <input
                     type="text"
-                    name="title"
-                    id="title"
+                    name="author"
+                    id="author"
                     placeholder="Enter the author blog"
                     onChange={(e) => setAuthor(e.target.value)}
+                  />
+                </div>
+                <div className="col-lg-12">
+                  <div className={cx("hashtag")}>
+                    <h5>Hashtag</h5>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <input
+                    type="text"
+                    name="hashtag"
+                    id="hashtag"
+                    placeholder="Enter the hashtag blog"
+                    onChange={(e) => setHashTag(e.target.value)}
                   />
                 </div>
                 <div className="col-lg-12">
