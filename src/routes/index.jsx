@@ -29,6 +29,7 @@ import OrdersDetail from "../pages/User/OrdersDetail/OrderDetail";
 import AdminOrders from "../pages/Admin/Orders/Orders";
 import ViewOrders from "../pages/Admin/OrderDetail/OrderDetail";
 import Statistical from "../pages/Admin/Statistical/Statistical";
+import Contacts from "../pages/User/Contacts/Contacts";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -90,6 +91,10 @@ const publicRoutes = [
   {
     path: routesConfig.OrdersDetail,
     component: OrdersDetail,
+  },
+  {
+    path: routesConfig.Contacts,
+    component: Contacts,
   },
 ];
 const privateRoutes = [

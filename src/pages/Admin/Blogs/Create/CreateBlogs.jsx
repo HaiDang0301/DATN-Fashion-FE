@@ -6,6 +6,7 @@ import blogAPI from "../../../../api/Admin/blogsAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import className from "classnames/bind";
+import loading from "../../../../assets/loading.gif";
 import styles from "./CreateBlogs.module.scss";
 const cx = className.bind(styles);
 function CreateBlogs() {
@@ -16,11 +17,13 @@ function CreateBlogs() {
   const [hashtag, setHashTag] = useState();
   const [description, setDescription] = useState("");
   const [check, setCheck] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   const handleChooseFile = (e) => {
     const url = e.target.files[0];
     setImage(url);
   };
   const handleSubmit = () => {
+    setIsLoading(true);
     const data = new FormData();
     data.append("image", image);
     data.append("title", title);
@@ -39,6 +42,7 @@ function CreateBlogs() {
               autoClose: 5000,
               theme: "light",
             });
+            setIsLoading(false);
           }
         })
         .catch((err) => {
@@ -48,6 +52,7 @@ function CreateBlogs() {
               autoClose: 5000,
               theme: "light",
             });
+            setIsLoading(false);
           }
           if (err.response.status === 500) {
             toast.error("Connect Server False", {
@@ -55,6 +60,7 @@ function CreateBlogs() {
               autoClose: 5000,
               theme: "light",
             });
+            setIsLoading(false);
           }
         });
     }
@@ -70,13 +76,17 @@ function CreateBlogs() {
                 <h5>Create Blog</h5>
               </div>
               <div className="col-lg-2">
-                <Link
-                  to={"#"}
-                  className="btn btn-primary"
-                  onClick={handleSubmit}
-                >
-                  <i className="fa fa-save"> Save</i>
-                </Link>
+                {isloading ? (
+                  <img src={loading} alt="" />
+                ) : (
+                  <Link
+                    to={"#"}
+                    className="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
+                    <i className="fa fa-edit"> Save</i>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

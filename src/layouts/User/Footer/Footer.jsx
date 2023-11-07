@@ -14,7 +14,7 @@ function Footer() {
     await AuthsAPI.newsletter(data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Subscribe newsletter Success", {
+          toast.success("Subscribe Newsletter Success", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",

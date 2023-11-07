@@ -15,7 +15,7 @@ function CreateBanners() {
   const [hashtag, setHashTag] = useState();
   const [image, setImage] = useState();
   const handleSubmit = () => {
-    if (!image || !title) {
+    if (!image) {
       toast.error("Please provide full information", {
         position: "bottom-right",
         autoClose: 5000,

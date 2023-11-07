@@ -104,7 +104,8 @@ function ProductDetail() {
           });
         }
         setDisable(true);
-      } else {
+      }
+      if (size && quantity > 0) {
         const data = {
           product_id: product._id,
           product_name: product.name,

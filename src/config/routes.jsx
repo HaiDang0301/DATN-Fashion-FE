@@ -14,6 +14,7 @@ const routesConfig = {
   CartDetail: "/my-cart",
   Orders: "/my-orders",
   OrdersDetail: "/my-orders/:id",
+  Contacts: "/about/contacts",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",

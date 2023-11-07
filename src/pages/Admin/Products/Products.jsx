@@ -398,6 +398,8 @@ function AdminProducts() {
                 <th>Product Code</th>
                 <th>Product Name</th>
                 <th>Image</th>
+                <th>Sizes</th>
+                <th>Quantity</th>
                 <th>Import Price</th>
                 <th>Sale Price</th>
                 <th>Brand</th>
@@ -423,6 +425,16 @@ function AdminProducts() {
                             alt=""
                           />
                         )}
+                      </td>
+                      <td>
+                        {item.sizes.map((size) => (
+                          <p>{size.size}</p>
+                        ))}
+                      </td>
+                      <td>
+                        {item.sizes.map((size) => (
+                          <p>{size.quantity}</p>
+                        ))}
                       </td>
                       <td>{Number(item.importPrice).toLocaleString()}</td>
                       <td>{Number(item.price).toLocaleString()}</td>

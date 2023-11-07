@@ -7,8 +7,6 @@ import AuthsAPI from "../../../api/AuthsAPI";
 import axios from "axios";
 const cx = className.bind(styles);
 function Profile() {
-  const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
   document.title = "Profile";
   const inputFiles = useRef();
   const [image, setImage] = useState();
@@ -26,6 +24,7 @@ function Profile() {
   const [disabledH, setDisableH] = useState(true);
   const [password, setPassword] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [loadingBtn, setLoadingBtn] = useState(false);
   useEffect(() => {
     const fetchApi = async () => {
       const result = await AuthsAPI.profile();
@@ -123,6 +122,7 @@ function Profile() {
     setDisableH(false);
   };
   const handleSubmit = async () => {
+    setLoadingBtn(true);
     const data = new FormData();
     data.append("image", image);
     data.append("full_name", user.full_name);
@@ -136,7 +136,7 @@ function Profile() {
     data.append("district", user.address.district);
     data.append("ward", user.address.ward);
     data.append("home", user.address.address_home);
-    const update = await AuthsAPI.update(data)
+    await AuthsAPI.update(data)
       .then((res) => {
         if (res.status === 200) {
           toast.success("Update Profile Success", {
@@ -144,6 +144,7 @@ function Profile() {
             autoClose: 2000,
             theme: "light",
           });
+          setLoadingBtn(false);
         }
       })
       .catch((err) => {
@@ -152,6 +153,7 @@ function Profile() {
           autoClose: 5000,
           theme: "light",
         });
+        setLoadingBtn(false);
       });
   };
   return (
@@ -388,9 +390,13 @@ function Profile() {
               </div>
               <div className="col-lg-12">
                 <div className={cx("save-information")}>
-                  <button className="btn btn-primary" onClick={handleSubmit}>
-                    Save
-                  </button>
+                  {loadingBtn ? (
+                    <img src={loading} alt="" />
+                  ) : (
+                    <button className="btn btn-primary" onClick={handleSubmit}>
+                      Save
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

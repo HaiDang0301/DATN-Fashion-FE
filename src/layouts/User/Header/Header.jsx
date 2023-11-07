@@ -335,7 +335,7 @@ function Header() {
                 <Link to={routesConfig.blogs}>Blog</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"#"}>Contact</Link>
+                <Link to={routesConfig.Contacts}>Contact</Link>
               </div>
             </div>
           </div>

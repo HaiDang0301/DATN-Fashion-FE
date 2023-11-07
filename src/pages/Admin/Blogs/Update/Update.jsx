@@ -4,12 +4,14 @@ import { Editor } from "@tinymce/tinymce-react";
 import blogAPI from "../../../../api/Admin/blogsAPI";
 import className from "classnames/bind";
 import styles from "./Update.module.scss";
+import loading from "../../../../assets/loading.gif";
 import { ToastContainer, toast } from "react-toastify";
 const cx = className.bind(styles);
 function UpdateBlogs() {
   document.title = "Admin | Edit Blog";
   const id = useParams().id;
   const [image, setImage] = useState("");
+  const [isloading, setIsLoading] = useState(false);
   const [blog, setBlog] = useState({
     image: "",
     title: "",
@@ -18,7 +20,6 @@ function UpdateBlogs() {
     hashtag: "",
   });
   const [edit, setEdit] = useState(false);
-  const [hashtag, setHashTag] = useState();
   useEffect(() => {
     const fetchBlog = async () => {
       const blog = await blogAPI.edit(id);
@@ -34,6 +35,7 @@ function UpdateBlogs() {
     setEdit(true);
   };
   const handleUpdate = async () => {
+    setIsLoading(true);
     const data = new FormData();
     data.append("image", image);
     data.append("title", blog.title);
@@ -45,15 +47,17 @@ function UpdateBlogs() {
         toast.success("Update Blog Success", {
           position: "bottom-right",
           autoClose: 5000,
-          theme: "colored",
+          theme: "light",
         });
+        setIsLoading(false);
       }
       if (res.data === "Can't Find Blog") {
         toast.error("Can't Find Blog", {
           position: "bottom-right",
           autoClose: 5000,
-          theme: "colored",
+          theme: "light",
         });
+        setIsLoading(false);
       }
     });
   };
@@ -69,13 +73,17 @@ function UpdateBlogs() {
                 <h5>Update Blog</h5>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-3 col-4">
-                <Link
-                  to={"#"}
-                  className="btn btn-primary"
-                  onClick={handleUpdate}
-                >
-                  <i className="fa fa-edit"> Update</i>
-                </Link>
+                {isloading ? (
+                  <img src={loading} alt="" />
+                ) : (
+                  <Link
+                    to={"#"}
+                    className="btn btn-primary"
+                    onClick={handleUpdate}
+                  >
+                    <i className="fa fa-edit"> Update</i>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

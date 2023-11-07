@@ -4,27 +4,29 @@ import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import blogAPI from "../../../api/User/blogsAPI";
 import className from "classnames/bind";
+import loading from "../../../assets/loading.gif";
 import styles from "./Blog.module.scss";
+import Skeleton from "react-loading-skeleton";
 const cx = className.bind(styles);
 function Blogs() {
   document.title = "Blogs";
   const navigate = useNavigate();
-  const [api, setAPI] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
   const [blogs, setBlogs] = useState([]);
   const [author, setAuthor] = useState();
   const [btnsearch, setBtnSearch] = useState(true);
+  const [isloading, setIsLoading] = useState(true);
   const params = searchParams;
   useEffect(() => {
     const fetchBlogs = async () => {
       const blogsList = await blogAPI.index(params);
       setBlogs(blogsList.data);
       setTimeout(() => {
-        setAPI(true);
-      }, 1000);
+        setIsLoading(false);
+      }, 1500);
     };
     fetchBlogs();
-  }, [api]);
+  }, [params]);
   const handleSearch = (e) => {
     setAuthor(e.target.value);
     setBtnSearch(false);
@@ -45,8 +47,9 @@ function Blogs() {
     navigate(newUrl);
   };
   const handleHashtag = (hashtag) => {
+    setIsLoading(true);
     setSearchParams({
-      hashtag: "123",
+      hashtag: hashtag,
     });
     setAPI(!api);
   };
@@ -76,7 +79,6 @@ function Blogs() {
                 </div>
                 <div className={cx("item-hashtag")}>
                   <h3>HashTag</h3>
-
                   <ul>
                     <div className="row g-0">
                       {blogs
@@ -95,7 +97,7 @@ function Blogs() {
                 </div>
                 <div className={cx("recent-post")}>
                   <h3>Recent Post</h3>
-                  {blogs.blogs.slice(3, 6).map((item, index) => (
+                  {blogs.blogs.slice(10, 16).map((item, index) => (
                     <div className={cx("item")} key={item._id}>
                       <img src={item.image} alt="" />
                       <div className={cx("title")}>
@@ -120,11 +122,25 @@ function Blogs() {
                       >
                         <Link to={item.slug}>
                           <Card className={cx("item-card")}>
-                            <Card.Img variant="top" src={item.image} />
+                            {isloading ? (
+                              <div className={cx("isloading")}>
+                                <img src={loading} alt="" />
+                              </div>
+                            ) : (
+                              <Card.Img variant="top" src={item.image} />
+                            )}
                             <Card.Body>
-                              <Card.Title className={cx("card-title")}>
-                                {item.title}
-                              </Card.Title>
+                              {isloading ? (
+                                <Skeleton
+                                  count={2}
+                                  width={220}
+                                  height={20}
+                                ></Skeleton>
+                              ) : (
+                                <Card.Title className={cx("card-title")}>
+                                  {item.title}
+                                </Card.Title>
+                              )}
                             </Card.Body>
                           </Card>
                         </Link>
