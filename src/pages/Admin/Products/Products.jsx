@@ -215,7 +215,7 @@ function AdminProducts() {
                     <h5>Products List</h5>
                   </div>
                 </div>
-                <div className="col-lg-5 col-md-9 col-sm-8 col-8">
+                <div className="col-lg-4 col-md-9 col-sm-8 col-8">
                   <div className={cx("search-name")}>
                     <div className="row">
                       <div className="col-lg-9 col-md-8 col-sm-9 col-9">
@@ -240,7 +240,7 @@ function AdminProducts() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-10 col-sm-10 col-10">
+                <div className="col-lg-5 col-md-10 col-sm-10 col-10">
                   <div className="row">
                     <div className="col-lg-5 col-md-7 col-sm-6 col-6">
                       <div className={cx("excel-file")}>

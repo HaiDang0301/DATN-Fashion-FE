@@ -88,12 +88,21 @@ function ProductDetail() {
           theme: "light",
         });
       }
-      if (size && isNaN(quantity)) {
-        toast.warning("The quantity must be a number", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
-        });
+      if (size) {
+        if (isNaN(quantity)) {
+          toast.warning("The quantity must be a number", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+        if (quantity < 0) {
+          toast.warning("The number must be greater than zero", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
         setDisable(true);
       } else {
         const data = {

@@ -235,38 +235,27 @@ function CreateProducts() {
       <div className={cx("product-act")}>
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
+            <div className="col-lg-10">
               <div className={cx("title")}>
                 <h5>
                   <i className="fa fa-file"> Create Product</i>
                 </h5>
               </div>
             </div>
-            <div className="col-lg-6">
+            <div className="col-lg-2">
               <div className={cx("save")}>
-                <div className="row g-0">
-                  <div className="col-lg-4 col-md-6 col-sm-6 col-12">
-                    <div className={cx("save")}>
-                      {isLoading ? (
-                        <img src={loading}></img>
-                      ) : (
-                        <Link
-                          to={"#"}
-                          className="btn btn-primary"
-                          onClick={handleSubmit}
-                        >
-                          <i className="fa fa-check"> Save</i>
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                  <div className="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div className={cx("save")}>
-                      <Link to={"#"} className="btn btn-primary">
-                        <i className="fa fa-save"> Save and continue</i>
-                      </Link>
-                    </div>
-                  </div>
+                <div className={cx("save")}>
+                  {isLoading ? (
+                    <img src={loading}></img>
+                  ) : (
+                    <Link
+                      to={"#"}
+                      className="btn btn-primary"
+                      onClick={handleSubmit}
+                    >
+                      <i className="fa fa-check"> Save</i>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
