@@ -30,6 +30,7 @@ import AdminOrders from "../pages/Admin/Orders/Orders";
 import ViewOrders from "../pages/Admin/OrderDetail/OrderDetail";
 import Statistical from "../pages/Admin/Statistical/Statistical";
 import Contacts from "../pages/User/Contacts/Contacts";
+import Clients from "../pages/Admin/Clients/Clients";
 const publicRoutes = [
   {
     path: routesConfig.home,
@@ -161,6 +162,10 @@ const privateRoutes = [
   {
     path: routesConfig.Statistical,
     component: Statistical,
+  },
+  {
+    path: routesConfig.AdminClients,
+    component: Clients,
   },
 ];
 export { publicRoutes, privateRoutes };

@@ -32,5 +32,6 @@ const routesConfig = {
   AdminOrders: "/admin/orders",
   ViewOrders: "/admin/orders/:id",
   Statistical: "/admin/statistical",
+  AdminClients: "/admin/clients",
 };
 export default routesConfig;
