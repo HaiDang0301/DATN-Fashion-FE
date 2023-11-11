@@ -275,7 +275,7 @@ function AdminHome() {
                     Total Clients
                     <div className={cx("stonk")}>
                       <i className="fa fa-signal"></i>{" "}
-                      {clients ? clients.length : null}
+                      {clients ? clients.countClients : null}
                     </div>
                   </div>
                 </div>
