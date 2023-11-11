@@ -23,13 +23,13 @@ function AdminProducers() {
   const params = searchParams;
   useEffect(() => {
     const fetchProducers = async () => {
-      const producers = await producersApi.getAll(params);
+      const producers = await producersApi.index(params);
       setProducers(producers.data);
     };
     fetchProducers();
   }, [show, params]);
   const handleDelete = async () => {
-    const deleteProducer = await producersApi.deleteProducer(id).then((res) => {
+    await producersApi.destroy(id).then((res) => {
       if (res.data === "Delete Producer Success") {
         toast.success("Delete Producer Success", {
           position: "bottom-right",

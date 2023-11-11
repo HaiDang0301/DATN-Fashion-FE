@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: 100vh;
   height: max-content;
 }
 .nav-banner {
@@ -14,6 +15,7 @@
   input {
     width: 100%;
     padding: 5px 25px;
+    margin: 15px 0px;
     &::placeholder {
       text-align: start;
     }

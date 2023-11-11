@@ -109,7 +109,7 @@ function UpdateBanners() {
                   </div>
                 </div>
                 <div className="col-lg-12">
-                  <h5>Description</h5>
+                  <h5>Text</h5>
                 </div>
                 <div className="col-lg-12">
                   <Editor

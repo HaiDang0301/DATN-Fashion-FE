@@ -22,7 +22,7 @@ function ModalContent(props) {
   var params = props.title.toLowerCase() + "s";
   useEffect(() => {
     const fetchAPI = async () => {
-      const result = await modalAPI.getAll(params);
+      const result = await modalAPI.index(params);
       setResults(result.data);
     };
     fetchAPI();

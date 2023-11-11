@@ -59,11 +59,11 @@ function Products() {
     fetchProducer();
   }, [params, query, category]);
   const fetchCollection = async () => {
-    const result = await modalAPI.getAll("collections");
+    const result = await modalAPI.index("collections");
     setCollections(result.data);
   };
   const fetchProducer = async () => {
-    const result = await producersApi.getAll();
+    const result = await producersApi.index();
     setProducers(result.data);
   };
   const handlePage = async (e) => {
@@ -423,7 +423,7 @@ function Products() {
                                   <div className={cx("loading-information")}>
                                     <Skeleton
                                       count={2}
-                                      width={250}
+                                      width={230}
                                       height={20}
                                     ></Skeleton>
                                   </div>

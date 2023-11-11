@@ -24,7 +24,7 @@ function CategoryContent(props) {
   var params = "collections";
   useEffect(() => {
     const fetchAPI = async () => {
-      const result = await modalAPI.getAll(params);
+      const result = await modalAPI.index(params);
       setResults(result.data);
     };
     fetchAPI();
@@ -32,7 +32,7 @@ function CategoryContent(props) {
   }, [callAPI]);
   const fetchCollection = async () => {
     await modalAPI
-      .getAll(params)
+      .index(params)
       .then((res) => {
         setCollection(res.data);
       })

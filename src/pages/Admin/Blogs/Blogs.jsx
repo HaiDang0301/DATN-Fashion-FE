@@ -27,14 +27,14 @@ function AdminBlogs() {
   const params = searchParams;
   useEffect(() => {
     const fetchBlogs = async () => {
-      const blogs = await blogAPI.getAll(params);
+      const blogs = await blogAPI.index(params);
       setBlogs(blogs.data);
     };
     fetchBlogs();
   }, [show, params]);
   const handleDelete = async () => {
-    const deleteBlog = await blogAPI.deleteBlog(id).then((res) => {
-      if (res.data === "Delete Success") {
+    await blogAPI.delete(id).then((res) => {
+      if (res.status === 200) {
         toast.success("Delete Blog Success", {
           position: "bottom-right",
           autoClose: 5000,
@@ -73,7 +73,8 @@ function AdminBlogs() {
         0 +
         (date.getMonth() + 1) +
         "-" +
-        (date.getDate() - 7)
+        date.getDate() -
+        7
     );
     const now = formatDate(
       date.getFullYear() +
@@ -89,12 +90,11 @@ function AdminBlogs() {
   const handleMonth = (month) => {
     setBackground(month);
     const finalMonth = formatDate(
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate()
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + 30
     );
     const beginMonth = formatDate(
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + 0 + 1
     );
-    console.log(beginMonth);
     setFinal(finalMonth);
     setBegin(beginMonth);
   };
@@ -225,6 +225,7 @@ function AdminBlogs() {
                   <th>Name</th>
                   <th>Image</th>
                   <th>Author</th>
+                  <th>HashTag</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -240,6 +241,7 @@ function AdminBlogs() {
                           </div>
                         </td>
                         <td>{item.author}</td>
+                        <td>{item.hashtag}</td>
                         <td>
                           <div className={cx("action")}>
                             <div className={cx("update")}>

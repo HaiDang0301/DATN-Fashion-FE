@@ -46,7 +46,7 @@ function Home() {
     setSpecialProducts(result.data);
   };
   const fetchBlogs = async () => {
-    const result = await blogAPI.getAll();
+    const result = await blogAPI.index();
     setBlogs(result.data);
   };
   function SamplePrevArrow(props) {
@@ -81,7 +81,6 @@ function Home() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
         },
       },
       {

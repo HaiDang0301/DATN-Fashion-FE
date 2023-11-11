@@ -43,7 +43,7 @@ function CreateProducers() {
         address: formik.values.address,
       };
       producersApi
-        .createProducer(data)
+        .create(data)
         .then((res) => {
           if (res.data === "Add Producer Success") {
             toast.success("Add Producer Success", {

@@ -19,7 +19,7 @@ function AdminProducts() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [reload, setReload] = useState(false);
-  const [name, setName] = useState("");
+  const [productCode, setProductCode] = useState("");
   const [id, setId] = useState("");
   const [collections, setCollections] = useState([]);
   const [producer, setProducer] = useState([]);
@@ -31,14 +31,14 @@ function AdminProducts() {
   const params = searchParams;
   useEffect(() => {
     const fetchAPI = async () => {
-      await productsAPI.getAll(params).then((res) => {
+      await productsAPI.index(params).then((res) => {
         setProducts(res.data);
       });
     };
     const fetchCollections = async () => {
       const params = "collections";
       await modalAPI
-        .getAll(params)
+        .index(params)
         .then((res) => {
           setCollections(res.data);
         })
@@ -52,7 +52,7 @@ function AdminProducts() {
     };
     const fetchProducer = async () => {
       await producersApi
-        .getAll()
+        .index()
         .then((res) => {
           setProducer(res.data);
         })
@@ -125,12 +125,12 @@ function AdminProducts() {
         });
       });
   };
-  const handleChangeName = (e) => {
-    setName(e.target.value);
+  const handleChangeProductCode = (e) => {
+    setProductCode(e.target.value);
   };
   const handleSearch = () => {
     setSearchParams({
-      name: name,
+      product_code: productCode,
     });
   };
   const handleChangeCollection = (e) => {
@@ -158,7 +158,7 @@ function AdminProducts() {
     navigate(newUrl);
   };
   const handleDelete = async () => {
-    const destroy = await productsAPI
+    await productsAPI
       .destroy(id)
       .then((res) => {
         if (res.data === "Delete Success") {
@@ -215,7 +215,7 @@ function AdminProducts() {
                     <h5>Products List</h5>
                   </div>
                 </div>
-                <div className="col-lg-5 col-md-9 col-sm-8 col-8">
+                <div className="col-lg-4 col-md-9 col-sm-8 col-8">
                   <div className={cx("search-name")}>
                     <div className="row">
                       <div className="col-lg-9 col-md-8 col-sm-9 col-9">
@@ -223,8 +223,8 @@ function AdminProducts() {
                           type="search"
                           name="search"
                           id="search"
-                          placeholder="Enter the product name"
-                          onChange={handleChangeName}
+                          placeholder="Enter the product code"
+                          onChange={handleChangeProductCode}
                         />
                       </div>
                       <div className="col-lg-2 col-md-4 col-sm-3 col-3">
@@ -240,7 +240,7 @@ function AdminProducts() {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-4 col-md-10 col-sm-10 col-10">
+                <div className="col-lg-5 col-md-10 col-sm-10 col-10">
                   <div className="row">
                     <div className="col-lg-5 col-md-7 col-sm-6 col-6">
                       <div className={cx("excel-file")}>
@@ -274,7 +274,6 @@ function AdminProducts() {
                           to={"#"}
                           onClick={handleDownloadFile}
                           className="btn btn-primary"
-                          target="blank"
                         >
                           Sample file
                         </Link>
@@ -302,6 +301,7 @@ function AdminProducts() {
               id="file"
               ref={inputFiles}
               onChange={changeExcel}
+              accept=".csv"
             />
           </div>
         </div>
@@ -398,16 +398,18 @@ function AdminProducts() {
                 <th>Product Code</th>
                 <th>Product Name</th>
                 <th>Image</th>
+                <th>Sizes</th>
+                <th>Quantity</th>
                 <th>Import Price</th>
                 <th>Sale Price</th>
                 <th>Brand</th>
                 <th>Action</th>
               </tr>
             </thead>
-            {products.products
-              ? products.products.map((item, index) => (
-                  <tbody key={index + 1}>
-                    <tr>
+            <tbody>
+              {products.products
+                ? products.products.map((item, index) => (
+                    <tr key={index}>
                       <td>
                         <input type="checkbox" name="" id="" />
                       </td>
@@ -423,6 +425,16 @@ function AdminProducts() {
                             alt=""
                           />
                         )}
+                      </td>
+                      <td>
+                        {item.sizes.map((size) => (
+                          <p>{size.size}</p>
+                        ))}
+                      </td>
+                      <td>
+                        {item.sizes.map((size) => (
+                          <p>{size.quantity}</p>
+                        ))}
                       </td>
                       <td>{Number(item.importPrice).toLocaleString()}</td>
                       <td>{Number(item.price).toLocaleString()}</td>
@@ -443,9 +455,9 @@ function AdminProducts() {
                         </div>
                       </td>
                     </tr>
-                  </tbody>
-                ))
-              : null}
+                  ))
+                : null}
+            </tbody>
           </Table>
         </div>
         <div className={cx("panigate")}>
@@ -457,11 +469,6 @@ function AdminProducts() {
             previousLabel="<"
             forcePage={searchParams.get("page") - 1}
           />
-        </div>
-        <div className={cx("total-product")}>
-          <span htmlFor="total-product">
-            Total products / Manufacturer Quantity
-          </span>
         </div>
       </div>
     </div>

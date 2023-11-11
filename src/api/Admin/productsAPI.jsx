@@ -1,7 +1,7 @@
 import axiosConfig from "../Axiosconfig";
 
 const productsAPI = {
-  getAll(params) {
+  index(params) {
     const url = "/api/admin/products";
     return axiosConfig.get(url, { params: params });
   },

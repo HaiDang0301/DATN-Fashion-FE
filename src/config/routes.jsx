@@ -14,6 +14,7 @@ const routesConfig = {
   CartDetail: "/my-cart",
   Orders: "/my-orders",
   OrdersDetail: "/my-orders/:id",
+  Contacts: "/about/contacts",
   //Admin
   AdminHome: "/admin/home",
   AdminBlogs: "/admin/blogs",
@@ -31,5 +32,6 @@ const routesConfig = {
   AdminOrders: "/admin/orders",
   ViewOrders: "/admin/orders/:id",
   Statistical: "/admin/statistical",
+  AdminClients: "/admin/clients",
 };
 export default routesConfig;

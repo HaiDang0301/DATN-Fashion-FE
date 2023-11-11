@@ -1,0 +1,48 @@
+.search {
+  text-align: center;
+  height: 100%;
+  input {
+    height: 38px;
+  }
+}
+.sort {
+  text-align: center;
+  height: 100%;
+  select {
+    height: inherit;
+  }
+}
+.table-clients {
+  text-align: center;
+  margin-top: 30px;
+}
+.action-client {
+  text-align: center;
+  a {
+    color: black;
+    &:hover {
+      color: red;
+    }
+  }
+}
+.panigate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  ul {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+  }
+  a {
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}

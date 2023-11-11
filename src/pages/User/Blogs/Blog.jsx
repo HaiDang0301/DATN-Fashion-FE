@@ -3,37 +3,38 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { useEffect, useState } from "react";
 import blogAPI from "../../../api/User/blogsAPI";
-import Parser from "html-react-parser";
 import className from "classnames/bind";
+import loading from "../../../assets/loading.gif";
 import styles from "./Blog.module.scss";
+import Skeleton from "react-loading-skeleton";
 const cx = className.bind(styles);
 function Blogs() {
   document.title = "Blogs";
   const navigate = useNavigate();
-  const year = new Date();
-  const [api, setAPI] = useState(false);
   let [searchParams, setSearchParams] = useSearchParams();
   const [blogs, setBlogs] = useState([]);
+  const [author, setAuthor] = useState();
   const [btnsearch, setBtnSearch] = useState(true);
+  const [isloading, setIsLoading] = useState(true);
   const params = searchParams;
   useEffect(() => {
     const fetchBlogs = async () => {
-      const blogsList = await blogAPI.getAll(params);
+      const blogsList = await blogAPI.index(params);
       setBlogs(blogsList.data);
       setTimeout(() => {
-        setAPI(true);
-      }, 1000);
+        setIsLoading(false);
+      }, 1500);
     };
     fetchBlogs();
-  }, [api]);
+  }, [params]);
   const handleSearch = (e) => {
-    const author = e.target.value;
-    setSearchParams({
-      author: author,
-    });
+    setAuthor(e.target.value);
     setBtnSearch(false);
   };
   const hanldeBtnSearch = () => {
+    setSearchParams({
+      author: author,
+    });
     setAPI(!api);
     setBtnSearch(!btnsearch);
   };
@@ -45,7 +46,11 @@ function Blogs() {
     const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
     navigate(newUrl);
   };
-  const handleHashtag = () => {
+  const handleHashtag = (hashtag) => {
+    setIsLoading(true);
+    setSearchParams({
+      hashtag: hashtag,
+    });
     setAPI(!api);
   };
   if (!blogs.blogs) return null;
@@ -75,37 +80,24 @@ function Blogs() {
                 <div className={cx("item-hashtag")}>
                   <h3>HashTag</h3>
                   <ul>
-                    <li>
-                      <Link to={"/blogs/?hashtag=sale"} onClick={handleHashtag}>
-                        Sale
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to={"/blogs/?hashtag=new"} onClick={handleHashtag}>
-                        New Product
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={"/blogs/?hashtag=celebrity"}
-                        onClick={handleHashtag}
-                      >
-                        Celebrity
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={`/blogs/?hashtag=${year.getFullYear()}`}
-                        onClick={handleHashtag}
-                      >
-                        {year.getFullYear()}
-                      </Link>
-                    </li>
+                    <div className="row g-0">
+                      {blogs
+                        ? blogs.hashtag.map((item, index) => (
+                            <div className="col-lg-4" key={index}>
+                              <li>
+                                <button onClick={(e) => handleHashtag(item)}>
+                                  # {item}
+                                </button>
+                              </li>
+                            </div>
+                          ))
+                        : null}
+                    </div>
                   </ul>
                 </div>
                 <div className={cx("recent-post")}>
                   <h3>Recent Post</h3>
-                  {blogs.blogs.slice(3, 6).map((item, index) => (
+                  {blogs.blogs.slice(10, 16).map((item, index) => (
                     <div className={cx("item")} key={item._id}>
                       <img src={item.image} alt="" />
                       <div className={cx("title")}>
@@ -130,11 +122,25 @@ function Blogs() {
                       >
                         <Link to={item.slug}>
                           <Card className={cx("item-card")}>
-                            <Card.Img variant="top" src={item.image} />
+                            {isloading ? (
+                              <div className={cx("isloading")}>
+                                <img src={loading} alt="" />
+                              </div>
+                            ) : (
+                              <Card.Img variant="top" src={item.image} />
+                            )}
                             <Card.Body>
-                              <Card.Title className={cx("card-title")}>
-                                {item.title}
-                              </Card.Title>
+                              {isloading ? (
+                                <Skeleton
+                                  count={2}
+                                  width={220}
+                                  height={20}
+                                ></Skeleton>
+                              ) : (
+                                <Card.Title className={cx("card-title")}>
+                                  {item.title}
+                                </Card.Title>
+                              )}
                             </Card.Body>
                           </Card>
                         </Link>

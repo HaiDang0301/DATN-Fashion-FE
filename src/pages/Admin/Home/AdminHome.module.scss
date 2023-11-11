@@ -1,0 +1,97 @@
+.wrapper {
+  margin: 30px 0px;
+  z-index: 1;
+}
+.orders {
+  padding: 10px;
+  height: 100px;
+  color: white;
+  background-color: #9abc32;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+}
+.sales {
+  padding: 10px;
+  height: 100px;
+  color: white;
+  background-color: #6fb3e0;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+}
+.revenue {
+  padding: 10px;
+  height: 100px;
+  color: white;
+  background-color: #d53f40;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+}
+.yearly-sales {
+  padding: 10px;
+  height: 100px;
+  color: white;
+  background-color: #e8b110;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+}
+.product-sales {
+  margin-top: 30px;
+}
+.total-clients {
+  padding: 15px;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+  background-color: #6fb3e0;
+}
+.total-user {
+  margin-top: 30px;
+  padding: 15px;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+  background-color: #6fb3e0;
+}
+.unique-visitor {
+  margin-top: 30px;
+  padding: 15px;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+  background-color: #6fb3e0;
+}
+.total-producers {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #6fb3e0;
+  box-shadow: 0px 10px 30px 0px rgba(13, 12, 13, 0.2);
+}
+.total-number {
+  font-size: 20px;
+}
+.comment {
+  margin: 30px 0px;
+  text-align: center;
+}
+.title {
+  margin: 30px 0px;
+}
+.preview-comments {
+  text-align: center;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+.thumnal-container {
+  border: 1px solid #ccc;
+  width: 95%;
+}
+.image-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    margin-top: 10px;
+    height: 50%;
+    width: 40%;
+  }
+}
+.yearsales {
+  width: 100%;
+  height: 100%;
+}
+.chart {
+  width: 100%;
+  height: 100%;
+}

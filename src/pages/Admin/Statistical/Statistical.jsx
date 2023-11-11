@@ -189,7 +189,7 @@ function Statistical() {
                     <label>Month Capital</label>
                   </div>
                   <div className={cx("import-money")}>
-                    ${data.findMonth[0].import_Money}
+                    ${Number(data.findMonth[0].import_Money).toLocaleString()}
                   </div>
                 </div>
               </div>

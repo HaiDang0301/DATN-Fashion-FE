@@ -29,23 +29,27 @@ function AdminBanners() {
     fetchBanners();
   }, [show, params]);
   const handleDelete = async () => {
-    const destroy = await bannerApi.delete(id).then((res) => {
-      if (res.data === "Delete Banner Success") {
-        toast.success("Delete Banner Success", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
-        });
-      }
-      if (res.status === 404) {
-        toast.error("Can't Find Producer", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
-        });
-      }
-      setShow(false);
-    });
+    const destroy = await bannerApi
+      .delete(id)
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Delete Banner Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+        setShow(false);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          toast.error("Can't Find Banner", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
   };
   const handlePage = (e) => {
     const queryParams = new URLSearchParams(window.location.search);
