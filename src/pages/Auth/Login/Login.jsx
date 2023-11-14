@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import loading from "../../../assets/loading.gif";
+import { OldSocialLogin as SocialLogin } from "react-social-login";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import classNames from "classnames/bind";
@@ -8,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import AuthsAPI from "../../../api/AuthsAPI";
 import routesConfig from "../../../config/routes";
+import { GoogleLogin } from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
 const cx = classNames.bind(styles);
 function Login() {
   document.title = "Login";
@@ -16,6 +19,9 @@ function Login() {
     localStorage.getItem("token") || sessionStorage.getItem("token");
   const [save, setSave] = useState(false);
   const [isloading, setIsloading] = useState(false);
+  useEffect(() => {
+    if (token) return navigate(routesConfig.home);
+  }, []);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -40,7 +46,7 @@ function Login() {
         if (res.data.others.role === "admin") {
           toast.success("Loggin Succes", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 3000,
             theme: "light",
           });
           setIsloading(false);
@@ -50,7 +56,7 @@ function Login() {
         } else {
           toast.success("Loggin Succes", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 3000,
             theme: "light",
           });
           setIsloading(false);
@@ -63,23 +69,54 @@ function Login() {
         if (errors.response.status === 401) {
           toast.error("Wrong account or password information", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 3000,
             theme: "light",
           });
         }
         if (errors.response.status === 403) {
           toast.error("Your account has not been verified", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 3000,
+            theme: "light",
+          });
+        }
+        if (err.response.status === 500) {
+          toast.error("Connect Server Errors", {
+            position: "bottom-right",
+            autoClose: 3000,
             theme: "light",
           });
         }
         setIsloading(false);
       });
   };
-  useEffect(() => {
-    if (token) return navigate(routesConfig.home);
-  }, []);
+  const handleSocialLogin = async (user, err) => {
+    const data = { access_token: user._token.accessToken };
+    await AuthsAPI.authFacebook(data)
+      .then((res) => {
+        if (res.status === 200) {
+          localStorage.setItem("token", res.data);
+          toast.success("Login Success", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+          setTimeout(() => {
+            navigate(routesConfig.home);
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 500) {
+          toast.error("Connect Server Errors", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
+        }
+      });
+  };
+
   return (
     <div className={cx("wrapper")}>
       <ToastContainer></ToastContainer>
@@ -146,6 +183,66 @@ function Login() {
                     <Link to={routesConfig.forgetpw}>Forgot password ?</Link>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div className={cx("social-login")}>
+              <div className={cx("title-social")}>
+                <label id="social-title">Other</label>
+              </div>
+              <div className={cx("btn-social")}>
+                <GoogleLogin
+                  locale="en"
+                  type="icon"
+                  onSuccess={(credentialResponse) => {
+                    const details = jwtDecode(credentialResponse.credential);
+                    const data = {
+                      authType: "google",
+                      authGoogleID: details.aud,
+                      email: details.email,
+                      full_name: details.name,
+                      url: details.picture,
+                    };
+                    AuthsAPI.authGoogle(data)
+                      .then((res) => {
+                        localStorage.setItem("token", res.data);
+                        if (res.status === 200) {
+                          toast.success("Login Success", {
+                            position: "bottom-right",
+                            autoClose: 5000,
+                            theme: "light",
+                          });
+                          setTimeout(() => {
+                            navigate(routesConfig.home);
+                          }, 3000);
+                        }
+                      })
+                      .catch((err) => {
+                        if (err.response.status === 500) {
+                          toast.error("Connect Server Errors", {
+                            position: "bottom-right",
+                            autoClose: 5000,
+                            theme: "light",
+                          });
+                        }
+                      });
+                  }}
+                  onError={() => {
+                    toast.error("Login Failed", {
+                      position: "bottom-right",
+                      autoClose: 5000,
+                      theme: "light",
+                    });
+                  }}
+                />
+                <SocialLogin
+                  provider="facebook"
+                  appId="1439463896615085"
+                  callback={handleSocialLogin}
+                >
+                  <button className={cx("facebook")}>
+                    <i className="fa fa-facebook"></i>
+                  </button>
+                </SocialLogin>
               </div>
             </div>
             <div className={cx("login-footer")}>
