@@ -21,7 +21,6 @@ function Header() {
     decode = jwt_decode(token);
   }
   const status = useSelector((status) => status.resetCart);
-  const [language, setLanguage] = useState("ENG");
   const [cart, setCart] = useState([]);
   const [quantity, setQuantity] = useState();
   const [orders, setOrders] = useState([]);
@@ -45,7 +44,7 @@ function Header() {
     };
     const fetchCart = async () => {
       const result = await cartAPI.index();
-      if (result.data.carts) {
+      if (result.data && result.data.carts) {
         let sum = 0;
         result.data.carts.map((quantity) => {
           sum += Number(quantity.quantity);
@@ -96,31 +95,6 @@ function Header() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-2 col-md-3 col-sm-4 col-5">
-              <div className={cx("language")}>
-                <label id="language">
-                  <span>
-                    Your Language:
-                    <Link>
-                      {language} <i className="	fa fa-angle-down"></i>
-                    </Link>
-                  </span>
-                  <ul className={cx("choose-language")}>
-                    <Link to={"#"} onClick={(e) => setLanguage("ENG")}>
-                      <li>English</li>
-                    </Link>
-                    <Link
-                      to={"#"}
-                      onClick={(e) => {
-                        setLanguage("VN");
-                      }}
-                    >
-                      <li>Vietnamese</li>
-                    </Link>
-                  </ul>
-                </label>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -166,7 +140,7 @@ function Header() {
                               <li>
                                 <div className={cx("order")}>
                                   <Link to={routesConfig.Orders}>Order</Link>
-                                  {orders && orders.length != 0 ? (
+                                  {orders && orders > 0 ? (
                                     <div className={cx("total-order")}>
                                       <span>{orders}</span>
                                     </div>
@@ -368,10 +342,10 @@ function Header() {
             </li>
             <li>
               <div className={cx("order-mobile")}>
-                <Link to={routesConfig.Orders}>
+                <Link to={token ? routesConfig.Orders : routesConfig.login}>
                   <i className="fa fa-shopping-cart"> Order</i>
                 </Link>
-                {orders ? (
+                {orders && orders > 0 ? (
                   <div className={cx("total-order-mobile")}>
                     <span>{orders}</span>
                   </div>
@@ -388,31 +362,10 @@ function Header() {
                 <i className="fa fa-bold"> Blog</i>
               </Link>
             </li>
-
             <li>
-              <Link to={"#"}>
-                <i className="fa fa-comment"> Contact</i>
+              <Link to={routesConfig.Contacts}>
+                <i className="fa fa-question-circle"> About us</i>
               </Link>
-            </li>
-            <li>
-              <Link to={"#"}>
-                <i className="fa fa-truck"> Delivery</i>
-              </Link>
-            </li>
-            <li>
-              <Link to={"#"} onClick={(e) => setCheck(!check)}>
-                <i className="fa fa-language">
-                  {"  "} Language <i className="fa fa-angle-down"></i>
-                </i>
-              </Link>
-              <ul className={cx(check ? "show-language" : "hiden-language")}>
-                <Link to={"#"} onClick={(e) => setCheck(!check)}>
-                  <li>EN</li>
-                </Link>
-                <Link to={"#"} onClick={(e) => setCheck(!check)}>
-                  <li>VN</li>
-                </Link>
-              </ul>
             </li>
             <li>
               <i className="fa fa-power-off"></i>{" "}
@@ -425,11 +378,6 @@ function Header() {
                   <Link to={routesConfig.login}>Log In</Link>
                 </>
               )}
-            </li>
-            <li>
-              <Link to={"#"}>
-                <i className="fa fa-question-circle"> About us</i>
-              </Link>
             </li>
           </ul>
         </Offcanvas.Body>

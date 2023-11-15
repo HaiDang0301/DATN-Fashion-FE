@@ -6,6 +6,7 @@ import footerlogo from "../../../assets/logo.png";
 import AuthsAPI from "../../../api/AuthsAPI";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import routesConfig from "../../../config/routes";
 function Footer() {
   const [email, setEmail] = useState();
   const [disabled, setDisable] = useState(false);
@@ -50,7 +51,7 @@ function Footer() {
             <div className="col-lg-4 col-md-4 col-sm-12 col-12">
               <div className={cx("title")}>
                 <h5>Subscribe Newsletter</h5>
-                <p>Subscribe newsletter to get 5% payment.</p>
+                <p>Subscribe newsletter to get 10% payment.</p>
               </div>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-9 col-12">
@@ -106,59 +107,48 @@ function Footer() {
         </div>
       </div>
       <div className={cx("inner-footer")}>
-        <div className={cx("main")}>
-          <div className={cx("logo")}>
-            <div className="row">
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"/"}>
-                  <img src={footerlogo} alt="" />
-                </Link>
+        <div className={cx("container")}>
+          <div className="row">
+            <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+              <Link to={"/"}>
+                <img src={footerlogo} alt="" />
+              </Link>
+            </div>
+            <div className="col-lg-4 col-md-4 col-sm-4 col-4">
+              <p>FASHION</p>
+              <p>
+                <i className="fa fa-phone"></i> 034 564 9255
+              </p>
+              <p>
+                <i className="fa fa-envelope"></i> dinhhaidang1003@gmail.com
+              </p>
+              <p>
+                <i className="fa fa-map-marker"></i> Trung Van, Tu Liem, Hanoi,
+                Vietnam
+              </p>
+            </div>
+            <div className="col-lg-4 col-md-4 col-sm-4 col-4">
+              <div className={cx("nav-item")}>
+                <Link to={routesConfig.home}>Home</Link>
+                <Link to={routesConfig.Profile}>Account</Link>
+                <Link to={routesConfig.Products}>Collections</Link>
+                <Link to={routesConfig.blogs}>Blogs</Link>
               </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <div className={cx("nav-ite")}>
-                  <Link to={"/"}>Men</Link>
-                  <Link to={"/"}>Clothing Fashion</Link>
-                  <Link to={"/"}>Winter</Link>
-                  <Link to={"/"}>Summer</Link>
-                  <Link to={"/"}>Collection 2023</Link>
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <div className={cx("nav-ite")}>
-                  <Link to={"/"}>Men</Link>
-                  <Link to={"/"}>Clothing Fashion</Link>
-                  <Link to={"/"}>Winter</Link>
-                  <Link to={"/"}>Summer</Link>
-                  <Link to={"/"}>Collection 2023</Link>
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <div className={cx("nav-ite")}>
-                  <Link to={"/"}>Men</Link>
-                  <Link to={"/"}>Clothing Fashion</Link>
-                  <Link to={"/"}>Winter</Link>
-                  <Link to={"/"}>Summer</Link>
-                  <Link to={"/"}>Collection 2023</Link>
-                </div>
-              </div>
-              <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <div className={cx("nav-item")}>
-                  <Link to={"/"}>Contact</Link>
-                  <Link to={"/"}>Support</Link>
-                  <Link to={"/"}>FAQ</Link>
-                  <Link to={"/"}>About</Link>
-                  <Link to={"/"}>Delivery</Link>
-                </div>
+            </div>
+            <div className="col-lg-2 col-md-2 col-sm-2 col-2">
+              <div className={cx("nav-item")}>
+                <Link to={routesConfig.Contacts}>Contact</Link>
+                <Link to={"#"}>Support</Link>
+                <Link to={"#"}>FAQ</Link>
+                <Link to={"#"}>About</Link>
+                <Link to={"#"}>Delivery</Link>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div className={cx("bottom-ft")}>
-        <p>
-          Đồ án tốt nghiệp © 2023 | Website phục vụ học tập không nhằm mục đích
-          kinh doanh
-        </p>
+        <p>© 2023 | Website phục vụ học tập</p>
       </div>
     </footer>
   );

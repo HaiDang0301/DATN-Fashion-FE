@@ -248,6 +248,11 @@
   color: #051829;
   width: 95%;
 }
+.slick-slider {
+  button {
+    display: none;
+  }
+}
 @media only screen and (max-width: 998px) {
   .caption-left {
     a {

@@ -212,6 +212,7 @@ function CreateProducts() {
               autoClose: 5000,
               theme: "light",
             });
+            setIsloading(false);
           }
           if (error.response.status === 500) {
             toast.error("Connect Server Errors", {
@@ -219,6 +220,7 @@ function CreateProducts() {
               autoClose: 5000,
               theme: "light",
             });
+            setIsloading(false);
           }
         });
     } else {

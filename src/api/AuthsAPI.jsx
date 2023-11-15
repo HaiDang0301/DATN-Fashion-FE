@@ -33,5 +33,13 @@ const AuthsAPI = {
     const url = `/api/auth/reset-password/${token}`;
     return axiosConfig.post(url, data);
   },
+  authGoogle(data) {
+    const url = "api/auth/google";
+    return axiosConfig.post(url, data);
+  },
+  authFacebook(data) {
+    const url = "api/auth/facebook";
+    return axiosConfig.post(url, data);
+  },
 };
 export default AuthsAPI;

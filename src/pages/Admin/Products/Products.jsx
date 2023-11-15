@@ -427,13 +427,13 @@ function AdminProducts() {
                         )}
                       </td>
                       <td>
-                        {item.sizes.map((size) => (
-                          <p>{size.size}</p>
+                        {item.sizes.map((size, index) => (
+                          <p key={index}>{size.size}</p>
                         ))}
                       </td>
                       <td>
-                        {item.sizes.map((size) => (
-                          <p>{size.quantity}</p>
+                        {item.sizes.map((size, index) => (
+                          <p key={index}>{size.quantity}</p>
                         ))}
                       </td>
                       <td>{Number(item.importPrice).toLocaleString()}</td>

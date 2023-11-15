@@ -61,10 +61,7 @@ function SideBar() {
       <div className={cx("avatar")}>
         <div className={cx("img")}>
           <Link to={"#"}>
-            <img
-              src={profile && profile.image ? profile.image.url : null}
-              alt=""
-            />
+            {profile.image ? <img src={profile.image.url} alt="" /> : null}
           </Link>
           <p>Admin</p>
           <div className={cx("network-social")}>
@@ -135,7 +132,6 @@ function SideBar() {
           icon="fa fa-users"
           link={routesConfig.home}
         ></ItemMenu>
-        <ItemMenu title="Setting" icon="fa fa-cogs"></ItemMenu>
       </div>
     </div>
   );

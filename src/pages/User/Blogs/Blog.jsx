@@ -39,8 +39,6 @@ function Blogs() {
     setBtnSearch(!btnsearch);
   };
   const handlePage = (e) => {
-    setAPI(!api);
-    window.scrollTo({ top: 0, behavior: "smooth" });
     const queryParams = new URLSearchParams(window.location.search);
     queryParams.set("page", e.selected + 1);
     const newUrl = `${window.location.pathname}?${queryParams.toString()}`;
@@ -133,7 +131,7 @@ function Blogs() {
                               {isloading ? (
                                 <Skeleton
                                   count={2}
-                                  width={220}
+                                  width={280}
                                   height={20}
                                 ></Skeleton>
                               ) : (

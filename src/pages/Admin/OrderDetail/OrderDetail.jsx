@@ -17,7 +17,7 @@ function ViewOrders() {
     const fetchOrders = async () => {
       const result = await ordersAPI.show(id);
       setData(result.data);
-      if (result.data) {
+      if (result.data && result.data.typePayment === "offline") {
         axios
           .get(
             `https://provinces.open-api.vn/api/p/${result.data.address.city}?depth=2`
@@ -43,6 +43,7 @@ function ViewOrders() {
     };
     fetchOrders();
   }, []);
+  if (!data.address) return null;
   return (
     <div className={cx("wrapper")}>
       <div className={cx("container")}>
@@ -80,9 +81,11 @@ function ViewOrders() {
                     <td>{data.full_name}</td>
                     <td>${data.totalMoney}</td>
                     <td>{data.phone}</td>
-                    <td>{city ? city.name : null}</td>
-                    <td>{districts ? districts.name : null}</td>
-                    <td>{ward ? ward.name : null}</td>
+                    <td>{city ? city.name : data.address.city}</td>
+                    <td>
+                      {districts ? districts.name : data.address.district}
+                    </td>
+                    <td>{ward ? ward.name : data.address.ward}</td>
                     <td>{data.address ? data.address.address_home : null}</td>
                   </tr>
                 ) : null}

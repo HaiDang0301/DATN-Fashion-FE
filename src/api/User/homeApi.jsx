@@ -5,7 +5,7 @@ const homeAPI = {
     return axiosConfig.get(url);
   },
   newProduct() {
-    const url = "/api/user/home/newProduct";
+    const url = "/api/collections/new-products";
     return axiosConfig.get(url);
   },
   special() {

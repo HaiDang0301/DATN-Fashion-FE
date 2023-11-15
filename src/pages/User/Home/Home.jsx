@@ -118,7 +118,6 @@ function Home() {
           slidesToShow: 3,
           slidesToScroll: 3,
           infinite: true,
-          dots: true,
         },
       },
       {
@@ -127,6 +126,8 @@ function Home() {
           slidesToShow: 3,
           slidesToScroll: 2,
           initialSlide: 2,
+          nextArrow: false,
+          prevArrow: false,
         },
       },
       {
@@ -134,6 +135,8 @@ function Home() {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
+          nextArrow: false,
+          prevArrow: false,
         },
       },
     ],
@@ -223,16 +226,18 @@ function Home() {
       <div className={cx("new-products")}>
         <div className="container">
           <div className="row">
-            <div className="col-lg-12">
-              <div className={cx("title-heading")}>
-                <h3>New Products</h3>
-                <hr />
+            {newProduct.products ? (
+              <div className="col-lg-12">
+                <div className={cx("title-heading")}>
+                  <h3>New Products</h3>
+                  <hr />
+                </div>
               </div>
-            </div>
+            ) : null}
             <div className="col-lg-12">
               <Slider {...settings}>
-                {newProduct
-                  ? newProduct.map((item, index) => (
+                {newProduct.products
+                  ? newProduct.products.map((item, index) => (
                       <div className={cx("product-item")} key={index}>
                         <Link
                           to={`/collections/new-products/products/${item.slug}`}
@@ -354,34 +359,36 @@ function Home() {
               </div>
             </div>
             <div className="col-lg-12">
-              <Slider {...settingBlogs}>
-                {blogs.blogs
-                  ? blogs.blogs.map((item, index) => (
-                      <div className={cx("blogs-item")} key={index}>
-                        <Link to={`/blogs/${item.slug}`}>
-                          <div className={cx("image")}>
-                            <img src={item.image} />
+              <div className="container">
+                <Slider {...settingBlogs}>
+                  {blogs.blogs
+                    ? blogs.blogs.map((item, index) => (
+                        <div className={cx("blogs-item")} key={index}>
+                          <Link to={`/blogs/${item.slug}`}>
+                            <div className={cx("image")}>
+                              <img src={item.image} />
+                            </div>
+                          </Link>
+                          <div className={cx("title-blog")}>
+                            {item.title.slice(0, 50) + ". . ."}
                           </div>
-                        </Link>
-                        <div className={cx("title-blog")}>
-                          {item.title.slice(0, 50) + ". . ."}
-                        </div>
-                        <div className={cx("time-update")}>
-                          <i className="fa fa-clock-o"></i>{" "}
-                          {formatDate(item.createdAt)}
-                        </div>
-                        <div className="row">
-                          <div className="col-lg-6">
-                            <i className="fa fa-comment"> 0 comment</i>
+                          <div className={cx("time-update")}>
+                            <i className="fa fa-clock-o"></i>{" "}
+                            {formatDate(item.createdAt)}
                           </div>
-                          <div className="col-lg-6">
-                            <i className="fa fa-user"></i> {item.author}
+                          <div className="row">
+                            <div className="col-lg-6">
+                              <i className="fa fa-comment"> 0 comment</i>
+                            </div>
+                            <div className="col-lg-6">
+                              <i className="fa fa-user"></i> {item.author}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))
-                  : null}
-              </Slider>
+                      ))
+                    : null}
+                </Slider>
+              </div>
             </div>
           </div>
         </div>

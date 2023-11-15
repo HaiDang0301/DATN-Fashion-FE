@@ -18,7 +18,7 @@ function OrdersDetail() {
     const fetchOrder = async () => {
       const result = await ordersAPI.show(id);
       setOrders(result.data);
-      if (result.data) {
+      if (result.data && result.data.typePayment === "offline") {
         axios
           .get(
             `https://provinces.open-api.vn/api/p/${result.data.address.city}?depth=2`
@@ -44,6 +44,7 @@ function OrdersDetail() {
     };
     fetchOrder();
   }, []);
+  if (!orders.address) return null;
   return (
     <div className={cx("wrapper")}>
       <div className="container">
@@ -78,9 +79,11 @@ function OrdersDetail() {
                       <td>{orders.orders_code}</td>
                       <td>{orders.full_name}</td>
                       <td>{orders.phone}</td>
-                      <td>{city ? city.name : null}</td>
-                      <td>{districts ? districts.name : null}</td>
-                      <td>{ward ? ward.name : null}</td>
+                      <td>{city ? city.name : orders.address.city}</td>
+                      <td>
+                        {districts ? districts.name : orders.address.district}
+                      </td>
+                      <td>{ward ? ward.name : orders.address.ward}</td>
                       <td>
                         {orders.address ? orders.address.address_home : null}
                       </td>

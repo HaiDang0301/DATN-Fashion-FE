@@ -123,38 +123,47 @@ function Profile() {
   };
   const handleSubmit = async () => {
     setLoadingBtn(true);
-    const data = new FormData();
-    data.append("image", image);
-    data.append("full_name", user.full_name);
-    if (user.phone) {
-      data.append("phone", user.phone);
-    }
-    if (password) {
-      data.append("password", password);
-    }
-    data.append("city", user.address.city);
-    data.append("district", user.address.district);
-    data.append("ward", user.address.ward);
-    data.append("home", user.address.address_home);
-    await AuthsAPI.update(data)
-      .then((res) => {
-        if (res.status === 200) {
-          toast.success("Update Profile Success", {
+    if (!user.phone || !user.address) {
+      toast.warning("Please provide full information", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+      setLoadingBtn(false);
+    } else {
+      const data = new FormData();
+      data.append("image", image);
+      data.append("full_name", user.full_name);
+      if (user.phone) {
+        data.append("phone", user.phone);
+      }
+      if (password) {
+        data.append("password", password);
+      }
+      data.append("city", user.address.city);
+      data.append("district", user.address.district);
+      data.append("ward", user.address.ward);
+      data.append("home", user.address.address_home);
+      await AuthsAPI.update(data)
+        .then((res) => {
+          if (res.status === 200) {
+            toast.success("Update Profile Success", {
+              position: "bottom-right",
+              autoClose: 2000,
+              theme: "light",
+            });
+            setLoadingBtn(false);
+          }
+        })
+        .catch((err) => {
+          toast.error("Connect Server False", {
             position: "bottom-right",
-            autoClose: 2000,
+            autoClose: 5000,
             theme: "light",
           });
           setLoadingBtn(false);
-        }
-      })
-      .catch((err) => {
-        toast.error("Connect Server False", {
-          position: "bottom-right",
-          autoClose: 5000,
-          theme: "light",
         });
-        setLoadingBtn(false);
-      });
+    }
   };
   return (
     <div className={cx("wrapper")}>
@@ -263,6 +272,7 @@ function Profile() {
                             type="password"
                             name="password"
                             id="password"
+                            disabled={user.authType === "local" ? false : true}
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>

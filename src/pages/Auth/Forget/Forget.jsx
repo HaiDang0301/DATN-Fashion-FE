@@ -38,9 +38,7 @@ function ForgetPw() {
     };
     const forget = await AuthsAPI.forget(data)
       .then((res) => {
-        if (
-          res.data.message === "Please go to Gmail to authenticate your account"
-        ) {
+        if (res.status === 200) {
           toast.success("Please go to Gmail to authenticate your account", {
             position: "bottom-right",
             autoClose: 5000,
