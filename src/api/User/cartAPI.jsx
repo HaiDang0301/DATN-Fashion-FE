@@ -17,5 +17,9 @@ const cartAPI = {
     const url = "/api/user/carts/orders";
     return axiosConfig.post(url, data);
   },
+  payment(data) {
+    const url = "/api/user/carts/orders/payment";
+    return axiosConfig.post(url, data);
+  },
 };
 export default cartAPI;

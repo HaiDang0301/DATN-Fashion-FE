@@ -9,7 +9,13 @@ import { useDispatch } from "react-redux";
 import { resetCart } from "../../../features/AddToCart/AddToCart";
 import { useNavigate } from "react-router-dom";
 import routesConfig from "../../../config/routes";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 const cx = className.bind(styles);
+var amount = 0;
+var totalAmount = 0;
+var discount = 0;
+var shipping = 0;
+var arrCart = [];
 function CartDetail() {
   document.title = "My Cart";
   const token =
@@ -26,10 +32,10 @@ function CartDetail() {
   ]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [success, setSuccess] = useState(false);
+  const [orderID, setOrderID] = useState(false);
   const [quantity, setQuantity] = useState();
-  const [total, setTotal] = useState();
-  const [discount, setDiscount] = useState();
-  const [shipping, setShipping] = useState();
+  const [totals, setTotals] = useState(0);
   const [cities, setCities] = useState([]);
   const [disabledW, setDisableW] = useState(true);
   const [disabledH, setDisableH] = useState(true);
@@ -48,6 +54,15 @@ function CartDetail() {
     if (!token) {
       navigate(routesConfig.login);
     }
+    const fetchProfile = async () => {
+      const result = await AuthsAPI.profile();
+      setUser(result.data);
+      if (result.data.registered === true) {
+        discount = 10;
+      } else {
+        discount = 0;
+      }
+    };
     const fetchCart = async () => {
       const result = await cartAPI.index(token);
       if (result.data) {
@@ -58,23 +73,21 @@ function CartDetail() {
           total += Number(quantity.price * quantity.quantity);
         });
         setQuantity(sum);
-        setTotal(total);
+        setTotals(total);
         if (total && total < 100) {
-          setShipping(10);
+          shipping = 10;
+          totalAmount =
+            total - (total * discount) / 100 + (total * shipping) / 100;
+          amount = totalAmount;
         } else {
-          setShipping(0);
+          shipping = 0;
+          totalAmount =
+            total - (total * discount) / 100 + (total * shipping) / 100;
+          amount = totalAmount;
         }
       }
       setCarts(result.data.carts);
-    };
-    const fetchProfile = async () => {
-      const result = await AuthsAPI.profile();
-      setUser(result.data);
-      if (result.data.registered === true) {
-        setDiscount(5);
-      } else {
-        setDiscount(0);
-      }
+      arrCart = result.data.carts;
     };
     const fetchCity = async () => {
       setDisableD(true);
@@ -96,10 +109,18 @@ function CartDetail() {
           setWards(ward.data);
         });
     };
+    if (success) {
+      toast.success("Payment successfull", {
+        position: "bottom-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+    }
     fetchProfile();
     fetchCity();
     fetchCart();
-  }, [status]);
+  }, [status, success]);
+  console.log(arrCart);
   const changeCity = async (e) => {
     setDisableD(false);
     setUser({
@@ -167,12 +188,14 @@ function CartDetail() {
       carts.map((item) => {
         total += item.quantity * item.price;
       });
-      setTotal(total);
+      setTotals(total);
       if (total && total < 100) {
-        setShipping(10);
+        shipping = 10;
       } else {
-        setShipping(0);
+        shipping = 0;
       }
+      totalAmount = total - (total * discount) / 100 + (total * shipping) / 100;
+      amount = totalAmount;
     }
   };
   const handlePlus = (index, quantity) => {
@@ -183,12 +206,14 @@ function CartDetail() {
     carts.map((item) => {
       total += item.quantity * item.price;
     });
-    setTotal(total);
+    setTotals(total);
     if (total && total < 100) {
-      setShipping(10);
+      shipping = 10;
     } else {
-      setShipping(0);
+      shipping = 0;
     }
+    totalAmount = total - (total * discount) / 100 + (total * shipping) / 100;
+    amount = totalAmount;
   };
   const handleDestroy = (product_id) => {
     cartAPI
@@ -235,7 +260,7 @@ function CartDetail() {
         phone: user.phone,
         address: user.address,
         carts: carts,
-        totalMoney: total - (total * discount) / 100,
+        totalMoney: totals - (totals * discount) / 100,
       };
       cartAPI
         .orders(data)
@@ -262,6 +287,61 @@ function CartDetail() {
           }
         });
     }
+  };
+  const createOrder = (data, actions) => {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            description: "Clothes",
+            amount: {
+              currency_code: "USD",
+              value: amount,
+            },
+          },
+        ],
+        request_shipping_address: true,
+      })
+      .then((orderID) => {
+        setOrderID(orderID);
+        return orderID;
+      });
+  };
+  const onApprove = (data, actions) => {
+    return actions.order.capture().then(function (details) {
+      const { payer } = details;
+      const shippingAddress = details.purchase_units[0].shipping.address;
+      const address = {
+        city: shippingAddress.country_code,
+        district: shippingAddress.admin_area_1,
+        ward: shippingAddress.admin_area_2,
+        address_home: shippingAddress.address_line_1,
+      };
+      const data = {
+        phone: shippingAddress.postal_code,
+        carts: arrCart,
+        full_name: details.purchase_units[0].shipping.name.full_name,
+        totalMoney: amount,
+        address: address,
+        typePayment: "online",
+      };
+      cartAPI
+        .payment(data)
+        .then((res) => {
+          if (res.status === 200) {
+            setSuccess(true);
+          }
+        })
+        .catch((err) => {
+          if (err.response.status === 500) {
+            toast.error("Connect Server Errors", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
+          }
+        });
+    });
   };
   return (
     <div className={cx("wrapper")}>
@@ -569,7 +649,7 @@ function CartDetail() {
                       </div>
                       <div className="col-lg-9">
                         <div className={cx("money")}>
-                          ${Number(total).toLocaleString()}
+                          ${Number(totals).valueOf()}
                         </div>
                       </div>
                     </div>
@@ -622,10 +702,10 @@ function CartDetail() {
                         <div className={cx("money")}>
                           $
                           {Number(
-                            total -
-                              (total * discount) / 100 +
-                              (total * shipping) / 100
-                          ).toLocaleString()}
+                            totals -
+                              (totals * discount) / 100 +
+                              (totals * shipping) / 100
+                          ).valueOf()}
                         </div>
                       </div>
                     </div>
@@ -637,8 +717,22 @@ function CartDetail() {
                         handleOrder();
                       }}
                     >
-                      CHECK OUT
+                      Payment on delivery
                     </button>
+                  </div>
+                  <div className={cx("paypal")}>
+                    <PayPalScriptProvider
+                      options={{
+                        clientId:
+                          "AYnafvzxoVRVEGORcHEHsJImFbMjh1J-y3HvnQGjhJG7LC9fA5qK0bSSCVgclRfDJTVGlGiOJN13Hjjs",
+                      }}
+                    >
+                      <PayPalButtons
+                        style={{ layout: "vertical" }}
+                        createOrder={createOrder}
+                        onApprove={onApprove}
+                      />
+                    </PayPalScriptProvider>
                   </div>
                 </div>
               </div>

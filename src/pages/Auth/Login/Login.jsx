@@ -80,7 +80,7 @@ function Login() {
             theme: "light",
           });
         }
-        if (err.response.status === 500) {
+        if (errors.response.status === 500) {
           toast.error("Connect Server Errors", {
             position: "bottom-right",
             autoClose: 3000,
@@ -106,8 +106,8 @@ function Login() {
           }, 3000);
         }
       })
-      .catch((err) => {
-        if (err.response.status === 500) {
+      .catch((error) => {
+        if (error.response.status === 500) {
           toast.error("Connect Server Errors", {
             position: "bottom-right",
             autoClose: 5000,
