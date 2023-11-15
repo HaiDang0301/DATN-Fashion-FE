@@ -263,6 +263,7 @@ function Profile() {
                             type="password"
                             name="password"
                             id="password"
+                            disabled={user.authType === "local" ? false : true}
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </div>

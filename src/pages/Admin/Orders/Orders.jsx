@@ -42,6 +42,7 @@ function AdminOrders() {
     fetchOrders();
   }, [status, searchParam]);
   const handleDelivery = async (id) => {
+    setID(id);
     const data = { status: "delivery" };
     await ordersAPI
       .update(id, data)
@@ -291,7 +292,7 @@ function AdminOrders() {
                         </td>
                         <td>{formatDate(item.createdAt)}</td>
                         <td>{item.full_name}</td>
-                        <td>${Number(item.totalMoney).toLocaleString()}</td>
+                        <td>${Number(item.totalMoney).valueOf()}</td>
                         <td
                           className={cx(
                             item.status_delivery === "Cancel"
@@ -313,13 +314,14 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-delivery")}>
                                   <button
-                                    disabled={
-                                      item.status_delivery === "Cancel" ||
-                                      item.status_delivery ===
-                                        "Successful Delivery"
-                                        ? true
-                                        : disableDelivery
-                                    }
+                                    // disabled={
+                                    //   (item.status_delivery === "Delivery" &&
+                                    //     item._id === id) ||
+                                    //   item.status_delivery ===
+                                    //     "Successful Delivery"
+                                    //     ? true
+                                    //     : disableDelivery
+                                    // }
                                     onClick={(e) => handleDelivery(item._id)}
                                   >
                                     <i className="fa fa-truck"></i>
@@ -329,13 +331,13 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-cancel")}>
                                   <button
-                                    disabled={
-                                      item.status_delivery === "Delivery" ||
-                                      item.status_delivery ===
-                                        "Successful Delivery"
-                                        ? true
-                                        : disableCancel
-                                    }
+                                    // disabled={
+                                    //   item.status_delivery === "Delivery" ||
+                                    //   item.status_delivery ===
+                                    //     "Successful Delivery"
+                                    //     ? true
+                                    //     : disableCancel
+                                    // }
                                     onClick={(e) => handleCancel(item._id)}
                                   >
                                     <i className="fa fa-ban"></i>
@@ -345,11 +347,11 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-success")}>
                                   <button
-                                    disabled={
-                                      item.status_delivery === "Cancel"
-                                        ? true
-                                        : disable
-                                    }
+                                    // disabled={
+                                    //   item.status_delivery === "Cancel"
+                                    //     ? true
+                                    //     : disable
+                                    // }
                                     onClick={(e) => handleSuccess(item._id)}
                                   >
                                     <i className="fa fa-check"></i>
@@ -360,7 +362,11 @@ function AdminOrders() {
                           </div>
                         </td>
                         <td>
-                          {item.status_payment === false ? "Unpaid" : "Paid"}
+                          {item.status_payment === false ? (
+                            <div className={cx("unpaid")}>Unpaid</div>
+                          ) : (
+                            <div className={cx("paid")}>Paid</div>
+                          )}
                         </td>
                         <td>
                           <div className={cx("actions")}>

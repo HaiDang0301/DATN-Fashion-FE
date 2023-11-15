@@ -70,6 +70,7 @@ function Clients() {
                     <th>Phone Number</th>
                     <th>Register NEWSLETTER</th>
                     <th>Status Verify</th>
+                    <th>Auth Type</th>
                     <th>Last Time Login</th>
                     <th>Action</th>
                   </tr>
@@ -85,11 +86,12 @@ function Clients() {
                             {data.registered ? "Registered" : "Unregistered"}
                           </td>
                           <td>{data.verify ? "Verify" : "Unverify"}</td>
+                          <td>{data.authType}</td>
                           <td>{formatDate(data.last_time_login)}</td>
                           <td>
                             <div className={cx("action-Clients")}>
-                              {query.get("q") === "not_login" ||
-                              query.get("q") === "not_verify" ? (
+                              {data.verify === false ||
+                              query.get("q") === "not_login" ? (
                                 <Link to={"#"}>
                                   <h5>
                                     <i className="fa fa-trash"></i>

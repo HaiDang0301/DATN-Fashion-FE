@@ -18,7 +18,7 @@ function OrdersDetail() {
     const fetchOrder = async () => {
       const result = await ordersAPI.show(id);
       setOrders(result.data);
-      if (result.data) {
+      if (result.data && result.data.typePayment === "offline") {
         axios
           .get(
             `https://provinces.open-api.vn/api/p/${result.data.address.city}?depth=2`
