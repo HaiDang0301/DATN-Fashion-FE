@@ -50,8 +50,8 @@ function Footer() {
           <div className="row">
             <div className="col-lg-4 col-md-4 col-sm-12 col-12">
               <div className={cx("title")}>
-                <h5>Subscribe Newsletter</h5>
-                <p>Subscribe newsletter to get 10% payment.</p>
+                <h5>Theo dõi bản tin</h5>
+                <p>Đăng ký bản tin để nhận 10% thanh toán.</p>
               </div>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-9 col-12">
@@ -63,7 +63,7 @@ function Footer() {
                       name="email"
                       id="email"
                       disabled={disabled}
-                      placeholder="Enter your email"
+                      placeholder="Nhập email của bản"
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
@@ -74,7 +74,7 @@ function Footer() {
                         onClick={(e) => handleNewsletter()}
                         disabled={disabled}
                       >
-                        Subscribe
+                        Đăng Ký
                       </button>
                     </div>
                   </div>
@@ -115,33 +115,33 @@ function Footer() {
               </Link>
             </div>
             <div className="col-lg-4 col-md-4 col-sm-4 col-4">
-              <p>FASHION</p>
+              <p>Thời Trang</p>
               <p>
                 <i className="fa fa-phone"></i> 034 564 9255
               </p>
               <p>
-                <i className="fa fa-envelope"></i> dinhhaidang1003@gmail.com
+                <i className="fa fa-envelope"></i> fashionlanhuong@gmail.com
               </p>
               <p>
-                <i className="fa fa-map-marker"></i> Trung Van, Tu Liem, Hanoi,
-                Vietnam
+                <i className="fa fa-map-marker"></i> Số 5 – Ngách 2 – Ngọc Đình
+                – Hồng Dương – Thanh Oai – Hà Nội.
               </p>
             </div>
             <div className="col-lg-4 col-md-4 col-sm-4 col-4">
               <div className={cx("nav-item")}>
-                <Link to={routesConfig.home}>Home</Link>
-                <Link to={routesConfig.Profile}>Account</Link>
-                <Link to={routesConfig.Products}>Collections</Link>
-                <Link to={routesConfig.blogs}>Blogs</Link>
+                <Link to={routesConfig.home}>Trang Chủ</Link>
+                <Link to={routesConfig.Profile}>Tài Khoản</Link>
+                <Link to={routesConfig.Products}>Bộ Sưu Tập</Link>
+                <Link to={routesConfig.blogs}>Bài Viết</Link>
               </div>
             </div>
             <div className="col-lg-2 col-md-2 col-sm-2 col-2">
               <div className={cx("nav-item")}>
-                <Link to={routesConfig.Contacts}>Contact</Link>
-                <Link to={"#"}>Support</Link>
+                <Link to={routesConfig.Contacts}>Liên Hệ</Link>
+                <Link to={"#"}>Giúp Đỡ</Link>
                 <Link to={"#"}>FAQ</Link>
-                <Link to={"#"}>About</Link>
-                <Link to={"#"}>Delivery</Link>
+                <Link to={"#"}>Về Chúng Tôi</Link>
+                <Link to={"#"}>Chính Sách Giao Hàng</Link>
               </div>
             </div>
           </div>

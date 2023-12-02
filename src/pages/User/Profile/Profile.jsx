@@ -124,7 +124,7 @@ function Profile() {
   const handleSubmit = async () => {
     setLoadingBtn(true);
     if (!user.phone || !user.address) {
-      toast.warning("Please provide full information", {
+      toast.warning("Vui lòng cung cấp đầy đủ thông tin", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -147,7 +147,7 @@ function Profile() {
       await AuthsAPI.update(data)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Update Profile Success", {
+            toast.success("Cập nhật thông tin tài khoản thành công", {
               position: "bottom-right",
               autoClose: 2000,
               theme: "light",
@@ -156,7 +156,7 @@ function Profile() {
           }
         })
         .catch((err) => {
-          toast.error("Connect Server False", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -214,7 +214,7 @@ function Profile() {
                     <div className="row">
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>Full name</h5>
+                          <h5>Tên</h5>
                         </div>
                         <div className="col-lg-12">
                           <input
@@ -246,7 +246,7 @@ function Profile() {
                       </div>
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>Phone Number</h5>
+                          <h5>Số Điện Thoại</h5>
                         </div>
                         <div className="col-lg-12">
                           <input
@@ -265,7 +265,7 @@ function Profile() {
                       </div>
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>Password</h5>
+                          <h5>Mật Khẩu</h5>
                         </div>
                         <div className="col-lg-12">
                           <input
@@ -283,7 +283,7 @@ function Profile() {
                     <div className="row">
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>Provines / City</h5>
+                          <h5>Thành Phố / Tỉnh</h5>
                         </div>
                         <div className="col-lg-12">
                           <select
@@ -309,7 +309,7 @@ function Profile() {
                       </div>
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>District</h5>
+                          <h5>Quận / Huyện</h5>
                         </div>
                         <div className="col-lg-12">
                           <select
@@ -338,7 +338,7 @@ function Profile() {
                       </div>
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>Ward</h5>
+                          <h5>Phường Xã</h5>
                         </div>
                         <div className="col-lg-12">
                           <select
@@ -367,7 +367,7 @@ function Profile() {
                       </div>
                       <div className="col-lg-12">
                         <div className={cx("title")}>
-                          <h5>Adress Home</h5>
+                          <h5>Địa Chỉ Nhà</h5>
                         </div>
                         <div className="col-lg-12">
                           <input
@@ -404,7 +404,7 @@ function Profile() {
                     <img src={loading} alt="" />
                   ) : (
                     <button className="btn btn-primary" onClick={handleSubmit}>
-                      Save
+                      Lưu Thông Tin
                     </button>
                   )}
                 </div>

@@ -134,7 +134,7 @@ function Products() {
               <div className="row">
                 <div className="col-lg-12">
                   <div className={cx("collections")}>
-                    <h4>Collections</h4>
+                    <h4>Bộ Sưu Tập</h4>
                     <ul>
                       {collections
                         ? collections.map((item, index) => (
@@ -169,7 +169,7 @@ function Products() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("manufacturer")}>
-                    <h4>Brand</h4>
+                    <h4>Thương Hiệu</h4>
                     <ul>
                       {producers.producers
                         ? producers.producers.map((item, index) => (
@@ -190,9 +190,9 @@ function Products() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("price")}>
-                    <h4>Price</h4>
+                    <h4>Giá</h4>
                     <div className="show-price">
-                      ${Number(min).toLocaleString()} - $
+                      {Number(min).toLocaleString()} -{" "}
                       {Number(max).toLocaleString()}
                     </div>
                     <div className={cx("process")}></div>
@@ -204,7 +204,7 @@ function Products() {
                           id="min"
                           value={min}
                           min={0}
-                          max={100}
+                          max={2500000}
                           onChange={(e) => setMin(e.target.value)}
                         />
                       </div>
@@ -214,8 +214,8 @@ function Products() {
                           name="max"
                           id="max"
                           value={max}
-                          min={100}
-                          max={500}
+                          min={2000000}
+                          max={5000000}
                           onChange={(e) => setMax(e.target.value)}
                         />
                       </div>
@@ -224,7 +224,7 @@ function Products() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("filter")}>
-                    <button onClick={handleFilter}>Filter</button>
+                    <button onClick={handleFilter}>Tìm Kiếm</button>
                   </div>
                 </div>
               </div>
@@ -235,16 +235,16 @@ function Products() {
               <div className="row">
                 <div className="col-lg-12">
                   <span htmlFor="">
-                    <Link to={routesConfig.home}>HOME </Link>{" "}
+                    <Link to={routesConfig.home}>Trang Chủ </Link>{" "}
                     <i className="fa fa-long-arrow-right"></i>{" "}
                     <Link to={type ? `/collections/${type}` : "/collections"}>
-                      {type ? type.toLocaleUpperCase() : "COLLECTIONS"}
+                      {type ? type.toLocaleUpperCase() : "BỘ SƯU TẬP"}
                     </Link>
                   </span>
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("title")}>
-                    <h5>{type ? type.toLocaleUpperCase() : "COLLECTIONS"}</h5>
+                    <h5>{type ? type.toLocaleUpperCase() : "BỘ SƯU TẬP"}</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -253,12 +253,12 @@ function Products() {
                       <div className="row">
                         <div className="col-lg-10 col-md-9 col-sm-8 col-8">
                           {" "}
-                          {limit} items
+                          {limit} sản phẩm
                         </div>
                         <div className="col-lg-2 col-md-3 col-sm-4 col-4">
                           <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-6 col-4">
-                              Show
+                              Xem
                             </div>
                             <div className="col-lg-6 col-md-6 col-sm-6 col-4">
                               <select
@@ -291,7 +291,7 @@ function Products() {
                         <div className="col-lg-3 col-md-4 col-sm-6 col-8">
                           <div className="row">
                             <div className="col-lg-5 col-md-5 col-sm-5 col-6">
-                              Sort By
+                              Sắp xếp
                             </div>
                             <div className="col-lg-7 col-md-7 col-sm-7 col-6">
                               <select
@@ -300,9 +300,9 @@ function Products() {
                                 value={sort}
                                 onChange={handleSort}
                               >
-                                <option value="new">New</option>
-                                <option value="name">Name</option>
-                                <option value="price">Price</option>
+                                <option value="new">Sản Phẩm Mới</option>
+                                <option value="name">Tên Sản Phẩm</option>
+                                <option value="price">Giá Giảm Dần</option>
                               </select>
                             </div>
                           </div>
@@ -350,7 +350,7 @@ function Products() {
                                           />
                                         )}
                                         <div className={cx("quick-view")}>
-                                          <span>View</span>
+                                          <span>Xem</span>
                                         </div>
                                       </div>
                                       <div className={cx("product-flag")}>
@@ -382,18 +382,18 @@ function Products() {
                                   {type === "sale" ? (
                                     <div className={cx("price-product")}>
                                       <div className={cx("old-price")}>
-                                        ${" "}
+                                        {" "}
                                         {Number(
                                           item.old_price
                                         ).toLocaleString()}
                                       </div>
                                       <div className={cx("now-price")}>
-                                        $ {Number(item.price).toLocaleString()}
+                                        {Number(item.price).toLocaleString()}
                                       </div>
                                     </div>
                                   ) : (
                                     <div className={cx("price-product")}>
-                                      $ {Number(item.price).toLocaleString()}
+                                      {Number(item.price).toLocaleString()}
                                     </div>
                                   )}
                                 </div>
@@ -453,7 +453,7 @@ function Products() {
                                           />
                                         )}
                                         <div className={cx("quick-view")}>
-                                          <span>View</span>
+                                          <span>Xem</span>
                                         </div>
                                       </div>
                                       <div className={cx("product-flag")}>
@@ -482,18 +482,17 @@ function Products() {
                                     {type === "sale" ? (
                                       <div className={cx("price-product")}>
                                         <div className={cx("old-price")}>
-                                          $
                                           {Number(
                                             item.old_price
                                           ).toLocaleString()}
                                         </div>
                                         <div className={cx("now-price")}>
-                                          ${Number(item.price).toLocaleString()}
+                                          {Number(item.price).toLocaleString()}
                                         </div>
                                       </div>
                                     ) : (
                                       <div className={cx("price-product")}>
-                                        $ {Number(item.price).toLocaleString()}
+                                        {Number(item.price).toLocaleString()}
                                       </div>
                                     )}
                                   </div>

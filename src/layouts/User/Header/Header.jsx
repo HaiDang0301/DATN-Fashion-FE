@@ -86,11 +86,14 @@ function Header() {
                 <div className="row g-0">
                   <div className="col-lg-4 col-md-5 col-sm-12 col-12">
                     <i className="fa fa-thumbs-o-up"></i>
-                    <span> SATISFACTION 100% GUARANTEED</span>
+                    <span> Sự hài lòng 100% được đảm bảo</span>
                   </div>
                   <div className="col-lg-8 col-md-7 col-sm-12 col-12">
                     <i className="fa fa-truck"></i>
-                    <span> Free shipping on orders over $99</span>
+                    <span>
+                      {" "}
+                      Miễn phí vận chuyển các đơn đặt hàng trên 2.000.0000
+                    </span>
                   </div>
                 </div>
               </div>
@@ -113,7 +116,7 @@ function Header() {
                 <div className="row">
                   <div className="col-lg-4 col-md-4 col-sm-12 col-12">
                     <div className={cx("title")}>
-                      Welcome to our online store!
+                      Chào mừng bạn đến với cửa hàng!
                     </div>
                   </div>
                   <div className="col-lg-6 col-md-6 col-sm-9 col-8">
@@ -129,17 +132,19 @@ function Header() {
                                     : routesConfig.login
                                 }
                               >
-                                My Account
+                                Tài Khoản
                               </Link>
                             </li>
                             {decode.role === "admin" ? (
                               <li>
-                                <Link to={routesConfig.AdminHome}>Admin</Link>
+                                <Link to={routesConfig.AdminHome}>
+                                  Trang Quản Trị
+                                </Link>
                               </li>
                             ) : (
                               <li>
                                 <div className={cx("order")}>
-                                  <Link to={routesConfig.Orders}>Order</Link>
+                                  <Link to={routesConfig.Orders}>Đơn Hàng</Link>
                                   {orders && orders > 0 ? (
                                     <div className={cx("total-order")}>
                                       <span>{orders}</span>
@@ -151,11 +156,11 @@ function Header() {
                             <li>
                               {checkLogin ? (
                                 <>
-                                  <Link onClick={handleLogout}>Log Out</Link>
+                                  <Link onClick={handleLogout}>Đăng Xuất</Link>
                                 </>
                               ) : (
                                 <>
-                                  <Link to={routesConfig.login}>Log In</Link>
+                                  <Link to={routesConfig.login}>Đăng Nhập</Link>
                                 </>
                               )}
                             </li>{" "}
@@ -168,7 +173,7 @@ function Header() {
                             type="search"
                             name="search"
                             id="search"
-                            placeholder="Enter the product name"
+                            placeholder="Nhập tên sản phẩm tìm kiếm"
                             onChange={(e) => setNameProduct(e.target.value)}
                           />
                           <button to={"#"} onClick={handleSearch}>
@@ -204,20 +209,22 @@ function Header() {
                                           </div>
                                           <div className="col-lg-12">
                                             <div className={cx("size")}>
-                                              <span>Size : {item.size}</span>
+                                              <span>
+                                                Kích Thước : {item.size}
+                                              </span>
                                             </div>
                                           </div>
                                           <div className="col-lg-12">
                                             <div className={cx("quantity")}>
                                               <span>
-                                                Quantity : {item.quantity}
+                                                Số Lượng : {item.quantity}
                                               </span>
                                             </div>
                                           </div>
                                           <div className="col-lg-12">
                                             <div className={cx("price")}>
                                               <span>
-                                                Price :{" "}
+                                                Giá :{" "}
                                                 {Number(
                                                   item.price
                                                 ).toLocaleString()}
@@ -227,7 +234,7 @@ function Header() {
                                           <div className="col-lg-12">
                                             <div className={cx("total-price")}>
                                               <span>
-                                                Total Price: $
+                                                Tổng Tiền:
                                                 {Number(
                                                   item.price * item.quantity
                                                 ).toLocaleString()}
@@ -241,12 +248,12 @@ function Header() {
                                 : null}
                             </div>
                             <button onClick={handleCart}>
-                              Proceed to order
+                              Tiến hành đặt hàng
                             </button>
                           </div>
                         ) : (
                           <div className={cx("cart-none")}>
-                            You have not added any product to the cart
+                            Chưa có sản phẩm nào trong giỏ hàng
                           </div>
                         )}
                       </div>
@@ -263,12 +270,12 @@ function Header() {
           <div className="container g-0">
             <div className="row">
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.home}>Home</Link>
+                <Link to={routesConfig.home}>Trang Chủ</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-3 col-2">
                 <ul className={cx("collections")}>
                   <li>
-                    <Link to={"/collections"}>Collection</Link>
+                    <Link to={"/collections"}>Bộ Sưu Tập</Link>
                     <ul className={cx("collection")}>
                       {collections
                         ? collections.map((item, index) => (
@@ -287,7 +294,7 @@ function Header() {
               <div className="col-lg-2 col-md-2 col-sm-1 col-2">
                 <ul className={cx("new-product")}>
                   <Link to={"/collections/new-products"}>
-                    <li>New</li>
+                    <li>Sản Phẩm Mới</li>
                   </Link>
                   <ul className={cx("category")}>
                     {collections
@@ -303,13 +310,13 @@ function Header() {
                 </ul>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={"/collections/sale"}>Sale</Link>
+                <Link to={"/collections/sale"}>Giảm Giá</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.blogs}>Blog</Link>
+                <Link to={routesConfig.blogs}>Bài Viết</Link>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-2 col-2">
-                <Link to={routesConfig.Contacts}>Contact</Link>
+                <Link to={routesConfig.Contacts}>Liên Hệ</Link>
               </div>
             </div>
           </div>
@@ -332,18 +339,18 @@ function Header() {
           <ul>
             <li>
               <Link to={routesConfig.home}>
-                <i className="fa fa-home"> Home</i>
+                <i className="fa fa-home"> Trang Chủ</i>
               </Link>
             </li>
             <li>
               <Link to={token ? routesConfig.Profile : routesConfig.login}>
-                <i className="fa fa-user"> My Account</i>
+                <i className="fa fa-user"> Tài Khoản</i>
               </Link>
             </li>
             <li>
               <div className={cx("order-mobile")}>
                 <Link to={token ? routesConfig.Orders : routesConfig.login}>
-                  <i className="fa fa-shopping-cart"> Order</i>
+                  <i className="fa fa-shopping-cart"> Đơn Hàng</i>
                 </Link>
                 {orders && orders > 0 ? (
                   <div className={cx("total-order-mobile")}>
@@ -354,28 +361,28 @@ function Header() {
             </li>
             <li>
               <Link to={"/collections/sale"}>
-                <i className="fa fa-tag"> Sale</i>
+                <i className="fa fa-tag"> Giảm Giá</i>
               </Link>
             </li>
             <li>
               <Link to={routesConfig.blogs}>
-                <i className="fa fa-bold"> Blog</i>
+                <i className="fa fa-bold"> Bài Viết</i>
               </Link>
             </li>
             <li>
               <Link to={routesConfig.Contacts}>
-                <i className="fa fa-question-circle"> About us</i>
+                <i className="fa fa-question-circle"> Liên Hệ</i>
               </Link>
             </li>
             <li>
               <i className="fa fa-power-off"></i>{" "}
               {checkLogin ? (
                 <>
-                  <Link onClick={handleLogout}>Log Out</Link>
+                  <Link onClick={handleLogout}>Đăng Xuất</Link>
                 </>
               ) : (
                 <>
-                  <Link to={routesConfig.login}>Log In</Link>
+                  <Link to={routesConfig.login}>Đăng Nhập</Link>
                 </>
               )}
             </li>
@@ -403,7 +410,7 @@ function Header() {
                 type="search"
                 name="search-mobile"
                 id="search-mobile"
-                placeholder="Enter the product name"
+                placeholder="Nhập tên sản phẩm tìm kiếm"
                 onChange={(e) => setNameProduct(e.target.value)}
               />
               <button onClick={handleSearch}>
@@ -438,7 +445,7 @@ function Header() {
                     setShowCollection(!showCollection);
                   }}
                 >
-                  <h5>Collection</h5>
+                  <h5>Bộ Sưu Tập</h5>
                   <i
                     className={
                       showCollection ? "fa fa-angle-down" : "fa fa-angle-right"

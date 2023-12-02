@@ -55,7 +55,7 @@ function Blogs() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("breadcrumb-blog")}>
-        <h1>Our Blog</h1>
+        <h1>Bài Viết</h1>
       </div>
       <div className={cx("blogs")}>
         <div className={cx("item-blog")}>
@@ -63,11 +63,11 @@ function Blogs() {
             <div className="col-lg-3 col-sm-4">
               <div className={cx("blog-sidebar")}>
                 <div className={cx("search-blog")}>
-                  <h3>Search</h3>
+                  <h3>Tìm Kiếm</h3>
                   <div className={cx("search")}>
                     <input
                       type="search"
-                      placeholder="Search the author . . ."
+                      placeholder="Tìm kiếm tác giả . . ."
                       onChange={handleSearch}
                     />
                     <button disabled={btnsearch} onClick={hanldeBtnSearch}>
@@ -76,7 +76,7 @@ function Blogs() {
                   </div>
                 </div>
                 <div className={cx("item-hashtag")}>
-                  <h3>HashTag</h3>
+                  <h3>Từ Khóa</h3>
                   <ul>
                     <div className="row g-0">
                       {blogs
@@ -94,7 +94,7 @@ function Blogs() {
                   </ul>
                 </div>
                 <div className={cx("recent-post")}>
-                  <h3>Recent Post</h3>
+                  <h3>Bài Viết Gần Đây</h3>
                   {blogs.blogs.slice(10, 16).map((item, index) => (
                     <div className={cx("item")} key={item._id}>
                       <img src={item.image} alt="" />

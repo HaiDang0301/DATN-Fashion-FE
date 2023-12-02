@@ -48,23 +48,30 @@ function Contacts() {
           <div className="row">
             <div className="col-lg-6 col-sm-12">
               <div className={cx("text")}>
-                <h5>INFORMATION</h5>
-                <h1>Contact Us</h1>
+                <h5>Thông Tin</h5>
+                <h1>Liên Hệ Với Chúng Tôi</h1>
                 <p>
-                  As you might expect of a company that began as a high-end
-                  interiors contractor, we pay strict attention.
+                  Chúng tôi rất vui khi có thể nhận được sự góp ý phản hồi từ
+                  bạn!
                 </p>
-                <h4>VietNam</h4>
-                <p>Trung Van, Tu Liem, Hanoi, Vietnam</p>
+                <h4>Địa chỉ</h4>
+                <p>
+                  Số 5 – Ngách 2 – Ngọc Đình – Hồng Dương – Thanh Oai – Hà Nội.
+                </p>
                 <p>+84 345-649-255</p>
-                <h4>Mail Support</h4>
-                <p>dinhhaidang1003@gmail.com</p>
+                <h4>Email Liên Hệ</h4>
+                <p>fashionlanhuong@gmail.com</p>
               </div>
             </div>
             <div className="col-lg-6 col-sm-12">
               <div className="row">
                 <div className="col-lg-6">
-                  <input type="text" name="name" id="name" placeholder="Name" />
+                  <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    placeholder="Tên của bạn"
+                  />
                 </div>
                 <div className="col-lg-6">
                   <input
@@ -80,11 +87,11 @@ function Contacts() {
                     id=""
                     cols="30"
                     rows="10"
-                    placeholder="Message"
+                    placeholder="Nội dung phản hồi"
                   ></textarea>
                 </div>
                 <div className="col-lg-6 col-sm-4">
-                  <button>SEND MESSAGE</button>
+                  <button>Gửi Phản Hồi</button>
                 </div>
               </div>
             </div>

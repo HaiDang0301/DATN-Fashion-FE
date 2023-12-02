@@ -23,7 +23,7 @@ function ResetPw() {
     validationSchema: Yup.object({
       password: Yup.string()
         .min(6, "Password is too short")
-        .required("The password is empty"),
+        .required("Mật khẩu quá ngắn"),
     }),
   });
   const handleSubmit = async () => {
@@ -41,7 +41,7 @@ function ResetPw() {
       const reset = await AuthsAPI.reset(token, data)
         .then((res) => {
           if (res.data === "Reset Password Success") {
-            toast.success(`Reset Password Success`, {
+            toast.success(`Đặt lại mật khẩu thành công`, {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -53,14 +53,14 @@ function ResetPw() {
           }
         })
         .catch((errors) => {
-          toast.error("Expiring request please create new requirement", {
+          toast.error("Hết hiệu lực vui lòng tạo lại yêu cầu", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
           });
         });
     } else {
-      toast.error("Wrong Token", {
+      toast.error("Token sai", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -74,12 +74,12 @@ function ResetPw() {
         <div className={cx("reset-form-area")}>
           <div className={cx("reset-form")}>
             <div className={cx("reset-heading")}>
-              <span>Reset Password</span>
-              <p>Enter your password to reset</p>
+              <span>Đặt lại mật khẩu</span>
+              <p>Nhập mật khẩu để đặt lại</p>
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label id="password">Password Adress</label>
+                <label id="password">Mật khẩu mới</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="password"
@@ -104,7 +104,7 @@ function ResetPw() {
                 isLoading
               ) : (
                 <button onClick={handleSubmit} disabled={button}>
-                  Submit
+                  Đặt Lại Mật Khẩu
                 </button>
               )}
             </div>

@@ -48,7 +48,7 @@ function AdminOrders() {
       .update(id, data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Update Status Order Success", {
+          toast.success("Cập nhật trạng thái đơn hàng thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -60,7 +60,7 @@ function AdminOrders() {
       })
       .catch((err) => {
         if (err.response.status === 500) {
-          toast.error("Connect Server Errors", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -78,7 +78,7 @@ function AdminOrders() {
       .update(id, data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Update Status Order Success", {
+          toast.success("Cập nhật trang thái đơn hàng thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -91,7 +91,7 @@ function AdminOrders() {
       })
       .catch((err) => {
         if (err.response.status === 500) {
-          toast.error("Connect Server Errors", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -105,7 +105,7 @@ function AdminOrders() {
       .update(id, data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Update Status Order Success", {
+          toast.success("Cập nhật trạng thái đơn hàng thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -118,7 +118,7 @@ function AdminOrders() {
       })
       .catch((err) => {
         if (err.response.status === 500) {
-          toast.error("Connect Server Errors", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -155,7 +155,7 @@ function AdminOrders() {
       .destroy(id)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Delete Orders Success", {
+          toast.success("Xóa đơn hàng thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -165,7 +165,7 @@ function AdminOrders() {
       })
       .catch((err) => {
         if (err.response.status === 500) {
-          toast.error("Connect Sever Errors", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -182,29 +182,28 @@ function AdminOrders() {
         <Modal.Header closeButton>
           <Modal.Title className={cx("title-reason")}>
             <span>
-              Reasons to cancel the order{" "}
-              {id ? id.slice(-6).toUpperCase() : null} ​
+              Lý do hủy đơn hàng {id ? id.slice(-6).toUpperCase() : null} ​
             </span>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={cx("reason")}>
           <input
-            placeholder="Enter the reason to cancel the order"
+            placeholder="Nhập lý do hủy đơn hàng"
             onChange={(e) => setReason(e.target.value)}
           ></input>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={(e) => handleConfirm()}>
-            Save
+            Xác Nhận
           </Button>
         </Modal.Footer>
       </Modal>
       <div className="top-orders">
         <div className="container">
-          <h5>Order List</h5>
+          <h5>Danh Sách Đơn Hàng</h5>
           <div className="row">
             <div className="col-lg-3 col-md-2 col-sm-12 col-12">
               <div className={cx("search-orders")}>
@@ -212,7 +211,7 @@ function AdminOrders() {
                   type="search"
                   name="search"
                   id="search"
-                  placeholder="Enter ther Orders Code"
+                  placeholder="Nhập mã đơn hàng"
                   onChange={(e) => handleChangeOrdersCode(e)}
                 />
               </div>
@@ -231,7 +230,7 @@ function AdminOrders() {
                 </div>
                 <div className="col-lg-1 col-md-1 col-sm-1 col-1">
                   <div className={cx("title")}>
-                    <span htmlFor="">to</span>
+                    <span htmlFor="">đến</span>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
@@ -247,7 +246,7 @@ function AdminOrders() {
                 <div className="col-lg-3 col-md-3 col-sm-3 col-3">
                   <div className={cx("btn-search")}>
                     <button onClick={(e) => handleSearch()}>
-                      <i className="fa fa-search"> Search</i>
+                      <i className="fa fa-search"> Tìm Kiếm</i>
                     </button>
                   </div>
                 </div>
@@ -256,12 +255,12 @@ function AdminOrders() {
             <div className="col-lg-3 col-md-2 col-sm-12 col-12">
               <div className={cx("select-sort")}>
                 <select name="sort" id="sort" onChange={(e) => handleSort(e)}>
-                  <option value="all_orders">All orders</option>
-                  <option value="pending">Pending</option>
-                  <option value="delivery">Delivery</option>
-                  <option value="delivered">Delivery has been delivered</option>
-                  <option value="decrease">Sort unit price reduction</option>
-                  <option value="increase">Arrange unit price increase</option>
+                  <option value="all_orders">Tất cả đơn hàng</option>
+                  <option value="pending">Chờ Xử Lý</option>
+                  <option value="delivery">Đang Giao Hàng</option>
+                  <option value="delivered">Giao Hàng Hoàn Tất</option>
+                  <option value="decrease">Theo Đơn Hàng Giảm Dần</option>
+                  <option value="increase">Theo Đơn Hàng Tăng Dần</option>
                 </select>
               </div>
             </div>
@@ -271,13 +270,13 @@ function AdminOrders() {
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>Orders Code</th>
-                  <th>Date</th>
-                  <th>Client</th>
-                  <th>Total Money</th>
-                  <th>Status Delivery</th>
-                  <th>Update Status</th>
-                  <th>Status Payment</th>
+                  <th>Mã Đơn Hàng</th>
+                  <th>Ngày</th>
+                  <th>Khách Hàng</th>
+                  <th>Tổng Tiền</th>
+                  <th>Trạng Thái Đơn Hàng</th>
+                  <th>Cập Nhật Trạng Thái</th>
+                  <th>Thanh Toán</th>
                 </tr>
               </thead>
               <tbody>
@@ -292,7 +291,7 @@ function AdminOrders() {
                         </td>
                         <td>{formatDate(item.createdAt)}</td>
                         <td>{item.full_name}</td>
-                        <td>${Number(item.totalMoney).valueOf()}</td>
+                        <td>{Number(item.totalMoney).valueOf()}</td>
                         <td
                           className={cx(
                             item.status_delivery === "Cancel"
@@ -314,14 +313,13 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-delivery")}>
                                   <button
-                                    // disabled={
-                                    //   (item.status_delivery === "Delivery" &&
-                                    //     item._id === id) ||
-                                    //   item.status_delivery ===
-                                    //     "Successful Delivery"
-                                    //     ? true
-                                    //     : disableDelivery
-                                    // }
+                                    disabled={
+                                      item.status_delivery === "Delivery" ||
+                                      item.status_delivery ===
+                                        "Successful Delivery"
+                                        ? true
+                                        : disableDelivery
+                                    }
                                     onClick={(e) => handleDelivery(item._id)}
                                   >
                                     <i className="fa fa-truck"></i>
@@ -331,13 +329,13 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-cancel")}>
                                   <button
-                                    // disabled={
-                                    //   item.status_delivery === "Delivery" ||
-                                    //   item.status_delivery ===
-                                    //     "Successful Delivery"
-                                    //     ? true
-                                    //     : disableCancel
-                                    // }
+                                    disabled={
+                                      item.status_delivery === "Delivery" ||
+                                      item.status_delivery ===
+                                        "Successful Delivery"
+                                        ? true
+                                        : disableCancel
+                                    }
                                     onClick={(e) => handleCancel(item._id)}
                                   >
                                     <i className="fa fa-ban"></i>
@@ -347,11 +345,11 @@ function AdminOrders() {
                               <div className="col-lg-4 col-md-4">
                                 <div className={cx("btn-success")}>
                                   <button
-                                    // disabled={
-                                    //   item.status_delivery === "Cancel"
-                                    //     ? true
-                                    //     : disable
-                                    // }
+                                    disabled={
+                                      item.status_delivery === "Cancel"
+                                        ? true
+                                        : disable
+                                    }
                                     onClick={(e) => handleSuccess(item._id)}
                                   >
                                     <i className="fa fa-check"></i>
@@ -363,9 +361,9 @@ function AdminOrders() {
                         </td>
                         <td>
                           {item.status_payment === false ? (
-                            <div className={cx("unpaid")}>Unpaid</div>
+                            <div className={cx("unpaid")}>Chưa Thanh Toán</div>
                           ) : (
-                            <div className={cx("paid")}>Paid</div>
+                            <div className={cx("paid")}>Đã Thanh Toán</div>
                           )}
                         </td>
                         <td>

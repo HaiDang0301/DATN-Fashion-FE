@@ -12,7 +12,7 @@ import className from "classnames/bind";
 import styles from "./Producers.module.scss";
 const cx = className.bind(styles);
 function AdminProducers() {
-  document.title = "Admin | Producers";
+  document.title = "Admin | Nhà Cung Cấp";
   const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
   const [producers, setProducers] = useState([]);
@@ -31,14 +31,14 @@ function AdminProducers() {
   const handleDelete = async () => {
     await producersApi.destroy(id).then((res) => {
       if (res.data === "Delete Producer Success") {
-        toast.success("Delete Producer Success", {
+        toast.success("Xóa nhà cung cấp thành công", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
         });
       }
       if (res.status === 404) {
-        toast.error("Can't Find Producer", {
+        toast.error("Không tìm thấy nhà cung cấp", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -69,16 +69,16 @@ function AdminProducers() {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className={cx("modal-title")}>
-            <i className="fa fa-warning"> Notification</i>
+            <i className="fa fa-warning"> Cảnh Báo</i>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete your producer !</Modal.Body>
+        <Modal.Body>Bạn có chắc chắn muốn xóa nhà cung cấp !</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="btn btn-danger" onClick={handleDelete}>
-            Confirm
+            Xác Nhận
           </Button>
         </Modal.Footer>
       </Modal>
@@ -86,7 +86,7 @@ function AdminProducers() {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-5 col-sm-4 col-0">
-              <h5>Producers List</h5>
+              <h5>Danh sách nhà cung cấp</h5>
             </div>
             <div className="col-lg-4 col-md-5 col-sm-6 col-9">
               <div className="row">
@@ -97,9 +97,9 @@ function AdminProducers() {
                     className={cx("select")}
                     onClick={handleSelect}
                   >
-                    <option value="default">Default</option>
-                    <option value="Providing">Providing</option>
-                    <option value="Stop-Providing">Stop Providing</option>
+                    <option value=""></option>
+                    <option value="Providing">Đang Cung Cấp</option>
+                    <option value="Stop-Providing">Ngừng Cung Cấp</option>
                   </select>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4 col-4">
@@ -115,7 +115,7 @@ function AdminProducers() {
                   to={routesConfig.CreateProducers}
                   className="btn btn-primary"
                 >
-                  Create
+                  Tạo mới
                 </Link>
               </div>
             </div>
@@ -124,13 +124,13 @@ function AdminProducers() {
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Name</th>
+                    <th>Tên</th>
                     <th>Email</th>
-                    <th>Phone</th>
-                    <th>Adress</th>
-                    <th>Status</th>
-                    <th>Sign_Date</th>
-                    <th>Action</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Địa Chỉ</th>
+                    <th>Trạng Thái</th>
+                    <th>Ngày Ký Hợp Đồng</th>
+                    <th>Hành Động</th>
                   </tr>
                 </thead>
                 {producers.producers

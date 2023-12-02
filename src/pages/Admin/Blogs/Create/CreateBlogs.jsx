@@ -37,7 +37,7 @@ function CreateBlogs() {
         .create(data)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Add Blogs Success", {
+            toast.success("Tạo mới bài viết thành công", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -47,7 +47,7 @@ function CreateBlogs() {
         })
         .catch((err) => {
           if (err.response.status === 409) {
-            toast.error("Blog has existed", {
+            toast.error("Bài viết đã tồn tại", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -55,7 +55,7 @@ function CreateBlogs() {
             setIsLoading(false);
           }
           if (err.response.status === 500) {
-            toast.error("Connect Server False", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -73,7 +73,7 @@ function CreateBlogs() {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-10">
-                <h5>Create Blog</h5>
+                <h5>Tạo mới bài viết</h5>
               </div>
               <div className="col-lg-2">
                 {isloading ? (
@@ -84,7 +84,7 @@ function CreateBlogs() {
                     className="btn btn-primary"
                     onClick={handleSubmit}
                   >
-                    <i className="fa fa-edit"> Save</i>
+                    <i className="fa fa-edit"> Lưu thông tin</i>
                   </Link>
                 )}
               </div>
@@ -109,7 +109,7 @@ function CreateBlogs() {
                   <div className={cx("image")}>
                     <div className="row">
                       <div className="col-lg-2">
-                        <h5>Image</h5>
+                        <h5>Hình Ảnh</h5>
                       </div>
                       <div className="col-lg-10">
                         <input
@@ -124,7 +124,7 @@ function CreateBlogs() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("title-blogs")}>
-                    <h5>Title Blogs</h5>
+                    <h5>Tiêu đề bài viết</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -132,13 +132,13 @@ function CreateBlogs() {
                     type="text"
                     name="title"
                     id="title"
-                    placeholder="Enter the title blog"
+                    placeholder="Tiêu đề bài viết"
                     onChange={(e) => setTitle(e.target.value)}
                   />
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("author")}>
-                    <h5>Author</h5>
+                    <h5>Tác Giả</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -146,13 +146,13 @@ function CreateBlogs() {
                     type="text"
                     name="author"
                     id="author"
-                    placeholder="Enter the author blog"
+                    placeholder="Tác giả bài viết"
                     onChange={(e) => setAuthor(e.target.value)}
                   />
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("hashtag")}>
-                    <h5>Hashtag</h5>
+                    <h5>Từ Khóa Tìm Kiếm</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -160,13 +160,13 @@ function CreateBlogs() {
                     type="text"
                     name="hashtag"
                     id="hashtag"
-                    placeholder="Enter the hashtag blog"
+                    placeholder="Từ Khóa Tìm Kiếm"
                     onChange={(e) => setHashTag(e.target.value)}
                   />
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("description")}>
-                    <h5>Description</h5>
+                    <h5>Mô Tả</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">

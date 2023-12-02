@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.2/tinymce.min.js"></script>;
 import loading from "../../../../assets/loading.gif";
+import noimage from "../../../../assets/noimg.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
@@ -26,7 +26,7 @@ function CreateProducts() {
   const [files, setFiles] = useState([]);
   const [description, setDescription] = useState("");
   const [buffer, setBuffer] = useState([{ size: "", quantity: "" }]);
-  document.title = "Admin | Create Products";
+  document.title = "Admin | Tạo Mới Sản Phẩm";
   useEffect(() => {
     fetchSizes();
     fetchColors();
@@ -41,7 +41,7 @@ function CreateProducts() {
         setProducers(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -56,7 +56,7 @@ function CreateProducts() {
         setCollections(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -71,7 +71,7 @@ function CreateProducts() {
         setColors(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -86,7 +86,7 @@ function CreateProducts() {
         setSizes(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -142,20 +142,20 @@ function CreateProducts() {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(2, "Minimum 2 characters")
-        .max(100, "Maximum of 20 characters")
-        .required("Please provide full name product"),
+        .min(2, "Tối thiểu 2 ký tự")
+        .max(100, "Tối đa 100 ký tự")
+        .required("Vui lòng cung cấp đầy đủ thông tin"),
       product_code: Yup.string()
-        .min(0, "Minimum 2 characters")
-        .max(6, "Maximum of 6 characters"),
-      producer: Yup.string().required("Please provide producer"),
-      collection: Yup.string().required("Please provide collection"),
-      category: Yup.string().required("Please provide category"),
-      color: Yup.string().required("Please provide color"),
-      import_price: Yup.string().required("Please provide import price"),
-      price: Yup.string().required("Please provide price"),
-      size: Yup.string().required("Please provide size"),
-      quantity: Yup.string().required("Please provide quantity"),
+        .min(6, "Tối thiểu 6 ký tự")
+        .max(12, "Tối đa 12 ký tự"),
+      producer: Yup.string().required("Vui chọn nhà cung cấp"),
+      collection: Yup.string().required("Vui lòng chọn bộ sưu tập"),
+      category: Yup.string().required("Vui lòng chọn loại sản phẩm"),
+      color: Yup.string().required("Vui lòng chọn màu sắc"),
+      import_price: Yup.string().required("Vui lòng nhập giá"),
+      price: Yup.string().required("Vui lòng nhập giá"),
+      size: Yup.string().required("Vui lòng chọn size"),
+      quantity: Yup.string().required("Vui lòng nhập số lượng"),
     }),
   });
   const handleSubmit = async () => {
@@ -178,7 +178,7 @@ function CreateProducts() {
     });
     data.append("description", description);
     if (!img) {
-      toast.error("Please provide image", {
+      toast.error("Vui lòng cung cấp hình ảnh", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -197,7 +197,7 @@ function CreateProducts() {
         .store(data)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Add products Sucssces", {
+            toast.success("Tạo mới sản phẩm thành công", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -207,7 +207,7 @@ function CreateProducts() {
         })
         .catch((error) => {
           if (error.response.status === 409) {
-            toast.error("Product has existed", {
+            toast.error("Sản phẩm đã tồn tại", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -215,7 +215,7 @@ function CreateProducts() {
             setIsloading(false);
           }
           if (error.response.status === 500) {
-            toast.error("Connect Server Errors", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -224,7 +224,7 @@ function CreateProducts() {
           }
         });
     } else {
-      toast.error("Please provide full information", {
+      toast.error("Vui lòng cung cấp đầy đủ thông tin", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -240,7 +240,7 @@ function CreateProducts() {
             <div className="col-lg-10">
               <div className={cx("title")}>
                 <h5>
-                  <i className="fa fa-file"> Create Product</i>
+                  <i className="fa fa-file"> Tạo mới sản phẩm</i>
                 </h5>
               </div>
             </div>
@@ -255,7 +255,7 @@ function CreateProducts() {
                       className="btn btn-primary"
                       onClick={handleSubmit}
                     >
-                      <i className="fa fa-check"> Save</i>
+                      <i className="fa fa-check"> Lưu thông tin</i>
                     </Link>
                   )}
                 </div>
@@ -269,8 +269,8 @@ function CreateProducts() {
           <div className="container">
             <div className="row">
               <div className="col-lg-4">
-                <h5>Basic information</h5>
-                <p>Enter the name and basic information of the product</p>
+                <h5>Thông tin cơ bản</h5>
+                <p>Nhập thông tin cơ bản sản phẩm</p>
               </div>
               <div className="col-lg-8">
                 <div className="row">
@@ -279,7 +279,7 @@ function CreateProducts() {
                       <div className="row">
                         <div className="col-lg-12">
                           <div className={cx("text")}>
-                            <h5>Product Name</h5>
+                            <h5>Tên Sản Phẩm</h5>
                           </div>
                         </div>
                         <div className="col-lg-12">
@@ -288,7 +288,7 @@ function CreateProducts() {
                               type="text"
                               name="name"
                               id="name"
-                              placeholder="Enter the product name"
+                              placeholder="Nhập tên sản phẩm"
                               onBlur={formik.handleBlur}
                               onChange={formik.handleChange}
                             />
@@ -312,7 +312,7 @@ function CreateProducts() {
                       <div className="row">
                         <div className="col-lg-12">
                           <div className={cx("text")}>
-                            <h5>Product Code</h5>
+                            <h5>Mã Sản Phẩm</h5>
                           </div>
                         </div>
                         <div className="col-lg-12">
@@ -321,7 +321,7 @@ function CreateProducts() {
                               type="text"
                               name="product_code"
                               id="product_code"
-                              placeholder="Enter the product code, otherwise the system will random code itself"
+                              placeholder="Nhập mã sản phẩm nếu không hệ thống sẽ tự tạo ngẫu nhiên"
                               onBlur={formik.handleBlur}
                               onChange={formik.handleChange}
                             />
@@ -345,7 +345,7 @@ function CreateProducts() {
                     <div className="row">
                       <div className="col-lg-6">
                         <div className={cx("title")}>
-                          <h5>Producer</h5>
+                          <h5>Nhà Cung Cấp</h5>
                         </div>
                         <div className={cx("content")}>
                           <div className="row">
@@ -372,7 +372,7 @@ function CreateProducts() {
                       <div className="col-lg-6">
                         <div className="row">
                           <div className={cx("title")}>
-                            <h5>Collection</h5>
+                            <h5>Bộ Sưu Tập</h5>
                           </div>
                           <div className="col-lg-10">
                             <div className={cx("content")}>
@@ -409,7 +409,7 @@ function CreateProducts() {
                       <div className="col-lg-6">
                         <div className="row">
                           <div className={cx("title")}>
-                            <h5>Category</h5>
+                            <h5>Loại Sản Phẩm</h5>
                           </div>
                           <div className="col-lg-10">
                             <div className={cx("content")}>
@@ -441,7 +441,7 @@ function CreateProducts() {
                       <div className="col-lg-6">
                         <div className="row">
                           <div className={cx("title")}>
-                            <h5>Color</h5>
+                            <h5>Màu Sắc</h5>
                           </div>
                           <div className="col-lg-10">
                             <div className={cx("content")}>
@@ -482,7 +482,7 @@ function CreateProducts() {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className={cx("title")}>
-                              <h5>Import Price</h5>
+                              <h5>Giá Nhập</h5>
                             </div>
                           </div>
                           <div className="col-lg-12">
@@ -514,7 +514,7 @@ function CreateProducts() {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className={cx("title")}>
-                              <h5>Price</h5>
+                              <h5>Giá Bán</h5>
                             </div>
                           </div>
                           <div className="col-lg-12">
@@ -550,7 +550,7 @@ function CreateProducts() {
                             <div className="col-lg-6">
                               <div className="row">
                                 <div className={cx("title")}>
-                                  <h5>Size</h5>
+                                  <h5>Kích Thước</h5>
                                 </div>
                                 <div className="col-lg-10">
                                   <div className={cx("content")}>
@@ -584,7 +584,7 @@ function CreateProducts() {
                                   <div className={cx("quantity")}>
                                     <div className="row">
                                       <div className="col-lg-8 col-md-8 col-sm-8">
-                                        <h5>Quantity</h5>
+                                        <h5>Số Lượng</h5>
                                       </div>
                                       <div className="col-lg-4 col-md-4 col-sm-4">
                                         <div className={cx("option")}>
@@ -626,7 +626,7 @@ function CreateProducts() {
                     : null}
                   <div className="col-lg-12">
                     <div className={cx("description")}>
-                      <h5>Description</h5>
+                      <h5>Mô Tả</h5>
                     </div>
                   </div>
                   <div className="col-lg-12">
@@ -677,14 +677,14 @@ function CreateProducts() {
                         <p>+{files.length - 1}</p>
                       </div>
                     ) : (
-                      <img src=""></img>
+                      <img src={noimage}></img>
                     )}
                   </div>
                 </div>
-                <h5>Upload product images</h5>
+                <h5>Tải lên hình ảnh sản phẩm</h5>
                 <p>
-                  (For fast loading and rendering, each upload should be up to
-                  10MB in size.)
+                  (Để tải và kết xuất nhanh, mỗi tải lên phải có kích thước nhỏ
+                  hơn 10MB)
                 </p>
                 <input
                   type="file"

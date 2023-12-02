@@ -106,7 +106,7 @@ function Home() {
   };
   const settingBlogs = {
     speed: 3000,
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 2,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -169,7 +169,7 @@ function Home() {
                           <h1>{item.title}</h1>
                           <label>{Parser(item.description)}</label>
                           <Link to={"/collections"} className="btn btn-primary">
-                            Shop now
+                            Xem bộ sưu tập
                           </Link>
                         </div>
                       </Carousel.Caption>
@@ -179,7 +179,7 @@ function Home() {
                           <h1>{item.title}</h1>
                           <label>{Parser(item.description)}</label>
                           <Link to={"/collections"} className="btn btn-primary">
-                            Shop now
+                            Xem Bộ Sưu Tập
                           </Link>
                         </div>
                       </Carousel.Caption>
@@ -209,10 +209,10 @@ function Home() {
                       </Link>
                       <div className={cx("text-collection")}>
                         <h1>{item.collections}</h1>
-                        <h5>Collections</h5>
+                        <h5>Bộ Sưu Tập</h5>
                         <div className={cx("action")}>
                           <Link to={`/collections/${item.collections}`}>
-                            Shop Now <i className="fa fa-long-arrow-right"></i>
+                            Mua Sắm <i className="fa fa-long-arrow-right"></i>
                           </Link>
                         </div>
                       </div>
@@ -226,10 +226,10 @@ function Home() {
       <div className={cx("new-products")}>
         <div className="container">
           <div className="row">
-            {newProduct.products ? (
+            {newProduct.products && newProduct.products.length > 0 ? (
               <div className="col-lg-12">
                 <div className={cx("title-heading")}>
-                  <h3>New Products</h3>
+                  <h3>Sản Phẩm Mới</h3>
                   <hr />
                 </div>
               </div>
@@ -253,7 +253,7 @@ function Home() {
                                 />
                               )}
                               <div className={cx("quick-view")}>
-                                <span>View</span>
+                                <span>Xem</span>
                               </div>
                             </div>
                             <div className={cx("product-flag")}>
@@ -264,7 +264,7 @@ function Home() {
                         <div className={cx("product-description")}>
                           <div className={cx("name-product")}>{item.name}</div>
                           <div className={cx("price-product")}>
-                            $ {Number(item.price).toLocaleString()}
+                            {Number(item.price).toLocaleString()}
                           </div>
                         </div>
                       </div>
@@ -277,10 +277,10 @@ function Home() {
       </div>
       <div className={cx("attachment")}>
         <div className={cx("title-attachment")}>
-          <h1>SAVE IN STYLE</h1>
-          <h2>WITH THE DISCOUNT CLOTHING!</h2>
+          <h1>THỜI TRANG PHONG CÁCH</h1>
+          <h2>CHÍNH HÃNG VÀ PHÙ HỢP GIÁ TIỀN</h2>
           <Link to={"/collections"} className="btn">
-            <span>VIEW COLLECTIONS</span>
+            <span>Xem Bộ Sưu Tập</span>
           </Link>
         </div>
       </div>
@@ -289,7 +289,7 @@ function Home() {
           <div className="row">
             <div className="col-lg-12">
               <div className={cx("title-heading")}>
-                <h3>Spicial Products</h3>
+                <h3>Sản Phẩm Giảm Giá</h3>
                 <hr />
               </div>
             </div>
@@ -310,7 +310,7 @@ function Home() {
                                 />
                               )}
                               <div className={cx("quick-view")}>
-                                <span>View</span>
+                                <span>Xem</span>
                               </div>
                             </div>
                             <div className={cx("product-flag-sale")}>
@@ -325,10 +325,10 @@ function Home() {
                           <div className={cx("name-product")}>{item.name}</div>
                           <div className={cx("price-product")}>
                             <div className={cx("old-price")}>
-                              $ {Number(item.old_price).toLocaleString()}
+                              {Number(item.old_price).toLocaleString()}
                             </div>
                             <div className={cx("now-price")}>
-                              $ {Number(item.price).toLocaleString()}
+                              {Number(item.price).toLocaleString()}
                             </div>
                           </div>
                         </div>
@@ -342,10 +342,10 @@ function Home() {
       </div>
       <div className={cx("attachment-1")}>
         <div className={cx("title-attachment")}>
-          <h1>BUY THE MOST STYLISH APPAREL</h1>
-          <h2>FOR THE WHOLE FAMILY!</h2>
+          <h1>MUA SẮM TRANG PHỤC SÀNH ĐIỆU NHẤT</h1>
+          <h2>CHO GIA ĐÌNH CỦA BẠN!</h2>
           <Link to={"/collections"} className="btn">
-            <span>VIEW COLLECTIONS</span>
+            <span>XEM BỘ SƯU TẬP</span>
           </Link>
         </div>
       </div>
@@ -354,7 +354,7 @@ function Home() {
           <div className="row">
             <div className="col-lg-12">
               <div className={cx("title-heading")}>
-                <h3>Our Blog</h3>
+                <h3>Bài Viết</h3>
                 <hr />
               </div>
             </div>

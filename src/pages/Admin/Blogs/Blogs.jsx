@@ -13,7 +13,7 @@ import styles from "./Blogs.module.scss";
 import formatDate from "../../../formatDate/formatDate";
 const cx = className.bind(styles);
 function AdminBlogs() {
-  document.title = "Admin | Blogs";
+  document.title = "Admin | Quản lý bài viết";
   const date = new Date();
   const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
@@ -35,14 +35,14 @@ function AdminBlogs() {
   const handleDelete = async () => {
     await blogAPI.delete(id).then((res) => {
       if (res.status === 200) {
-        toast.success("Delete Blog Success", {
+        toast.success("Xóa bài viết thành công", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
         });
       }
       if (res.status === 404) {
-        toast.error("Can't Find Blogs", {
+        toast.error("Không tìm thấy bài viết", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -114,22 +114,22 @@ function AdminBlogs() {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className={cx("modal-title")}>
-            <i className="fa fa-warning"> Notification</i>
+            <i className="fa fa-warning"> Cảnh Báo</i>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete your blog !</Modal.Body>
+        <Modal.Body>Bạn có chắc chắn muốn xóa bài viết !</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="btn btn-danger" onClick={handleDelete}>
-            Confirm
+            Xác Nhận
           </Button>
         </Modal.Footer>
       </Modal>
       <div className={cx("blogs")}>
         <div className="container">
-          <h5>Blogs List</h5>
+          <h5>Danh Sách Bài Viết</h5>
           <div className="row">
             <div className="col-lg-7 col-md-12 col-sm-12 col-12">
               <div className="row">
@@ -146,7 +146,7 @@ function AdminBlogs() {
                 </div>
                 <div className="col-lg-1 col-md-1 col-sm-1 col-12">
                   <div className={cx("title")}>
-                    <span htmlFor="">to</span>
+                    <span htmlFor="">đến</span>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-4 col-sm-4 col-12">
@@ -163,7 +163,7 @@ function AdminBlogs() {
                 <div className="col-lg-3 col-md-3 col-sm-3 col-3">
                   <div className={cx("btn-search")}>
                     <button className="btn btn-primary" onClick={handleSearch}>
-                      <i className="fa fa-search"> Search</i>
+                      <i className="fa fa-search"> Tìm Kiếm</i>
                     </button>
                   </div>
                 </div>
@@ -179,7 +179,7 @@ function AdminBlogs() {
                       )}
                       onClick={(e) => handleWeek("week")}
                     >
-                      Week
+                      Tuần
                     </button>
                   </div>
                 </div>
@@ -191,7 +191,7 @@ function AdminBlogs() {
                       )}
                       onClick={(e) => handleMonth("month")}
                     >
-                      Month
+                      Tháng
                     </button>
                   </div>
                 </div>
@@ -203,7 +203,7 @@ function AdminBlogs() {
                       )}
                       onClick={(e) => handleYear("year")}
                     >
-                      Year
+                      Năm
                     </button>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ function AdminBlogs() {
             <div className="col-lg-2 col-md-12 col-sm-12 col-12">
               <div className={cx("create-blogs")}>
                 <Link to={routesConfig.CreateBlogs} className="btn btn-primary">
-                  Create
+                  Tạo mới
                 </Link>
               </div>
             </div>
@@ -222,11 +222,11 @@ function AdminBlogs() {
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>Name</th>
-                  <th>Image</th>
-                  <th>Author</th>
-                  <th>HashTag</th>
-                  <th>Action</th>
+                  <th>Tiêu Đề</th>
+                  <th>Hình Ảnh</th>
+                  <th>Tác Giả</th>
+                  <th>Từ Khóa</th>
+                  <th>Hành Động</th>
                 </tr>
               </thead>
               {blogs.blogs

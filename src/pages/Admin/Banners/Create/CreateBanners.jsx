@@ -30,7 +30,7 @@ function CreateBanners() {
         .store(data)
         .then((res) => {
           if (res.data === "Add Banner Success") {
-            toast.success("Add Banner Success", {
+            toast.success("Tạo mới banner thành công", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -39,14 +39,14 @@ function CreateBanners() {
         })
         .catch((error) => {
           if (error.response.status === 409) {
-            toast.error("Banner has existed", {
+            toast.error("Banner đã tồn tại", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
             });
           }
           if (error.response.status === 500) {
-            toast.error("Connect Server False", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -63,7 +63,7 @@ function CreateBanners() {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-10 col-md-10 com-sm-9 col-9">
-                <h5>Create Banner</h5>
+                <h5>Tạo mới banner</h5>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-3 col-3">
                 <Link
@@ -71,7 +71,7 @@ function CreateBanners() {
                   className="btn btn-primary"
                   onClick={handleSubmit}
                 >
-                  <i className="fa fa-save"> Save</i>
+                  <i className="fa fa-save"> Lưu Thông Tin</i>
                 </Link>
               </div>
             </div>
@@ -90,7 +90,7 @@ function CreateBanners() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("image")}>
-                    <h5>Image</h5>
+                    <h5>Hình Ảnh</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -103,21 +103,21 @@ function CreateBanners() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("title-banner")}>
-                    <h5>Title</h5>
+                    <h5>Tiêu Đề</h5>
                   </div>
                   <div className="col-lg-12">
                     <input
                       type="text"
                       name="title"
                       id="tiele"
-                      placeholder="Enter the title name"
+                      placeholder="Nhập tiêu đề"
                       onChange={(e) => setTitle(e.target.value)}
                     />
                   </div>
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("description-banner")}>
-                    <h5>Text</h5>
+                    <h5>Mô Tả</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">

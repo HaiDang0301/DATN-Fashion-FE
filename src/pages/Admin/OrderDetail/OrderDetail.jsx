@@ -49,7 +49,7 @@ function ViewOrders() {
       <div className={cx("container")}>
         <div className="row">
           <div className="col-lg-11">
-            <h5>Information Order</h5>
+            <h5>Chi Tiết Đơn Hàng</h5>
           </div>
           <div className="col-lg-1">
             <div className={cx("back")}>
@@ -64,14 +64,14 @@ function ViewOrders() {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th scope="col">Order Code</th>
-                  <th scope="col">Client</th>
-                  <th scope="col">Total Money</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">City</th>
-                  <th scope="col">District</th>
-                  <th scope="col">Ward</th>
-                  <th scope="col">Adress Home</th>
+                  <th scope="col">Mã Đơn Hàng</th>
+                  <th scope="col">Khách Hàng</th>
+                  <th scope="col">Tổng Tiền</th>
+                  <th scope="col">Số Điện Thoại</th>
+                  <th scope="col">Thành Phố / Tỉnh</th>
+                  <th scope="col">Quận / Huyện</th>
+                  <th scope="col">Phường / Xã</th>
+                  <th scope="col">Địa Chỉ Nhà</th>
                 </tr>
               </thead>
               <tbody>
@@ -95,7 +95,7 @@ function ViewOrders() {
         </div>
         <div className="col-lg-12">
           <div className={cx("title")}>
-            <h5>Products Order</h5>
+            <h5>Mã Sản Phẩm</h5>
           </div>
         </div>
         <div className="col-lg-12 col-md-12 col-sm-12 col-12">
@@ -119,17 +119,17 @@ function ViewOrders() {
                             </div>
                             <div className="col-lg-12">
                               <div className={cx("size")}>
-                                Size : {item.size}
+                                Kích Thước : {item.size}
                               </div>
                             </div>
                             <div className="col-lg-12">
                               <div className={cx("total-price")}>
-                                Quantity : {item.quantity}
+                                Số Lượng : {item.quantity}
                               </div>
                             </div>
                             <div className="col-lg-12">
                               <div className={cx("price")}>
-                                Price : ${Number(item.price).toLocaleString()}
+                                Giá : {Number(item.price).toLocaleString()}
                               </div>
                             </div>
                           </div>
