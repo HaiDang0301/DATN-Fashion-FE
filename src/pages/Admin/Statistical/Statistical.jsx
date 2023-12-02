@@ -79,7 +79,7 @@ function Statistical() {
           <div className="row">
             <div className="col-lg-3">
               <h5>
-                <i className="fa fa-usd"> Profit</i>
+                <i className="fa fa-usd"> Thống kê và xuất nhập hàng</i>
               </h5>
             </div>
             <div className="col-lg-9">
@@ -87,7 +87,7 @@ function Statistical() {
                 <div className="row">
                   <div className="col-lg-3">
                     <div className="row">
-                      <div className="col-lg-4">Years</div>
+                      <div className="col-lg-4">Năm</div>
                       <div className="col-lg-8">
                         <div className={cx("years")}>
                           <select
@@ -110,7 +110,7 @@ function Statistical() {
                   </div>
                   <div className="col-lg-3">
                     <div className="row">
-                      <div className="col-lg-4">Month</div>
+                      <div className="col-lg-4">Tháng</div>
                       <div className="col-lg-8">
                         <div className={cx("month")}>
                           <select
@@ -138,7 +138,7 @@ function Statistical() {
                         className="btn btn-primary"
                         onClick={(e) => handleSearch()}
                       >
-                        <i className="fa fa-search"> Search</i>
+                        <i className="fa fa-search"> Tìm Kiếm</i>
                       </button>
                     </div>
                   </div>
@@ -149,9 +149,9 @@ function Statistical() {
                         id="sort"
                         onChange={(e) => handleSort(e)}
                       >
-                        <option value="">Type</option>
-                        <option value="import">Import of goods</option>
-                        <option value="sale">Goods sold</option>
+                        <option value=""></option>
+                        <option value="import">Nhập vào</option>
+                        <option value="sale">Bán ra</option>
                       </select>
                     </div>
                   </div>
@@ -175,9 +175,9 @@ function Statistical() {
                 <div className={cx("content")}>
                   <div className={cx("text")}>
                     <i className="fa fa-usd"></i>
-                    <label>Year Revenue</label>
+                    <label>Doanh thu năm</label>
                   </div>
-                  <div className={cx("annual-money")}>${money}</div>
+                  <div className={cx("annual-money")}>{money}</div>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@ function Statistical() {
                 <div className={cx("content")}>
                   <div className={cx("text")}>
                     <i className="fa fa-money"></i>
-                    <label>Month Capital</label>
+                    <label>Tiền nhập hàng</label>
                   </div>
                   <div className={cx("import-money")}>
                     ${Number(data.findMonth[0].import_Money).toLocaleString()}
@@ -199,10 +199,10 @@ function Statistical() {
                 <div className={cx("content")}>
                   <div className={cx("text")}>
                     <i className="fa fa-shopping-cart"></i>
-                    <label>Month revenue</label>
+                    <label>Doanh thu tháng</label>
                   </div>
                   <div className={cx("sales-money")}>
-                    ${data.findMonth[0].sales_Money}
+                    {data.findMonth[0].sales_Money}
                   </div>
                 </div>
               </div>
@@ -214,12 +214,12 @@ function Statistical() {
             <thead>
               <tr>
                 <th>STT</th>
-                <th>Name</th>
-                <th>Size</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <td>Date</td>
-                <th>Type</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Kích Thước</th>
+                <th>Số Lượng</th>
+                <th>Giá</th>
+                <td>Ngày</td>
+                <th>Loại</th>
               </tr>
             </thead>
             <tbody>
@@ -238,9 +238,9 @@ function Statistical() {
                           <li key={index}>{quantity.quantity}</li>
                         ))}
                       </td>
-                      <td>$ {item.price}</td>
+                      <td>{item.price}</td>
                       <td>{formatDate(item.createdAt)}</td>
-                      <td>{item.type === 0 ? "Import" : "Sale"}</td>
+                      <td>{item.type === 0 ? "Nhập" : "Xuất"}</td>
                     </tr>
                   ))
                 : null}

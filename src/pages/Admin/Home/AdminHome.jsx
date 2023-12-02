@@ -59,13 +59,13 @@ function AdminHome() {
     labels,
     datasets: [
       {
-        label: "Import",
+        label: "Nhập Vào",
         data: arrLenghtType0,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
       {
-        label: "Sale",
+        label: "Bán Ra",
         data: arrLenghtType1,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
@@ -95,7 +95,7 @@ function AdminHome() {
       },
       title: {
         display: true,
-        text: "Sales Month",
+        text: "Thống kê nhập xuất hàng",
       },
     },
   };
@@ -136,7 +136,7 @@ function AdminHome() {
       },
     ],
   };
-  document.title = "Admin | Home";
+  document.title = "Admin | Trang Chủ";
   useEffect(() => {
     const fetchOrders = async () => {
       const reusult = await ordersAPI.index();
@@ -198,18 +198,20 @@ function AdminHome() {
               return type.type === 1;
             });
           });
-          arrType0.map((item) => {
-            item.sizes.map((quantity) => {
+          arrType0.forEach((item) => {
+            item.sizes.forEach((quantity) => {
               sumImport += quantity.quantity;
             });
           });
           arrLenghtType0.push(sumImport);
+          sumImport = 0;
           arrType1.map((item) => {
             item.sizes.map((quantity) => {
               sumSale += quantity.quantity;
             });
           });
           arrLenghtType1.push(sumSale);
+          sumSale = 0;
         });
       }
     };
@@ -232,7 +234,8 @@ function AdminHome() {
             <div className={cx("orders")}>
               <div className={cx("content")}>
                 <div className={cx("text")}>
-                  <i className="fa fa-shopping-cart"></i> <label>Orders</label>
+                  <i className="fa fa-shopping-cart"></i>{" "}
+                  <label>Tổng Đơn Hàng</label>
                 </div>
                 <div className={cx("total-number")}>
                   {orders && orders.countOrders ? orders.countOrders : null}
@@ -242,7 +245,7 @@ function AdminHome() {
           </div>
           <div className="col-lg-3 col-md-3 col-sm-6 col-6">
             <div className={cx("sales")}>
-              <i className="fa fa-usd"></i> Month Capital
+              <i className="fa fa-usd"></i> Tổng Tiền Nhập Hàng
               <div className={cx("import-money")}>
                 {Number(wareHouse.findMonth[0].import_Money).toLocaleString()}
               </div>
@@ -250,7 +253,7 @@ function AdminHome() {
           </div>
           <div className="col-lg-3 col-md-3 col-sm-6 col-6">
             <div className={cx("revenue")}>
-              <i className="fa fa-paypal"> Month revenue</i>
+              <i className="fa fa-paypal"> Doanh Thu Tháng</i>
               <div className={cx("sales-money")}>
                 ${wareHouse.findMonth[0].sales_Money}
               </div>
@@ -258,7 +261,7 @@ function AdminHome() {
           </div>
           <div className="col-lg-3 col-md-3 col-sm-6 col-6">
             <div className={cx("yearly-sales")}>
-              <i className="fa fa-money"> Yearly Sales</i>
+              <i className="fa fa-money"> Doanh Thu Năm</i>
               <div className={cx("annual-money")}>${money}</div>
             </div>
           </div>
@@ -272,7 +275,7 @@ function AdminHome() {
               <div className="row">
                 <div className="col-lg-12 col-md-3 col-sm-6 col-12">
                   <div className={cx("total-clients")}>
-                    Total Clients
+                    Tổng Khách Hàng
                     <div className={cx("stonk")}>
                       <i className="fa fa-signal"></i>{" "}
                       {clients ? clients.countClients : null}
@@ -281,7 +284,7 @@ function AdminHome() {
                 </div>
                 <div className="col-lg-12 col-md-3 col-sm-6 col-12">
                   <div className={cx("total-producers")}>
-                    Total Producers
+                    Tổng Nhà Cung Cấp
                     <div className={cx("stonk")}>
                       <i className="fa fa-signal"></i>{" "}
                       {producers && producers.countProducers
@@ -292,7 +295,7 @@ function AdminHome() {
                 </div>
                 <div className="col-lg-12 col-md-3 col-sm-6 col-12">
                   <div className={cx("unique-visitor")}>
-                    Total Products
+                    Tổng Sản Phẩm
                     <div className={cx("stonk")}>
                       <i className="fa fa-signal"></i>{" "}
                       {products && products.countProducts
@@ -303,7 +306,7 @@ function AdminHome() {
                 </div>
                 <div className="col-lg-12 col-md-3 col-sm-6 col-12">
                   <div className={cx("total-user")}>
-                    Total Blogs
+                    Tổng Bài Viết
                     <div className={cx("stonk")}>
                       <i className="fa fa-signal"></i>{" "}
                       {blogs && blogs.countBlogs ? blogs.countBlogs : null}

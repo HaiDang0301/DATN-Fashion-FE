@@ -74,8 +74,8 @@ function CartDetail() {
         });
         setQuantity(sum);
         setTotals(total);
-        if (total && total < 100) {
-          shipping = 2;
+        if (total && total < 2000000) {
+          shipping = 25000;
           totalAmount = total - (total * discount) / 100 + shipping;
           amount = totalAmount;
         } else {
@@ -108,7 +108,7 @@ function CartDetail() {
         });
     };
     if (success) {
-      toast.success("Payment successfull", {
+      toast.success("Thanh toán thành công", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -186,8 +186,8 @@ function CartDetail() {
         total += item.quantity * item.price;
       });
       setTotals(total);
-      if (total && total < 100) {
-        shipping = 2;
+      if (total && total < 2000000) {
+        shipping = 25000;
       } else {
         shipping = 0;
       }
@@ -204,8 +204,8 @@ function CartDetail() {
       total += item.quantity * item.price;
     });
     setTotals(total);
-    if (total && total < 100) {
-      shipping = 2;
+    if (total && total < 2000000) {
+      shipping = 25000;
     } else {
       shipping = 0;
     }
@@ -217,7 +217,7 @@ function CartDetail() {
       .destroy(product_id)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Delete Success", {
+          toast.success("Xóa sản phẩm khỏi giỏ hàng thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -229,7 +229,7 @@ function CartDetail() {
       })
       .catch((err) => {
         if (err.response.status === 500) {
-          toast.success("Connect Server Error", {
+          toast.success("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -245,7 +245,7 @@ function CartDetail() {
       !user.address.ward ||
       !user.address.address_home
     ) {
-      toast.warning("Please provide full information", {
+      toast.warning("Vui lòng cung cấp đầy đủ thông tin nhận hàng", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -263,10 +263,11 @@ function CartDetail() {
         .orders(data)
         .then((res) => {
           if (res.status === 200) {
-            toast.success(
-              "Successful order, please wait for the admin to confirm your order",
-              { position: "bottom-right", autoClose: 5000, theme: "light" }
-            );
+            toast.success("Đặt hàng thành công", {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            });
             setDisable(true);
             setStatus(!status);
             const actions = resetCart();
@@ -275,7 +276,7 @@ function CartDetail() {
         })
         .catch((err) => {
           if (err.response.status === 500) {
-            toast.error("Connect Server Errors", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -333,7 +334,7 @@ function CartDetail() {
         })
         .catch((err) => {
           if (err.response.status === 500) {
-            toast.error("Connect Server Errors", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -349,10 +350,12 @@ function CartDetail() {
           <div className="row">
             <div className="col-lg-12">
               <div className={cx("title")}>
-                <h5>You have {quantity ? quantity : 0} items in your cart </h5>
+                <h5>
+                  Bạn có {quantity ? quantity : 0} sản phẩm trong giỏ hàng{" "}
+                </h5>
               </div>
             </div>
-            <div className="col-lg-8 col-md-7 col-sm-12">
+            <div className="col-lg-7 col-md-7 col-sm-12">
               {carts
                 ? carts.map((item, index) => (
                     <div className={cx("box-item")} key={index}>
@@ -373,21 +376,22 @@ function CartDetail() {
                                 </div>
                                 <div className="col-lg-12">
                                   <div className={cx("size")}>
-                                    Size : {item.size}
+                                    Kích Thước : {item.size}
                                   </div>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className={cx("price")}>
-                                    Price : $
-                                    {Number(item.price).toLocaleString()}
+                                    Giá : {Number(item.price).toLocaleString()}{" "}
+                                    đ
                                   </div>
                                 </div>
                                 <div className="col-lg-12">
                                   <div className={cx("total-price")}>
-                                    Total Price : $
+                                    Tổng Tiền :{" "}
                                     {Number(
                                       item.price * item.quantity
-                                    ).toLocaleString()}
+                                    ).toLocaleString()}{" "}
+                                    đ
                                   </div>
                                 </div>
                               </div>
@@ -445,21 +449,21 @@ function CartDetail() {
                   ))
                 : null}
             </div>
-            <div className="col-lg-4 col-md-5 col-sm-12">
+            <div className="col-lg-5 col-md-5 col-sm-12">
               <div className={cx("checkout-form")}>
                 <div className="container">
                   <div className={cx("shipping")}>
                     <div className="row">
                       <div className="col-lg-12">
                         <div className={cx("title-shipping")}>
-                          <span>Shipping</span>
+                          <span>Địa Chỉ Nhận Hàng</span>
                         </div>
                       </div>
                       <div className={cx("address")}>
                         <div className={cx("name")}>
                           <div className="row">
                             <div className="col-lg-4">
-                              <span>Name</span>
+                              <span>Tên</span>
                             </div>
                             <div className="col-lg-8">
                               <input
@@ -499,7 +503,7 @@ function CartDetail() {
                         <div className={cx("phone")}>
                           <div className="row">
                             <div className="col-lg-4">
-                              <span>Phone</span>
+                              <span>Số Điện Thoại</span>
                             </div>
                             <div className="col-lg-8">
                               <input
@@ -520,7 +524,7 @@ function CartDetail() {
                         <div className={cx("city")}>
                           <div className="row">
                             <div className="col-lg-4">
-                              <span>City</span>
+                              <span>Thành Phố / Tỉnh</span>
                             </div>
                             <div className="col-lg-8">
                               <select
@@ -548,7 +552,7 @@ function CartDetail() {
                         <div className={cx("district")}>
                           <div className="row">
                             <div className="col-lg-4">
-                              <span>District</span>
+                              <span>Quận / Huyện</span>
                             </div>
                             <div className="col-lg-8">
                               <select
@@ -579,7 +583,7 @@ function CartDetail() {
                         <div className={cx("wards")}>
                           <div className="row">
                             <div className="col-lg-4">
-                              <span>Ward</span>
+                              <span>Phường / Xã</span>
                             </div>
                             <div className="col-lg-8">
                               <select
@@ -610,7 +614,7 @@ function CartDetail() {
                         <div className={cx("address-home")}>
                           <div className="row">
                             <div className={cx("col-lg-4")}>
-                              <span>Adress Home</span>
+                              <span>Đia Chỉ Nhà</span>
                             </div>
                             <div className="col-lg-8">
                               <input
@@ -644,11 +648,11 @@ function CartDetail() {
                   <div className={cx("subtotal")}>
                     <div className="row">
                       <div className="col-lg-3">
-                        <span>Subtotal</span>
+                        <span>Tổng</span>
                       </div>
                       <div className="col-lg-9">
                         <div className={cx("money")}>
-                          ${Number(totals).valueOf()}
+                          {Number(totals).toLocaleString()} đ
                         </div>
                       </div>
                     </div>
@@ -657,7 +661,7 @@ function CartDetail() {
                     <div className={cx("discount")}>
                       <div className="row">
                         <div className="col-lg-3">
-                          <span>Discount</span>
+                          <span>Giảm giá</span>
                         </div>
                         <div className="col-lg-9">
                           <div className={cx("discount-money")}>
@@ -671,11 +675,11 @@ function CartDetail() {
                     <div className={cx("delivery-charges")}>
                       <div className="row">
                         <div className="col-lg-6">
-                          <span>Delivery charges</span>
+                          <span>Phí Vận Chuyển</span>
                         </div>
                         <div className="col-lg-6">
                           <div className={cx("delivery-money")}>
-                            $ {shipping}
+                            {Number(shipping).toLocaleString()} đ
                           </div>
                         </div>
                       </div>
@@ -684,10 +688,10 @@ function CartDetail() {
                     <div className={cx("delivery-charges")}>
                       <div className="row">
                         <div className="col-lg-6">
-                          <span>Delivery charges</span>
+                          <span>Phí Vận Chuyển</span>
                         </div>
                         <div className="col-lg-6">
-                          <div className={cx("delivery-money")}>Free</div>
+                          <div className={cx("delivery-money")}>Miễn Phí</div>
                         </div>
                       </div>
                     </div>
@@ -695,14 +699,14 @@ function CartDetail() {
                   <div className={cx("grand-money")}>
                     <div className="row">
                       <div className="col-lg-6">
-                        <span>Grand Money</span>
+                        <span>Tổng Tiền</span>
                       </div>
                       <div className="col-lg-6">
                         <div className={cx("money")}>
-                          $
                           {Number(
                             totals - (totals * discount) / 100 + shipping
-                          ).valueOf()}
+                          ).toLocaleString()}{" "}
+                          đ
                         </div>
                       </div>
                     </div>
@@ -714,7 +718,7 @@ function CartDetail() {
                         handleOrder();
                       }}
                     >
-                      Payment on delivery
+                      Thanh Toán Khi Nhận Hàng
                     </button>
                   </div>
                   <div className={cx("paypal")}>

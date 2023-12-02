@@ -56,7 +56,7 @@ function UpdateProducts() {
         setProducers(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -71,7 +71,7 @@ function UpdateProducts() {
         setCollections(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -85,7 +85,7 @@ function UpdateProducts() {
           setCategories(res.data);
         })
         .catch((err) => {
-          toast.error("Connect Server False", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: "5000",
             theme: "light",
@@ -101,7 +101,7 @@ function UpdateProducts() {
         setColors(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -116,7 +116,7 @@ function UpdateProducts() {
         setSizes(res.data);
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: "5000",
           theme: "light",
@@ -173,7 +173,7 @@ function UpdateProducts() {
         .update(id, data)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Update product Sucssces", {
+            toast.success("Cập nhật sản phẩm thành công", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -183,7 +183,7 @@ function UpdateProducts() {
         })
         .catch((err) => {
           if (err.response.status === 403) {
-            toast.error("Please provide new image", {
+            toast.error("Vui lòng cung cấp hình ảnh", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -191,7 +191,7 @@ function UpdateProducts() {
             setIsloading(false);
           }
           if (err.response.status === 401) {
-            toast.error("Product Name Has existed", {
+            toast.error("Sản phẩm đã tồn tại", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -199,7 +199,7 @@ function UpdateProducts() {
             setIsloading(false);
           }
           if (err.response.status === 404) {
-            toast.error("Can not find ID", {
+            toast.error("Không tìm thấy sản phẩm", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -207,7 +207,7 @@ function UpdateProducts() {
             setIsloading(false);
           }
           if (err.response.status === 500) {
-            toast.error("Connect Server False", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -226,7 +226,7 @@ function UpdateProducts() {
             <div className="col-lg-10">
               <div className={cx("title")}>
                 <h5>
-                  <i className="fa fa-file"> Update Product</i>
+                  <i className="fa fa-file"> Cập nhật</i>
                 </h5>
               </div>
             </div>
@@ -241,7 +241,7 @@ function UpdateProducts() {
                       className="btn btn-primary"
                       onClick={handleSubmit}
                     >
-                      <i className="fa fa-check"> Update</i>
+                      <i className="fa fa-check"> Lưu thông tin</i>
                     </Link>
                   )}
                 </div>
@@ -255,8 +255,8 @@ function UpdateProducts() {
           <div className="container">
             <div className="row">
               <div className="col-lg-4">
-                <h5>Basic information</h5>
-                <p>Enter the name and basic information of the product</p>
+                <h5>Thông tin cơ bản</h5>
+                <p>Nhập thông tin cơ bản sản phẩm</p>
               </div>
               <div className="col-lg-8">
                 <div className="row">
@@ -265,7 +265,7 @@ function UpdateProducts() {
                       <div className="row">
                         <div className="col-lg-12">
                           <div className={cx("text")}>
-                            <h5>Product Name</h5>
+                            <h5>Tên Sản Phẩm</h5>
                           </div>
                         </div>
                         <div className="col-lg-12">
@@ -291,7 +291,7 @@ function UpdateProducts() {
                     <div className="row">
                       <div className="col-lg-6">
                         <div className={cx("title")}>
-                          <h5>Producer</h5>
+                          <h5>Nhà Cung Cấp</h5>
                         </div>
                         <div className={cx("content")}>
                           <div className="row">
@@ -322,7 +322,7 @@ function UpdateProducts() {
                       <div className="col-lg-6">
                         <div className="row">
                           <div className={cx("title")}>
-                            <h5>Collection</h5>
+                            <h5>Bộ Sưu Tập</h5>
                           </div>
                           <div className="col-lg-10">
                             <div className={cx("content")}>
@@ -357,7 +357,7 @@ function UpdateProducts() {
                       <div className="col-lg-6">
                         <div className="row">
                           <div className={cx("title")}>
-                            <h5>Category</h5>
+                            <h5>Loại Sản Phẩm</h5>
                           </div>
                           <div className="col-lg-10">
                             <div className={cx("content")}>
@@ -392,7 +392,7 @@ function UpdateProducts() {
                       <div className="col-lg-6">
                         <div className="row">
                           <div className={cx("title")}>
-                            <h5>Color</h5>
+                            <h5>Màu Sắc</h5>
                           </div>
                           <div className="col-lg-10">
                             <div className={cx("content")}>
@@ -437,7 +437,7 @@ function UpdateProducts() {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className={cx("title")}>
-                              <h5>Import Price</h5>
+                              <h5>Giá Nhập</h5>
                             </div>
                           </div>
                           <div className="col-lg-12">
@@ -462,7 +462,7 @@ function UpdateProducts() {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className={cx("title")}>
-                              <h5>Price</h5>
+                              <h5>Giá Bán</h5>
                             </div>
                           </div>
                           <div className="col-lg-12">
@@ -491,7 +491,7 @@ function UpdateProducts() {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className={cx("title")}>
-                              <h5>Promotion</h5>
+                              <h5>Giamr giá</h5>
                             </div>
                           </div>
                           <div className="col-lg-12">
@@ -516,7 +516,7 @@ function UpdateProducts() {
                         <div className="row">
                           <div className="col-lg-12">
                             <div className={cx("title")}>
-                              <h5>Out of promotion</h5>
+                              <h5>Giảm Giá Đến Ngày</h5>
                             </div>
                           </div>
                           <div className="col-lg-12">
@@ -546,7 +546,7 @@ function UpdateProducts() {
                             <div className="col-lg-6">
                               <div className="row">
                                 <div className={cx("title")}>
-                                  <h5>Size</h5>
+                                  <h5>Kích Thước</h5>
                                 </div>
                                 <div className="col-lg-10">
                                   <div className={cx("content")}>
@@ -580,7 +580,7 @@ function UpdateProducts() {
                                   <div className={cx("quantity")}>
                                     <div className="row">
                                       <div className="col-lg-8 col-md-8 col-sm-8">
-                                        <h5>Quantity</h5>
+                                        <h5>Số Lượng</h5>
                                       </div>
                                       <div className="col-lg-4 col-md-4 col-sm-4">
                                         <div className={cx("option")}>
@@ -619,7 +619,7 @@ function UpdateProducts() {
                     : null}
                   <div className="col-lg-12">
                     <div className={cx("description")}>
-                      <h5>Description</h5>
+                      <h5>Mô tả</h5>
                     </div>
                   </div>
                   <div className="col-lg-12">

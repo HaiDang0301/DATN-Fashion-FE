@@ -7,7 +7,7 @@ import producersApi from "../../../../api/Admin/producersAPI";
 import { useEffect, useState } from "react";
 const cx = className.bind(styles);
 function UpdateProducers() {
-  document.title = "Admin | Update Producer";
+  document.title = "Admin | Cập nhật nhà cung cấp";
   const id = useParams().id;
   const [producer, setProducer] = useState({
     name: "",
@@ -35,7 +35,7 @@ function UpdateProducers() {
       .update(id, data)
       .then((res) => {
         if (res.data === "Update Producer Success") {
-          toast.success("Update Producer Success", {
+          toast.success("Cập nhật nhà cung cấp thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -43,7 +43,7 @@ function UpdateProducers() {
         }
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -58,7 +58,7 @@ function UpdateProducers() {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-10 col-md-10 com-sm-9 col-9">
-                <h5>Update Producer</h5>
+                <h5>Cập Nhật Nhà Cung Cấp</h5>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-3 col-3">
                 <Link
@@ -76,7 +76,7 @@ function UpdateProducers() {
               <div className="row">
                 <div className="col-lg-12">
                   <div className={cx("name-producer")}>
-                    <h5>Name Producer</h5>
+                    <h5>Tên Nhà Cung Cấp</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -84,7 +84,7 @@ function UpdateProducers() {
                     type="text"
                     name="name"
                     id="name"
-                    placeholder="Enter the email producer"
+                    placeholder="Tên Nhà Cung Cấp"
                     value={producer.name}
                     onChange={(e) =>
                       setProducer({ ...producer, name: e.target.value })
@@ -94,13 +94,13 @@ function UpdateProducers() {
                 <div className={cx("errors")}>
                   {!producer.name ? (
                     <i className="fa fa-warning">
-                      {""} Please provide name producer
+                      {""} Vui lòng cung cấp tên nhà cung cấp
                     </i>
                   ) : null}
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("email-producer")}>
-                    <h5>Email Producer</h5>
+                    <h5>Email</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -108,7 +108,7 @@ function UpdateProducers() {
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="Enter the email producer"
+                    placeholder="Email nhà cung cấp"
                     value={producer.email}
                     onChange={(e) =>
                       setProducer({ ...producer, email: e.target.value })
@@ -118,13 +118,13 @@ function UpdateProducers() {
                 <div className={cx("errors")}>
                   {!producer.email ? (
                     <i className="fa fa-warning">
-                      {""} Please provide email producer
+                      {""} Vui lòng cung cấp email nhà cung cấp
                     </i>
                   ) : null}
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("phone")}>
-                    <h5>Phone Number</h5>
+                    <h5>Số Điện Thoại</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -132,7 +132,7 @@ function UpdateProducers() {
                     type="text"
                     name="phone_number"
                     id="phone_number"
-                    placeholder="Enter the phone number producer"
+                    placeholder="Số Điện Thoại Nhà Cung Cấp"
                     value={producer.phone_number}
                     onChange={(e) =>
                       setProducer({ ...producer, phone_number: e.target.value })
@@ -142,13 +142,13 @@ function UpdateProducers() {
                 <div className={cx("errors")}>
                   {!producer.phone_number ? (
                     <i className="fa fa-warning">
-                      {""} Please provide phone number producer
+                      {""} Vui lòng cung cấp số điện thoại
                     </i>
                   ) : null}
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("adress")}>
-                    <h5>Adress</h5>
+                    <h5>Địa Chỉ</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -156,7 +156,7 @@ function UpdateProducers() {
                     type="text"
                     name="address"
                     id="address"
-                    placeholder="Enter the adress producer"
+                    placeholder="Địa chỉ nhà cung cấp"
                     value={producer.address}
                     onChange={(e) =>
                       setProducer({ ...producer, address: e.target.value })
@@ -166,13 +166,13 @@ function UpdateProducers() {
                 <div className={cx("errors")}>
                   {!producer.address ? (
                     <i className="fa fa-warning">
-                      {""} Please provide address producer
+                      {""} Vui lòng cung cấp địa chỉ nhà cung cấp
                     </i>
                   ) : null}
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("adress")}>
-                    <h5>Status</h5>
+                    <h5>Trạng Thái</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -184,14 +184,14 @@ function UpdateProducers() {
                       setProducer({ ...producer, status: e.target.value })
                     }
                   >
-                    <option value="Providing">Providing</option>
-                    <option value="Stop-Providing">Stop-Providing</option>
+                    <option value="Providing">Đang Cung Cấp</option>
+                    <option value="Stop-Providing">Ngừng Cung Cấp</option>
                   </select>
                 </div>
                 <div className={cx("errors")}>
                   {!producer.address ? (
                     <i className="fa fa-warning">
-                      {""} Please provide address producer
+                      {""} Vui long cung cấp địa chỉ
                     </i>
                   ) : null}
                 </div>

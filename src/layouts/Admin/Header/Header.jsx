@@ -45,18 +45,18 @@ function Header() {
           <div className={cx("drop-down")}>
             <Dropdown className={cx("section-admin")}>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Hi, admin
+                Xin chào, admin
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item href="#">
                   <Link to={routesConfig.Profile}>
                     <i className="fa fa-user"></i>
-                    <span>Account</span>
+                    <span>Tài Khoản</span>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item href="#" onClick={handleLogout}>
                   <i className="fa fa-power-off"></i>
-                  <span>Log out</span>
+                  <span>Đăng Xuất</span>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

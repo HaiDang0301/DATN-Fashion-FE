@@ -39,11 +39,14 @@ function ForgetPw() {
     const forget = await AuthsAPI.forget(data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Please go to Gmail to authenticate your account", {
-            position: "bottom-right",
-            autoClose: 5000,
-            theme: "light",
-          });
+          toast.success(
+            "Yêu cầu đặt lại mật khẩu thành công vui lòng kiểm tra email",
+            {
+              position: "bottom-right",
+              autoClose: 5000,
+              theme: "light",
+            }
+          );
           setCheck(false);
           setButton(true);
           setTimeout(() => {
@@ -53,7 +56,7 @@ function ForgetPw() {
       })
       .catch((errors) => {
         if (errors.response.status === 401) {
-          toast.error("Please check the email again", {
+          toast.error("Vui lòng kiểm tra lại email của bạn", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -73,18 +76,18 @@ function ForgetPw() {
         <div className={cx("forget-form-area")}>
           <div className={cx("forget-form")}>
             <div className={cx("forget-heading")}>
-              <span>Forget Password</span>
-              <p>Enter your email to reset the password</p>
+              <span>Quên Mật Khẩu</span>
+              <p>Nhập Địa Chỉ Email Của Bạn Để Tạo Yêu Cầu Đặt Lại Mật Khẩu</p>
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label id="email">Email Adress</label>
+                <label id="email">Địa Chỉ Email</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="Email Address"
+                  placeholder="Địa Chỉ Email"
                   value={formik.values.email}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -103,7 +106,7 @@ function ForgetPw() {
                 isLoading
               ) : (
                 <button onClick={handleSubmit} disabled={button}>
-                  Submit
+                  Gửi Yêu Cầu
                 </button>
               )}
             </div>

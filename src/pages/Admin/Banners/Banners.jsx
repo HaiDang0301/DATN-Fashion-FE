@@ -33,7 +33,7 @@ function AdminBanners() {
       .delete(id)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Delete Banner Success", {
+          toast.success("Xóa banner thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -43,7 +43,7 @@ function AdminBanners() {
       })
       .catch((error) => {
         if (error.response.status === 404) {
-          toast.error("Can't Find Banner", {
+          toast.error("Không tìm thấy banner", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -64,16 +64,16 @@ function AdminBanners() {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title className={cx("modal-title")}>
-            <i className="fa fa-warning"> Notification</i>
+            <i className="fa fa-warning"> Cảnh Báo</i>
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>Are you sure you want to delete your producer !</Modal.Body>
+        <Modal.Body>Bạn có chắc chắn muốn xóa banner !</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="btn btn-danger" onClick={handleDelete}>
-            Confirm
+            Xác Nhận
           </Button>
         </Modal.Footer>
       </Modal>
@@ -81,7 +81,7 @@ function AdminBanners() {
         <div className="container">
           <div className="row">
             <div className="col-lg-10 col-md-10 col-sm-10 col-9">
-              <h5>Banner List</h5>
+              <h5>Danh Sách Banner</h5>
             </div>
             <div className="col-lg-2 col-md-2 col-sm-2 col-3">
               <div className={cx("create-banners")}>
@@ -89,7 +89,7 @@ function AdminBanners() {
                   to={routesConfig.CreateBanners}
                   className="btn btn-primary"
                 >
-                  Create
+                  Tạo mới
                 </Link>
               </div>
             </div>
@@ -98,10 +98,10 @@ function AdminBanners() {
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Action</th>
+                    <th>Hình Ảnh</th>
+                    <th>Tiêu Đề</th>
+                    <th>Mô Tả</th>
+                    <th>Hành Động</th>
                   </tr>
                 </thead>
                 {banners.banners

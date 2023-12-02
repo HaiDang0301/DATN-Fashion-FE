@@ -17,10 +17,10 @@ function CreateProducers() {
       address: "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please enter name producer"),
-      email: Yup.string().required("Please enter email producer"),
-      phone_number: Yup.string().required("Please enter phone number producer"),
-      address: Yup.string().required("Please enter adress producer"),
+      name: Yup.string().required("Vui lòng nhập tên nhà cung cấp"),
+      email: Yup.string().required("Vui lòng nhập địa chỉ email"),
+      phone_number: Yup.string().required("Vui lòng nhập số điện thoại"),
+      address: Yup.string().required("Vui lòng nhập địa chỉ"),
     }),
   });
   const handleSubmit = () => {
@@ -30,7 +30,7 @@ function CreateProducers() {
       formik.errors.phone_number ||
       formik.errors.address
     ) {
-      toast.error("Please provide full information", {
+      toast.error("Vui lòng cung cấp đầy đủ thông tin", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -46,7 +46,7 @@ function CreateProducers() {
         .create(data)
         .then((res) => {
           if (res.data === "Add Producer Success") {
-            toast.success("Add Producer Success", {
+            toast.success("Tạo mới nhà cung cấp thành công", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -54,7 +54,7 @@ function CreateProducers() {
           }
         })
         .catch((err) => {
-          toast.error("Connect Server False", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -70,7 +70,7 @@ function CreateProducers() {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-10 col-md-10 com-sm-9 col-9">
-                <h5>Create Producer</h5>
+                <h5>Tạo Mới Nhà Cung Cấp</h5>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-3 col-3">
                 <Link
@@ -78,7 +78,7 @@ function CreateProducers() {
                   className="btn btn-primary"
                   onClick={handleSubmit}
                 >
-                  <i className="fa fa-save"> Save</i>
+                  <i className="fa fa-save"> Lưu thông tin</i>
                 </Link>
               </div>
             </div>
@@ -88,7 +88,7 @@ function CreateProducers() {
               <div className="row">
                 <div className="col-lg-12">
                   <div className={cx("name-producer")}>
-                    <h5>Name Producer</h5>
+                    <h5>Tên Nhà Cung Cấp</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -96,7 +96,7 @@ function CreateProducers() {
                     type="text"
                     name="name"
                     id="name"
-                    placeholder="Enter the email producer"
+                    placeholder="Tên nhà cung cấp"
                     value={formik.values.name}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -111,7 +111,7 @@ function CreateProducers() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("email-producer")}>
-                    <h5>Email Producer</h5>
+                    <h5>Email</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -119,7 +119,7 @@ function CreateProducers() {
                     type="text"
                     name="email"
                     id="email"
-                    placeholder="Enter the email producer"
+                    placeholder="Địa chỉ email"
                     value={formik.values.email}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -134,7 +134,7 @@ function CreateProducers() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("phone")}>
-                    <h5>Phone Number</h5>
+                    <h5>Số Điện Thoại</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -142,7 +142,7 @@ function CreateProducers() {
                     type="text"
                     name="phone_number"
                     id="phone_number"
-                    placeholder="Enter the phone number producer"
+                    placeholder="Số điện thoại nhà cung cấp"
                     value={formik.values.phone_number}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
@@ -159,7 +159,7 @@ function CreateProducers() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("adress")}>
-                    <h5>Adress</h5>
+                    <h5>Địa Chỉ</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -167,7 +167,7 @@ function CreateProducers() {
                     type="text"
                     name="address"
                     id="address"
-                    placeholder="Enter the adress producer"
+                    placeholder="Địa chỉ nhà cung cấp"
                     value={formik.values.address}
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}

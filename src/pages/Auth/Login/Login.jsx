@@ -28,8 +28,8 @@ function Login() {
       password: "",
     },
     validationSchema: Yup.object({
-      email: Yup.string().required("Please enter your email"),
-      password: Yup.string().required("Please enter a password"),
+      email: Yup.string().required("Vui lòng nhập email"),
+      password: Yup.string().required("Vui lòng nhập mật khẩu"),
     }),
   });
   const handleSubmit = async () => {
@@ -44,7 +44,7 @@ function Login() {
           ? localStorage.setItem("token", res.data.token)
           : sessionStorage.setItem("token", res.data.token);
         if (res.data.others.role === "admin") {
-          toast.success("Loggin Succes", {
+          toast.success("Đăng Nhập Thành Công", {
             position: "bottom-right",
             autoClose: 3000,
             theme: "light",
@@ -54,7 +54,7 @@ function Login() {
             navigate(routesConfig.AdminHome);
           }, 2000);
         } else {
-          toast.success("Loggin Succes", {
+          toast.success("Đăng Nhập Thành Công", {
             position: "bottom-right",
             autoClose: 3000,
             theme: "light",
@@ -67,21 +67,21 @@ function Login() {
       })
       .catch((errors) => {
         if (errors.response.status === 401) {
-          toast.error("Wrong account or password information", {
+          toast.error("Thông tin tài khoản mật khẩu không chính xác", {
             position: "bottom-right",
             autoClose: 3000,
             theme: "light",
           });
         }
         if (errors.response.status === 403) {
-          toast.error("Your account has not been verified", {
+          toast.error("Tài khoản chưa được xác thực", {
             position: "bottom-right",
             autoClose: 3000,
             theme: "light",
           });
         }
         if (errors.response.status === 500) {
-          toast.error("Connect Server Errors", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 3000,
             theme: "light",
@@ -124,12 +124,12 @@ function Login() {
         <div className={cx("login-form-area")}>
           <div className={cx("login-form")}>
             <div className={cx("login-heading")}>
-              <span>Login</span>
-              <p>Enter Login details to get access</p>
+              <span>Đăng Nhập</span>
+              <p>Nhập thông tin tài khoản để có quyền truy cập</p>
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label id="email">Email Adress</label>
+                <label id="email">Địa chỉ email</label>
                 <input
                   type="email"
                   name="email"
@@ -148,7 +148,7 @@ function Login() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label id="password">Password</label>
+                <label id="password">Mật Khẩu</label>
                 <input
                   type="password"
                   name="password"
@@ -176,18 +176,18 @@ function Login() {
                         id=""
                         onClick={(e) => setSave(!save)}
                       />
-                      <label id="check">Keep Me Logged In</label>
+                      <label id="check">Lưu thông tin đăng nhập</label>
                     </div>
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-12 col-12">
-                    <Link to={routesConfig.forgetpw}>Forgot password ?</Link>
+                    <Link to={routesConfig.forgetpw}>Quên Mật Khẩu ?</Link>
                   </div>
                 </div>
               </div>
             </div>
             <div className={cx("social-login")}>
               <div className={cx("title-social")}>
-                <label id="social-title">Other</label>
+                <label id="social-title">Hoặc</label>
               </div>
               <div className={cx("btn-social")}>
                 <GoogleLogin
@@ -206,7 +206,7 @@ function Login() {
                       .then((res) => {
                         localStorage.setItem("token", res.data);
                         if (res.status === 200) {
-                          toast.success("Login Success", {
+                          toast.success("Đăng Nhập Thành Công", {
                             position: "bottom-right",
                             autoClose: 5000,
                             theme: "light",
@@ -218,7 +218,7 @@ function Login() {
                       })
                       .catch((err) => {
                         if (err.response.status === 500) {
-                          toast.error("Connect Server Errors", {
+                          toast.error("Lỗi Server", {
                             position: "bottom-right",
                             autoClose: 5000,
                             theme: "light",
@@ -227,7 +227,7 @@ function Login() {
                       });
                   }}
                   onError={() => {
-                    toast.error("Login Failed", {
+                    toast.error("Đăng Nhập Thất Bại", {
                       position: "bottom-right",
                       autoClose: 5000,
                       theme: "light",
@@ -249,15 +249,15 @@ function Login() {
               <div className="row">
                 <div className="col-lg-8">
                   <p>
-                    Don’t have an account?
-                    <Link to={routesConfig.register}> Sign Up </Link> here
+                    Bạn chưa có tài khoản ?
+                    <Link to={routesConfig.register}> Đăng Ký </Link>
                   </p>
                 </div>
                 <div className="col-lg-4">
                   {isloading ? (
                     <img src={loading} alt="" />
                   ) : (
-                    <button onClick={handleSubmit}>Login</button>
+                    <button onClick={handleSubmit}>Đăng Nhập</button>
                   )}
                 </div>
               </div>

@@ -14,7 +14,7 @@ function Verify() {
       await AuthsAPI.verify(params)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Successful account registration", {
+            toast.success("Xác Thực Tài Khoản Thành Công", {
               position: "bottom-right",
               autoClose: 2000,
               theme: "light",
@@ -26,7 +26,7 @@ function Verify() {
         })
         .catch((err) => {
           if (err.response.status === 500) {
-            toast.error("Connect SerVer Errors", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -43,7 +43,7 @@ function Verify() {
           <div className={cx("notification-form")}>
             <div className="row">
               <div className="col-lg-12">
-                <h5>Email has been verifired</h5>
+                <h5>Tài Khoản Của Bạn Đã Được Xác Thực</h5>
               </div>
               <div className="col-lg-12">
                 <label id="check">
@@ -51,7 +51,7 @@ function Verify() {
                 </label>
               </div>
               <div className="col-lg-12">
-                <span htmlFor="">You can now login</span>
+                <span htmlFor="">Bạn Có Thể Đăng Nhập Ngay Bây Giờ</span>
               </div>
             </div>
           </div>

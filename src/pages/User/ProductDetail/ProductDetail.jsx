@@ -73,7 +73,7 @@ function ProductDetail() {
   };
   const handleAddToCart = async () => {
     if (!token) {
-      toast.warning("Please login to use this function", {
+      toast.warning("Vui lòng đăng nhập để sử dụng chứ năng này", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -82,7 +82,7 @@ function ProductDetail() {
     } else {
       if (!size) {
         setDisable(true);
-        toast.warning("Please choose the product size", {
+        toast.warning("Bạn chưa chọn kích thước sản phẩm", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -90,14 +90,14 @@ function ProductDetail() {
       }
       if (size) {
         if (isNaN(quantity)) {
-          toast.warning("The quantity must be a number", {
+          toast.warning("Số lượng phải là một số", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
           });
         }
         if (quantity < 0) {
-          toast.warning("The number must be greater than zero", {
+          toast.warning("Số lượng phải lơn hơn 0", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -121,7 +121,7 @@ function ProductDetail() {
               const action = resetCart();
               dispatch(action);
               setDisable(true);
-              toast.success("Add products to successful shopping cart", {
+              toast.success("Thêm sản phẩm vào giỏ hàng thành công", {
                 position: "bottom-right",
                 autoClose: 5000,
                 theme: "light",
@@ -130,7 +130,7 @@ function ProductDetail() {
           })
           .catch((err) => {
             if (err.response.status === 409) {
-              toast.error("Products already in the cart", {
+              toast.error("Sản phẩm đã có trong giỏ hàng", {
                 position: "bottom-right",
                 autoClose: 5000,
                 theme: "light",
@@ -138,18 +138,15 @@ function ProductDetail() {
               setDisable(true);
             }
             if (err.response.status === 403) {
-              toast.error(
-                "The number of products in the warehouse is not enough",
-                {
-                  position: "bottom-right",
-                  autoClose: 5000,
-                  theme: "light",
-                }
-              );
+              toast.error("Số lượng trong kho không đủ", {
+                position: "bottom-right",
+                autoClose: 5000,
+                theme: "light",
+              });
               setDisable(true);
             }
             if (err.response.status === 404) {
-              toast.error("Can't Find Product", {
+              toast.error("Không tìm thấy sản phẩm", {
                 position: "bottom-right",
                 autoClose: 5000,
                 theme: "light",
@@ -157,7 +154,7 @@ function ProductDetail() {
               setDisable(true);
             }
             if (err.response.status === 500) {
-              toast.error("Connect Server False", {
+              toast.error("Lỗi Server", {
                 position: "bottom-right",
                 autoClose: 5000,
                 theme: "light",
@@ -233,7 +230,7 @@ function ProductDetail() {
       <div className={cx("heading")}>
         <div className="container">
           <div className={cx("title-heading")}>
-            <Link to={routesConfig.home}>Home</Link> <span> / </span>
+            <Link to={routesConfig.home}>Trang Chủ</Link> <span> / </span>
             {type ? (
               <>
                 <Link to={`/collections/${type}`}>{type}</Link>
@@ -322,7 +319,7 @@ function ProductDetail() {
                   <div className="col-lg-12">
                     <div className={cx("producer")}>
                       <span>
-                        Trademark :{" "}
+                        Thương Hiệu :{" "}
                         <Link to={`/collections?producer=${product.producer}`}>
                           {product.producer}
                         </Link>
@@ -331,7 +328,7 @@ function ProductDetail() {
                   </div>
                   <div className="col-lg-12">
                     <div className={cx("product-code")}>
-                      <span>Product Code : {product.productCode}</span>
+                      <span>Mã Sản Phẩm : {product.productCode}</span>
                     </div>
                   </div>
                   <div className="col-lg-12">
@@ -340,28 +337,26 @@ function ProductDetail() {
                         <>
                           <div className={cx("old-price")}>
                             <span>
-                              $ {Number(product.old_price).toLocaleString()}
+                              {Number(product.old_price).toLocaleString()}
                             </span>
                           </div>
                           <div className={cx("now-price")}>
                             {" "}
                             <span>
-                              $ {Number(product.price).toLocaleString()}
+                              {Number(product.price).toLocaleString()}
                             </span>
                           </div>
                         </>
                       ) : (
                         <div>
-                          <span>
-                            $ {Number(product.price).toLocaleString()}
-                          </span>
+                          <span>{Number(product.price).toLocaleString()}</span>
                         </div>
                       )}
                     </div>
                   </div>
                   <div className="col-lg-12">
                     <div className={cx("size")}>
-                      <span>Size</span>
+                      <span>Kích Thước</span>
                     </div>
                     <div className="row">
                       {product.sizes
@@ -376,7 +371,7 @@ function ProductDetail() {
                                 )}
                               >
                                 <button onClick={(e) => handleSize(item.size)}>
-                                  Size {item.size}
+                                  {item.size}
                                 </button>
                                 <div className={cx("check")}>
                                   <i className="fa fa-check"></i>
@@ -389,7 +384,7 @@ function ProductDetail() {
                   </div>
                   <div className="col-lg-12">
                     <div className={cx("title")}>
-                      <span>Color</span>
+                      <span>Màu</span>
                     </div>
                     <div className={cx("color")}>
                       <label style={{ backgroundColor: `${product.color}` }}>
@@ -401,7 +396,7 @@ function ProductDetail() {
                     <div className="row g-0">
                       <div className="col-lg-3 col-md-4 col-sm-5 col-2">
                         <div className={cx("quantity")}>
-                          <label>Quantity</label>
+                          <label>Số Lượng</label>
                         </div>
                       </div>
                       <div className="col-lg-1 col-md-1 col-sm-1 col-1">
@@ -438,7 +433,7 @@ function ProductDetail() {
                       )}
                     >
                       <button onClick={handleAddToCart} disabled={disable}>
-                        ADD TO CART
+                        THÊM VÀO GIỎ HÀNG
                       </button>
                     </div>
                   </div>
@@ -454,7 +449,7 @@ function ProductDetail() {
           <div className={cx("similar-product")}>
             <div className="row">
               <div className="col-lg-12">
-                <h4>Similar Product</h4>
+                <h4>Sản Phẩm Tương Tự</h4>
               </div>
               <div className="col-lg-12">
                 <div className={cx("slider")}>

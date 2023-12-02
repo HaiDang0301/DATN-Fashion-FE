@@ -26,16 +26,16 @@ function Register() {
     },
     validationSchema: Yup.object({
       full_name: Yup.string()
-        .min(2, "Minimum 2 characters")
-        .max(20, "Maximum of 20 characters")
-        .required("Please provide full name"),
-      email: Yup.string().required("Email must not leave blank"),
+        .min(2, "Tối thiểu 2 ký tự")
+        .max(20, "Tối đa 20 ký tự")
+        .required("Vui lòng cung cấp đầy đủ họ và tên"),
+      email: Yup.string().required("Vui lòng cung cấp email"),
       password: Yup.string()
-        .min(6, "Password is too short")
-        .required("The password is empty"),
+        .min(6, "Mật khẩu quá ngắn")
+        .required("Vui lòng cung cấp mật khẩu"),
       confirm_password: Yup.string()
-        .oneOf([Yup.ref("password")], "Password incorrect")
-        .required("Please confirm the password"),
+        .oneOf([Yup.ref("password")], "Mật khẩu không khớp")
+        .required("Vui lòng xác nhận lại mật khẩu"),
     }),
   });
   const handleSubmit = async () => {
@@ -66,17 +66,20 @@ function Register() {
       await AuthsAPI.register(data)
         .then((res) => {
           if (res.status === 200) {
-            toast.success("Please go to Gmail to verify your account", {
-              position: "bottom-right",
-              autoClose: 5000,
-              theme: "light",
-            });
+            toast.success(
+              "Đăng Ký Thành Công Vui Lòng Vào Email Để Xác Thực Tài Khoản",
+              {
+                position: "bottom-right",
+                autoClose: 5000,
+                theme: "light",
+              }
+            );
             setCheck(false);
           }
         })
         .catch((errors) => {
           if (errors.response.status === 409) {
-            toast.error("The account has been registered", {
+            toast.error("Tài Khoản Đã Được Đăng Ký", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -84,7 +87,7 @@ function Register() {
             setCheck(false);
           }
           if (errors.response.status === 401) {
-            toast.error("Please check your email", {
+            toast.error("Vui Lòng Kiểm Tra Lại Email", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -92,7 +95,7 @@ function Register() {
             setCheck(false);
           }
           if (errors.response.status === 500) {
-            toast.error("Connect server false", {
+            toast.error("Lỗi Server", {
               position: "bottom-right",
               autoClose: 5000,
               theme: "light",
@@ -114,18 +117,18 @@ function Register() {
         <div className={cx("register-form-area")}>
           <div className={cx("register-form")}>
             <div className={cx("register-heading")}>
-              <span>Sign Up</span>
-              <p>Create your account to get full access</p>
+              <span>Đăng Ký</span>
+              <p>Tạo tài khoản của bạn để có quyền truy cập đầy đủ</p>
             </div>
             <div className={cx("input-box")}>
               <div className={cx("single-input")}>
-                <label id="full_name">Full Name</label>
+                <label id="full_name">Họ và tên</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="text"
                   id="full_name"
                   name="full_name"
-                  placeholder="Enter Full Name"
+                  placeholder="Họ và tên"
                   value={formik.values.full_name}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -145,7 +148,7 @@ function Register() {
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="Enter your Email"
+                  placeholder="Địa Chỉ Email"
                   value={formik.values.email}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -159,13 +162,13 @@ function Register() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label id="password">Password</label>
+                <label id="password">Mật Khẩu</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="Enter Password"
+                  placeholder="Mật Khẩu"
                   value={formik.values.password}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -179,13 +182,13 @@ function Register() {
                 ) : null}
               </div>
               <div className={cx("single-input")}>
-                <label id="confrim_password">Confirm Password</label>
+                <label id="confrim_password">Xác Nhận Mật Khẩu</label>
                 <input
                   onClick={(e) => setButton(false)}
                   type="password"
                   name="confirm_password"
                   id="confirm_password"
-                  placeholder="Confirm Password"
+                  placeholder="Xác Nhận Lại Mật Khẩu"
                   value={formik.values.confirm_password}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
@@ -206,9 +209,8 @@ function Register() {
               <div className="row">
                 <div className="col-lg-8">
                   <p>
-                    Already have an account?
-                    <Link to={routesConfig.login}> Login </Link>
-                    here
+                    Bạn đã có tài khoản?
+                    <Link to={routesConfig.login}> Đăng Nhập </Link>
                   </p>
                 </div>
                 <div className="col-lg-4">
@@ -216,7 +218,7 @@ function Register() {
                     isLoading
                   ) : (
                     <button onClick={handleSubmit} disabled={button}>
-                      Register
+                      Đăng Ký
                     </button>
                   )}
                 </div>

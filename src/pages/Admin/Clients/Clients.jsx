@@ -8,7 +8,7 @@ import clientAPI from "../../../api/Admin/clientAPI";
 import formatDate from "../../../formatDate/formatDate";
 const cx = className.bind(styles);
 function Clients() {
-  document.title = "Admin | Clients";
+  document.title = "Admin | Quản lý khách hàng";
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams;
@@ -41,19 +41,17 @@ function Clients() {
             <div className="row">
               <div className="col-lg-9">
                 <h5>
-                  <i className="fa fa-users"> Clients</i>
+                  <i className="fa fa-users"> Danh sách khách hàng</i>
                 </h5>
               </div>
               <div className="col-lg-3">
                 <div className={cx("sort")}>
                   <select name="sort" onChange={(e) => handleSort(e)}>
-                    <option value="all_clients">All Clients</option>
-                    <option value="name_clients">Name Clients</option>
-                    <option value="not_verify">
-                      The account is not authenticated
-                    </option>
+                    <option value="all_clients">Tất cả khách hàng</option>
+                    <option value="name_clients">Tên tác giả</option>
+                    <option value="not_verify">Tài khoản chưa đăng ký</option>
                     <option value="not_login">
-                      Do not log in continuously for a month
+                      Không đăng nhập liên tục trong vòng 1 tháng
                     </option>
                   </select>
                 </div>
@@ -66,13 +64,13 @@ function Clients() {
                 <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Name</th>
-                    <th>Phone Number</th>
-                    <th>Register NEWSLETTER</th>
-                    <th>Status Verify</th>
-                    <th>Auth Type</th>
-                    <th>Last Time Login</th>
-                    <th>Action</th>
+                    <th>Tên</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Nhận thông báo</th>
+                    <th>Trang thái tài khoản</th>
+                    <th>Hình thức đăng nhập</th>
+                    <th>Đăng nhập lần cuối</th>
+                    <th>Hành Động</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -83,9 +81,11 @@ function Clients() {
                           <td>{data.full_name}</td>
                           <td>{data.phone}</td>
                           <td>
-                            {data.registered ? "Registered" : "Unregistered"}
+                            {data.registered ? "Đã đăng ky" : "Chưa đăng ký"}
                           </td>
-                          <td>{data.verify ? "Verify" : "Unverify"}</td>
+                          <td>
+                            {data.verify ? "Đã xác thực" : "Chưa xác thực"}
+                          </td>
                           <td>{data.authType}</td>
                           <td>{formatDate(data.last_time_login)}</td>
                           <td>

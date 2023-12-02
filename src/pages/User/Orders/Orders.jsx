@@ -38,16 +38,16 @@ function Orders() {
       <div className="container">
         <div className="row">
           <div className="col-lg-9 col-md-8 col-sm-7 col-5">
-            <h5>Your Orders</h5>
+            <h5>Đơn Hàng Của Bạn</h5>
           </div>
           <div className="col-lg-3 col-md-4 col-sm-5 col-7">
             <select name="sort" id="sort" onChange={(e) => handleSort(e)}>
-              <option value="all_orders">All orders</option>
-              <option value="pending">Pending</option>
-              <option value="delivery">Delivery</option>
-              <option value="delivered">Delivery has been delivered</option>
-              <option value="decrease">Sort unit price reduction</option>
-              <option value="increase">Arrange unit price increase</option>
+              <option value="all_orders">Tất cả đơn hàng</option>
+              <option value="pending">Chờ Xử Lý</option>
+              <option value="delivery">Đang Giao Hàng</option>
+              <option value="delivered">Giao Hàng Hoàn Tất</option>
+              <option value="decrease">Theo Đơn Hàng Giảm Dần</option>
+              <option value="increase">Theo Đơn Hàng Tăng Dần</option>
             </select>
           </div>
         </div>
@@ -56,11 +56,11 @@ function Orders() {
             <thead>
               <tr>
                 <th>STT</th>
-                <th>Orders Code</th>
-                <th>Total Money</th>
-                <th>Status</th>
-                <th>Payment</th>
-                <th>Date</th>
+                <th>Mã Đơn Hàng</th>
+                <th>Tổng Tiền</th>
+                <th>Trạng Thái Giao Hàng</th>
+                <th>Thanh Toán</th>
+                <th>Ngày Đặt</th>
                 <th></th>
               </tr>
             </thead>
@@ -75,7 +75,7 @@ function Orders() {
                           ? item.orders_code.toUpperCase()
                           : null}
                       </td>
-                      <td>${Number(item.totalMoney).toLocaleString()}</td>
+                      <td>{Number(item.totalMoney).toLocaleString()}</td>
                       <td
                         className={cx(
                           item.status_delivery === "Cancel"
@@ -90,11 +90,13 @@ function Orders() {
                         </span>
                       </td>
                       <td>
-                        {item.status_payment === false ? "Unpaid" : "Paid"}
+                        {item.status_payment === false
+                          ? "Chưa Thanh Toán"
+                          : "Đã Thanh Toán"}
                       </td>
                       <td>{formatDate(item.createdAt)}</td>
                       <td>
-                        <Link to={item._id}>View</Link>
+                        <Link to={item._id}>Chi Tiết</Link>
                       </td>
                     </tr>
                   ))

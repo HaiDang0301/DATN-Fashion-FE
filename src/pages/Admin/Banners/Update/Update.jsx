@@ -32,7 +32,7 @@ function UpdateBanners() {
       .update(id, data)
       .then((res) => {
         if (res.data === "Update Banner Success") {
-          toast.success("Update Banner Success", {
+          toast.success("Cập nhật banner thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -40,7 +40,7 @@ function UpdateBanners() {
         }
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -55,7 +55,7 @@ function UpdateBanners() {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-10 col-md-10 com-sm-9 col-9">
-                <h5>Create Banner</h5>
+                <h5>Cập nhật banner</h5>
               </div>
               <div className="col-lg-2 col-md-2 col-sm-3 col-3">
                 <Link
@@ -63,7 +63,7 @@ function UpdateBanners() {
                   className="btn btn-primary"
                   onClick={handleSubmit}
                 >
-                  <i className="fa fa-save"> Save</i>
+                  <i className="fa fa-save"> Lưu Thông tin</i>
                 </Link>
               </div>
             </div>
@@ -80,7 +80,7 @@ function UpdateBanners() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("adress")}>
-                    <h5>Image</h5>
+                    <h5>Hình Ảnh</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -93,7 +93,7 @@ function UpdateBanners() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("name-banner")}>
-                    <h5>Title</h5>
+                    <h5>Tiêu Đề</h5>
                   </div>
                   <div className="col-lg-12">
                     <input
@@ -101,7 +101,7 @@ function UpdateBanners() {
                       name="title"
                       id="title"
                       value={banner.title}
-                      placeholder="Enter ther title banner"
+                      placeholder="Nhập Tiêu Đề Banner"
                       onChange={(e) =>
                         setBanner({ ...banner, title: e.target.value })
                       }
@@ -109,7 +109,7 @@ function UpdateBanners() {
                   </div>
                 </div>
                 <div className="col-lg-12">
-                  <h5>Text</h5>
+                  <h5>Mô Tả</h5>
                 </div>
                 <div className="col-lg-12">
                   <Editor

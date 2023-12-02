@@ -38,22 +38,24 @@ function SideBar() {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.AdminHome}>Home</Link>
+              <Link to={routesConfig.AdminHome}>Trang Chủ</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.AdminOrders}>Oders</Link>
+              <Link to={routesConfig.AdminOrders}>Đơn Hàng</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.AdminProducts}>Products</Link>
+              <Link to={routesConfig.AdminProducts}>Sản Phẩm</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.AdminProducers}>Producers</Link>
+              <Link to={routesConfig.AdminProducers}>Nhà Cung Cấp</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.AdminBlogs}>Blogs</Link>
+              <Link to={routesConfig.AdminBlogs}>Bài Viết</Link>
             </div>
             <div className={cx("item-mobile")}>
-              <Link to={routesConfig.Statistical}>Statistical</Link>
+              <Link to={routesConfig.Statistical}>
+                Doanh Thu & Xuất, Nhập Hàng
+              </Link>
             </div>
           </Offcanvas.Body>
         </Offcanvas>
@@ -88,37 +90,37 @@ function SideBar() {
       </div>
       <div className={cx("metis-menu")}>
         <ItemMenu
-          title="Home"
+          title="Trang Chủ"
           icon="fa fa-home"
           link={routesConfig.AdminHome}
         ></ItemMenu>
         <ItemMenu
-          title="Orders"
+          title="Đơn Hàng"
           icon="fa fa-shopping-cart"
           link={routesConfig.AdminOrders}
         ></ItemMenu>
         <ItemMenu
-          title="Clients"
+          title="Khách Hàng"
           icon="fa fa-users"
           link={routesConfig.AdminClients}
         ></ItemMenu>
         <ItemMenu
-          title="Producers"
+          title="Nhà Cung Cấp"
           icon="fa fa-product-hunt"
           link={routesConfig.AdminProducers}
         ></ItemMenu>
         <ItemMenu
-          title="Products"
+          title="Sản Phẩm"
           icon="fa fa-barcode"
           link={routesConfig.AdminProducts}
         ></ItemMenu>
         <ItemMenu
-          title="Statistical"
+          title="Doanh Thu & X,N Hàng"
           icon="fa fa-usd"
           link={routesConfig.Statistical}
         ></ItemMenu>
         <ItemMenu
-          title="Blogs"
+          title="Bài Viết"
           icon="fa fa-file-text"
           link={routesConfig.AdminBlogs}
         ></ItemMenu>
@@ -128,7 +130,7 @@ function SideBar() {
           link={routesConfig.AdminBanners}
         ></ItemMenu>
         <ItemMenu
-          title="User Home"
+          title="Trang Khách Hàng"
           icon="fa fa-users"
           link={routesConfig.home}
         ></ItemMenu>

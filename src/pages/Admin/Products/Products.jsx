@@ -15,7 +15,7 @@ import productsAPI from "../../../api/Admin/productsAPI";
 import producersApi from "../../../api/Admin/producersAPI";
 const cx = className.bind(styles);
 function AdminProducts() {
-  document.title = "Admin | Products";
+  document.title = "Admin | Quản lý sản phẩm";
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [reload, setReload] = useState(false);
@@ -43,7 +43,7 @@ function AdminProducts() {
           setCollections(res.data);
         })
         .catch((err) => {
-          toast.error("Connect Server False", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -57,7 +57,7 @@ function AdminProducts() {
           setProducer(res.data);
         })
         .catch((err) => {
-          toast.error("Connect Server False", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -70,7 +70,7 @@ function AdminProducts() {
   }, [params, show, reload]);
   const handleImportExcel = async () => {
     if (!fileExcel) {
-      toast.error("Please Choose Excel File", {
+      toast.error("Vui lòng chọn file excel", {
         position: "bottom-right",
         autoClose: 5000,
         theme: "light",
@@ -82,7 +82,7 @@ function AdminProducts() {
       .importExcel(data)
       .then((res) => {
         if (res.status === 200) {
-          toast.success("Add Product List Success", {
+          toast.success("Thêm danh sách sản phẩm thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -92,17 +92,14 @@ function AdminProducts() {
       })
       .catch((err) => {
         if (err.response.status === 409) {
-          toast.error(
-            "There are duplication products or files not in the format",
-            {
-              position: "bottom-right",
-              autoClose: 5000,
-              theme: "light",
-            }
-          );
+          toast.error("Sản phẩm đã tồn tại hoặc file không đúng định dạng", {
+            position: "bottom-right",
+            autoClose: 5000,
+            theme: "light",
+          });
         }
         if (err.response.status === 500) {
-          toast.error("Connect Server False", {
+          toast.error("Lỗi Server", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -118,7 +115,7 @@ function AdminProducts() {
         FileDownLoad(res.data, "sampleFile.csv");
       })
       .catch((err) => {
-        toast.error("Connect Server False", {
+        toast.error("Lỗi Server", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -162,7 +159,7 @@ function AdminProducts() {
       .destroy(id)
       .then((res) => {
         if (res.data === "Delete Success") {
-          toast.success("Delete Product Success", {
+          toast.success("Xóa sản phẩm thành công", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -172,7 +169,7 @@ function AdminProducts() {
       })
       .catch((err) => {
         if (err.response.status === 404) {
-          toast.error("Can't Find Blogs", {
+          toast.error("Không tìm thấy sản phẩm", {
             position: "bottom-right",
             autoClose: 5000,
             theme: "light",
@@ -192,15 +189,15 @@ function AdminProducts() {
     <div className={cx("wrapper")}>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Notification</Modal.Title>
+          <Modal.Title>Cảnh Báo</Modal.Title>
         </Modal.Header>
-        <Modal.Body>You are sure to delete the product !</Modal.Body>
+        <Modal.Body>Bạn có chắc chắn muốn xóa sản phẩm !</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
-            Close
+            Đóng
           </Button>
           <Button variant="primary" onClick={handleDelete}>
-            Confirm
+            Xác Nhận
           </Button>
         </Modal.Footer>
       </Modal>
@@ -212,35 +209,35 @@ function AdminProducts() {
               <div className="row">
                 <div className="col-lg-2 col-md-3 col-sm-4 col-4">
                   <div className={cx("title")}>
-                    <h5>Products List</h5>
+                    <h5>Sản Phẩm</h5>
                   </div>
                 </div>
                 <div className="col-lg-4 col-md-9 col-sm-8 col-8">
                   <div className={cx("search-name")}>
                     <div className="row">
-                      <div className="col-lg-9 col-md-8 col-sm-9 col-9">
+                      <div className="col-lg-8 col-md-8 col-sm-9 col-9">
                         <input
                           type="search"
                           name="search"
                           id="search"
-                          placeholder="Enter the product code"
+                          placeholder="Nhập mã sản phẩm"
                           onChange={handleChangeProductCode}
                         />
                       </div>
-                      <div className="col-lg-2 col-md-4 col-sm-3 col-3">
+                      <div className="col-lg-4 col-md-4 col-sm-3 col-3">
                         <div className={cx("search")}>
                           <button
                             className="btn btn-primary"
                             onClick={handleSearch}
                           >
-                            Search
+                            Tìm Kiếm
                           </button>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-5 col-md-10 col-sm-10 col-10">
+                <div className="col-lg-4 col-md-10 col-sm-10 col-10">
                   <div className="row">
                     <div className="col-lg-5 col-md-7 col-sm-6 col-6">
                       <div className={cx("excel-file")}>
@@ -265,7 +262,7 @@ function AdminProducts() {
                         className="btn btn-primary"
                         onClick={handleImportExcel}
                       >
-                        Import
+                        Nhập
                       </button>
                     </div>
                     <div className="col-lg-4 col-md-3 col-sm-4 col-4">
@@ -275,19 +272,19 @@ function AdminProducts() {
                           onClick={handleDownloadFile}
                           className="btn btn-primary"
                         >
-                          Sample file
+                          File Mẫu
                         </Link>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-1 col-md-2 col-sm-2 col-2">
+                <div className="col-lg-2 col-md-2 col-sm-2 col-2">
                   <div className={cx("create-product")}>
                     <Link
                       to={routesConfig.CreateProducts}
                       className="btn btn-primary"
                     >
-                      Create
+                      Tạo Mới
                     </Link>
                   </div>
                 </div>
@@ -312,7 +309,7 @@ function AdminProducts() {
                 <div className={cx("status")}>
                   <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-4 col-4">
-                      <div className={cx("title-sort")}>Collections</div>
+                      <div className={cx("title-sort")}>Bộ Sưu Tập</div>
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
@@ -321,7 +318,7 @@ function AdminProducts() {
                           id=""
                           onChange={(e) => handleChangeCollection(e)}
                         >
-                          <option value="">Default</option>
+                          <option value=""></option>
                           {collections
                             ? collections.map((item, index) => (
                                 <option value={item.collections} key={index}>
@@ -339,7 +336,7 @@ function AdminProducts() {
                 <div className={cx("categories")}>
                   <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-4 col-4">
-                      <div className={cx("title-sort")}>Producers</div>
+                      <div className={cx("title-sort")}>Thương Hiệu</div>
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
@@ -348,7 +345,7 @@ function AdminProducts() {
                           id="producer"
                           onChange={(e) => handleChangeProducer(e)}
                         >
-                          <option value="">Default</option>
+                          <option value=""></option>
                           {producer.producers
                             ? producer.producers.map((item, index) => (
                                 <option value={item.name} key={index}>
@@ -366,18 +363,16 @@ function AdminProducts() {
                 <div className={cx("status")}>
                   <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-4 col-4">
-                      <div className={cx("title-sort")}>Price</div>
+                      <div className={cx("title-sort")}>Giá</div>
                     </div>
                     <div className="col-lg-8 col-md-8 col-sm-8 col-8">
                       <div className={cx("input-sort")}>
                         <select name="" id="" onChange={handleChangePrice}>
-                          <option value="default">Default</option>
+                          <option value="default"></option>
                           <option value="increase">
-                            Product prices gradually increase
+                            Giá sản phẩm tăng dần
                           </option>
-                          <option value="reduce">
-                            Product prices gradually decrease
-                          </option>
+                          <option value="reduce">Giá sản phẩm giảm dần</option>
                         </select>
                       </div>
                     </div>
@@ -391,28 +386,22 @@ function AdminProducts() {
           <Table striped bordered hover className={cx("table")}>
             <thead>
               <tr>
-                <th>
-                  <input type="checkbox" name="" id="" />
-                </th>
                 <th>STT</th>
-                <th>Product Code</th>
-                <th>Product Name</th>
-                <th>Image</th>
-                <th>Sizes</th>
-                <th>Quantity</th>
-                <th>Import Price</th>
-                <th>Sale Price</th>
-                <th>Brand</th>
-                <th>Action</th>
+                <th>Mã Sản Phẩm</th>
+                <th>Tên Sản Phẩm</th>
+                <th>Hình Ảnh</th>
+                <th>Kích Thước</th>
+                <th>Số Lượng</th>
+                <th>Giá Nhập</th>
+                <th>Giá Bán</th>
+                <th>Thương Hiệu</th>
+                <th>Hành Động</th>
               </tr>
             </thead>
             <tbody>
               {products.products
                 ? products.products.map((item, index) => (
                     <tr key={index}>
-                      <td>
-                        <input type="checkbox" name="" id="" />
-                      </td>
                       <td>{index + 1}</td>
                       <td>{item.productCode}</td>
                       <td>{item.name}</td>

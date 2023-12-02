@@ -44,7 +44,7 @@ function UpdateBlogs() {
     data.append("description", blog.description);
     await blogAPI.update(id, data).then((res) => {
       if (res.status === 200) {
-        toast.success("Update Blog Success", {
+        toast.success("Cập nhật bài viết thành công", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -52,7 +52,7 @@ function UpdateBlogs() {
         setIsLoading(false);
       }
       if (res.data === "Can't Find Blog") {
-        toast.error("Can't Find Blog", {
+        toast.error("Không tìm thấy bài viết", {
           position: "bottom-right",
           autoClose: 5000,
           theme: "light",
@@ -70,7 +70,7 @@ function UpdateBlogs() {
           <div className="col-lg-12">
             <div className="row">
               <div className="col-lg-10 col-md-9 com-sm-9 col-8">
-                <h5>Update Blog</h5>
+                <h5>Cập nhật bài viết</h5>
               </div>
               <div className="col-lg-2 col-md-3 col-sm-3 col-4">
                 {isloading ? (
@@ -81,7 +81,7 @@ function UpdateBlogs() {
                     className="btn btn-primary"
                     onClick={handleUpdate}
                   >
-                    <i className="fa fa-edit"> Update</i>
+                    <i className="fa fa-edit"> Lưu thông tin</i>
                   </Link>
                 )}
               </div>
@@ -101,7 +101,7 @@ function UpdateBlogs() {
                   <div className={cx("image")}>
                     <div className="row">
                       <div className="col-lg-2">
-                        <h5>Image</h5>
+                        <h5>Hình Ảnh</h5>
                       </div>
                       <div className="col-lg-10">
                         <input
@@ -116,7 +116,7 @@ function UpdateBlogs() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("title-blogs")}>
-                    <h5>Title Blogs</h5>
+                    <h5>Tiêu Đề Bài Viết</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -125,7 +125,7 @@ function UpdateBlogs() {
                     name="title"
                     id="title"
                     onClick={handleEdit}
-                    placeholder="Enter the title blog"
+                    placeholder="Tiêu đề bài viết"
                     value={blog.title}
                     onChange={(e) =>
                       setBlog({ ...blog, title: e.target.value })
@@ -139,13 +139,13 @@ function UpdateBlogs() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("author")}>
-                    <h5>Author</h5>
+                    <h5>Tác Giả</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
                   <input
                     type="text"
-                    placeholder="Enter the author blog"
+                    placeholder="Tác giả bài viết"
                     value={blog.author}
                     onChange={(e) =>
                       setBlog({ ...blog, author: e.target.value })
@@ -154,7 +154,7 @@ function UpdateBlogs() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("hashtag")}>
-                    <h5>Hashtag</h5>
+                    <h5>Từ Khóa Tìm Kiếm</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
@@ -162,7 +162,7 @@ function UpdateBlogs() {
                     type="text"
                     name="title"
                     id="title"
-                    placeholder="Enter the hashtag blog"
+                    placeholder="Từ khóa tìm kiếm"
                     value={blog.hashtag}
                     onChange={(e) =>
                       setBlog({ ...blog, hashtag: e.target.value })
@@ -176,7 +176,7 @@ function UpdateBlogs() {
                 </div>
                 <div className="col-lg-12">
                   <div className={cx("description")}>
-                    <h5>Description</h5>
+                    <h5>Mô Tả</h5>
                   </div>
                 </div>
                 <div className="col-lg-12">
