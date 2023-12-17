@@ -1,0 +1,66 @@
+.wrapper {
+  margin-top: 30px;
+  font-size: 15px;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
+  margin-bottom: 30px;
+}
+.table-orders {
+  overflow: hidden;
+  overflow-x: scroll;
+}
+.table {
+  text-align: center;
+  a {
+    color: black;
+    text-decoration: none;
+    border: none;
+    background: none;
+    &:hover {
+      color: green;
+    }
+  }
+}
+.status_cancel {
+  span {
+    color: red;
+  }
+}
+.status_delivery {
+  span {
+    color: green;
+  }
+}
+.panigate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  ul {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+  }
+  a {
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .wrapper {
+    font-size: 13px;
+    h5 {
+      font-size: 13px;
+    }
+    select {
+      width: 100%;
+    }
+  }
+}

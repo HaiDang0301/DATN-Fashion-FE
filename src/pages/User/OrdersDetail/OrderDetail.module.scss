@@ -1,0 +1,144 @@
+.wrapper {
+  margin-bottom: 30px;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.back {
+  float: right;
+  button {
+    border: none;
+    background: none;
+    width: 100%;
+  }
+}
+.title-heading {
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+}
+.box-item {
+  position: relative;
+  height: 150px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  box-shadow: 1px 3px #e9e5e5;
+}
+.image {
+  position: absolute;
+  height: 100%;
+  padding: 15px 0px;
+  img {
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+  }
+}
+.quantity {
+  position: absolute;
+  top: 40%;
+}
+.change-quantity {
+  position: absolute;
+  top: 32%;
+  .btn-minus {
+    button {
+      width: 100%;
+      border: none;
+      background-color: white;
+    }
+    i {
+      font-size: 13px;
+    }
+  }
+  .btn-plus {
+    button {
+      width: 100%;
+      border: none;
+      background-color: white;
+    }
+    i {
+      font-size: 13px;
+    }
+  }
+}
+.information {
+  position: absolute;
+  top: 20%;
+}
+.info-customer {
+  text-align: center;
+  margin-top: 20px;
+}
+.destroy {
+  position: absolute;
+  top: 35%;
+  button {
+    width: 100%;
+    border: none;
+    background-color: white;
+    &:hover {
+      color: red;
+    }
+    &:active {
+      color: red;
+    }
+  }
+}
+.product-name {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+}
+.size {
+  font-size: 15px;
+}
+.price {
+  font-size: 15px;
+}
+.total-price {
+  font-size: 15px;
+}
+.checkout {
+  margin-top: 20px;
+  height: max-content;
+}
+.checkout-form {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  span {
+    color: black;
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 992px) {
+  .information {
+    position: absolute;
+    top: 20%;
+    margin-left: 5%;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .information {
+    position: absolute;
+    top: 20%;
+    margin-left: 8%;
+  }
+}
+@media only screen and (max-width: 568px) {
+  .information {
+    position: absolute;
+    top: 20%;
+    margin-left: 10%;
+  }
+  .product-name {
+    font-size: 13px;
+  }
+  .size {
+    font-size: 13px;
+  }
+  .price {
+    font-size: 13px;
+  }
+  .total-price {
+    font-size: 13px;
+  }
+}

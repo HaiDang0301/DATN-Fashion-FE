@@ -1,0 +1,152 @@
+.heading {
+  margin-bottom: 30px;
+}
+.search {
+  select {
+    width: 100%;
+    height: 40px;
+  }
+}
+.date {
+  font-size: 20px;
+  color: #9abc32;
+  height: 100px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  label {
+    margin-left: 2%;
+  }
+  i {
+    font-size: 40px;
+  }
+}
+.annual-revenue {
+  font-size: 20px;
+  color: #9abc32;
+  height: 100px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  label {
+    margin-left: 2%;
+  }
+  i {
+    font-size: 40px;
+  }
+}
+.annual-money {
+  color: #9abc32;
+  text-align: center;
+  font-size: 20px;
+}
+.total-money {
+  width: 100%;
+  font-size: 15px;
+  height: 100px;
+  border: 1px solid #ddd;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  i {
+    color: blue;
+    font-size: 40px;
+  }
+  label {
+    margin-left: 2%;
+  }
+}
+.content {
+  width: 100%;
+  padding: 0px 10px;
+}
+.text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  label {
+    font-size: 20px;
+  }
+}
+.import-money {
+  color: blue;
+  text-align: center;
+  font-size: 20px;
+}
+.total-sale {
+  font-size: 15px;
+  height: 100px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  i {
+    color: red;
+    font-size: 40px;
+  }
+  label {
+    margin-left: 2%;
+  }
+}
+.sales-money {
+  color: red;
+  text-align: center;
+  font-size: 20px;
+}
+.total-inventory {
+  font-size: 15px;
+  height: 100px;
+  border: 1px solid #ddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  i {
+    color: orange;
+    font-size: 40px;
+  }
+  label {
+    margin-left: 2%;
+  }
+}
+.quantity-iventory {
+  color: orange;
+  text-align: center;
+  font-size: 20px;
+}
+.table-contents {
+  margin: 30px 0px;
+  text-align: center;
+  li {
+    list-style: none;
+  }
+}
+.panigate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  ul {
+    display: flex;
+  }
+  li {
+    list-style-type: none;
+  }
+  a {
+    padding: 5px 10px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+}
