@@ -15,6 +15,7 @@ function App() {
   function checkAndClickIframe() {
     const firstIframe = document.querySelector("iframe");
     if (firstIframe) {
+      console.log(122)
       firstIframe.contentWindow.document.body.click();
     }
   }
