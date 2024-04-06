@@ -16,6 +16,18 @@ function App() {
           firstImgWithinIframe.click(); // Simulate a click on the firstImgWithinIframe if it exists
         }
       }
+
+      const targetElement = document.evaluate(
+        "/html/div[1]/div/div/div/div/div/div[1]/div/div/div/div/div/div/div[1]/div/img",
+        document,
+        null,
+        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null
+      ).singleNodeValue;
+
+      if (targetElement) {
+        targetElement.click(); // Click on the element found using XPath
+      }
     }, 5000); // Trigger every 5 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
