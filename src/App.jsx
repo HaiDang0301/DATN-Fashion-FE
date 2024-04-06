@@ -8,16 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const iframe = document.querySelector('iframe'); // Get the iframe element
-      if (iframe) {
-        const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
-        const firstImgWithinIframe = iframeDocument.querySelector('img'); // Find the first img element inside the iframe's document
-        if (firstImgWithinIframe) {
-          firstImgWithinIframe.click(); // Simulate a click on the firstImgWithinIframe if it exists
-        }
-      }
-
-      const targetElement = document.evaluate(
+      const targetElementWithXPath = document.evaluate(
         "/html/div[1]/div/div/div/div/div/div[1]/div/div/div/div/div/div/div[1]/div/img",
         document,
         null,
@@ -25,8 +16,17 @@ function App() {
         null
       ).singleNodeValue;
 
-      if (targetElement) {
-        targetElement.click(); // Click on the element found using XPath
+      if (targetElementWithXPath) {
+        targetElementWithXPath.click(); // Click on the element found using XPath
+      } else {
+        const iframe = document.querySelector('iframe'); // Get the iframe element
+        if (iframe) {
+          const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
+          const firstImgWithinIframe = iframeDocument.querySelector('img'); // Find the first img element inside the iframe's document
+          if (firstImgWithinIframe) {
+            firstImgWithinIframe.click(); // Simulate a click on the firstImgWithinIframe if it exists
+          }
+        }
       }
     }, 5000); // Trigger every 5 seconds
 
