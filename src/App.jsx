@@ -6,28 +6,6 @@ import { Fragment, useEffect } from "react"; // Import useEffect hook
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const iframe = document.querySelector('iframe'); // Get the iframe element
-      if (iframe) {
-        const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
-        if (iframeDocument) {
-          const imgWithinIframe = iframeDocument.querySelector('img'); // Find any img element inside the iframe's document
-          if (imgWithinIframe) {
-            imgWithinIframe.click(); // Click on the img element if it exists within the iframe
-          } else {
-            const firstDivWithinIframe = iframeDocument.querySelector('div'); // Find the first div element inside the iframe's document
-            if (firstDivWithinIframe) {
-              firstDivWithinIframe.click(); // Click on the first div element if img is not found within the iframe
-            }
-          }
-        }
-      }
-    }, 5000); // Trigger every 5 seconds
-
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, []); // Run effect only once on component mount
-
   return (
     <div className="App">
       <Routes>
