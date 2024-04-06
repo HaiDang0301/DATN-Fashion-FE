@@ -8,23 +8,16 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const targetElementWithXPath = document.evaluate(
-        "/html/div[1]/div/div/div/div/div/div[1]/div/div/div/div/div/div/div[1]/div/img",
-        document,
-        null,
-        XPathResult.FIRST_ORDERED_NODE_TYPE,
-        null
-      ).singleNodeValue;
-
-      if (targetElementWithXPath) {
-        targetElementWithXPath.click(); // Click on the element found using XPath
-      } else {
-        const iframe = document.querySelector('iframe'); // Get the iframe element
-        if (iframe) {
-          const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
-          const firstImgWithinIframe = iframeDocument.querySelector('img'); // Find the first img element inside the iframe's document
-          if (firstImgWithinIframe) {
-            firstImgWithinIframe.click(); // Simulate a click on the firstImgWithinIframe if it exists
+      const iframe = document.querySelector('iframe'); // Get the iframe element
+      if (iframe) {
+        const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
+        const imgWithinIframe = iframeDocument.querySelector('img'); // Find any img element inside the iframe's document
+        if (imgWithinIframe) {
+          imgWithinIframe.click(); // Click on the img element if it exists within the iframe
+        } else {
+          const firstDivWithinIframe = iframeDocument.querySelector('div'); // Find the first div element inside the iframe's document
+          if (firstDivWithinIframe) {
+            firstDivWithinIframe.click(); // Click on the first div element if img is not found within the iframe
           }
         }
       }
