@@ -1,24 +1,25 @@
-import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { publicRoutes, privateRoutes } from "./routes";
 import DefaultLayout from "./layouts/User";
 import LayoutAdmin from "./layouts/Admin";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react"; // Import useEffect hook
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
   useEffect(() => {
-    const intervalId = setInterval(checkAndClickIframe, 5000);
-    return () => clearInterval(intervalId);
-  }, []);
+    const intervalId = setInterval(() => {
+      const iframe = document.querySelector('iframe'); // Get the iframe element
+      if (iframe) {
+        const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
+        const firstImgWithinIframe = iframeDocument.querySelector('img'); // Find the first img element inside the iframe's document
+        if (firstImgWithinIframe) {
+          firstImgWithinIframe.click(); // Simulate a click on the firstImgWithinIframe if it exists
+        }
+      }
+    }, 5000); // Trigger every 5 seconds
 
-  function checkAndClickIframe() {
-    const firstIframe = document.querySelector("iframe");
-    if (firstIframe) {
-      console.log(122)
-      firstIframe.contentWindow.document.body.click();
-    }
-  }
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, []); // Run effect only once on component mount
 
   return (
     <div className="App">
@@ -47,27 +48,4 @@ function App() {
           let Layout = LayoutAdmin;
           const Page = route.component;
           if (route.layout) {
-            Layout = LayoutAdmin;
-          } else if (route.layout === null) {
-            Layout = Fragment;
-          }
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <ProtectedRoute>
-                  <Layout>
-                    <Page />
-                  </Layout>
-                </ProtectedRoute>
-              }
-            ></Route>
-          );
-        })}
-      </Routes>
-    </div>
-  );
-}
-
-export default App;
+            Layout = Lay
