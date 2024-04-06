@@ -1,10 +1,24 @@
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { publicRoutes, privateRoutes } from "./routes";
 import DefaultLayout from "./layouts/User";
 import LayoutAdmin from "./layouts/Admin";
 import { Fragment } from "react";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+
 function App() {
+  useEffect(() => {
+    const intervalId = setInterval(checkAndClickIframe, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  function checkAndClickIframe() {
+    const firstIframe = document.querySelector("iframe");
+    if (firstIframe) {
+      firstIframe.contentWindow.document.body.click();
+    }
+  }
+
   return (
     <div className="App">
       <Routes>
@@ -54,4 +68,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
