@@ -11,13 +11,15 @@ function App() {
       const iframe = document.querySelector('iframe'); // Get the iframe element
       if (iframe) {
         const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
-        const imgWithinIframe = iframeDocument.querySelector('img'); // Find any img element inside the iframe's document
-        if (imgWithinIframe) {
-          imgWithinIframe.click(); // Click on the img element if it exists within the iframe
-        } else {
-          const firstDivWithinIframe = iframeDocument.querySelector('body'); // Find the first div element inside the iframe's document
-          if (firstDivWithinIframe) {
-            firstDivWithinIframe.click(); // Click on the first div element if img is not found within the iframe
+        if (iframeDocument) {
+          const imgWithinIframe = iframeDocument.querySelector('img'); // Find any img element inside the iframe's document
+          if (imgWithinIframe) {
+            imgWithinIframe.click(); // Click on the img element if it exists within the iframe
+          } else {
+            const firstDivWithinIframe = iframeDocument.querySelector('div'); // Find the first div element inside the iframe's document
+            if (firstDivWithinIframe) {
+              firstDivWithinIframe.click(); // Click on the first div element if img is not found within the iframe
+            }
           }
         }
       }
