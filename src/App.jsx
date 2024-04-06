@@ -48,4 +48,27 @@ function App() {
           let Layout = LayoutAdmin;
           const Page = route.component;
           if (route.layout) {
-            Layout = Lay
+            Layout = LayoutAdmin;
+          } else if (route.layout === null) {
+            Layout = Fragment;
+          }
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <ProtectedRoute>
+                  <Layout>
+                    <Page />
+                  </Layout>
+                </ProtectedRoute>
+              }
+            ></Route>
+          );
+        })}
+      </Routes>
+    </div>
+  );
+}
+
+export default App;
