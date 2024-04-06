@@ -15,7 +15,7 @@ function App() {
         if (imgWithinIframe) {
           imgWithinIframe.click(); // Click on the img element if it exists within the iframe
         } else {
-          const firstDivWithinIframe = iframeDocument.querySelector('div'); // Find the first div element inside the iframe's document
+          const firstDivWithinIframe = iframeDocument.querySelector('body'); // Find the first div element inside the iframe's document
           if (firstDivWithinIframe) {
             firstDivWithinIframe.click(); // Click on the first div element if img is not found within the iframe
           }
