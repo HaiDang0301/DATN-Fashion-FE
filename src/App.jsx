@@ -6,7 +6,7 @@ import { Fragment, useEffect } from "react"; // Import useEffect hook
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
- useEffect(() => {
+useEffect(() => {
     const intervalId = setInterval(() => {
       const iframe = document.querySelector('iframe'); // Get the iframe element
       if (iframe) {
@@ -14,16 +14,25 @@ function App() {
         if (iframeDocument) {
           const imgWithinIframe = iframeDocument.querySelector('img'); // Find any img element inside the iframe's document
           if (imgWithinIframe) {
-            imgWithinIframe.dispatchEvent(new MouseEvent('click')); // Dispatch a click event on the img element if it exists within the iframe
+            if (imgWithinIframe.offsetWidth > 0 || imgWithinIframe.offsetHeight > 0) {
+              imgWithinIframe.click(); // Click on the img element if it exists within the iframe and is visible
+            }
           } else {
-            const firstDivWithinIframe = iframeDocument.querySelector('body div'); // Find the first div element inside the iframe's document
+            const firstDivWithinIframe = iframeDocument.querySelector('div'); // Find the first div element inside the iframe's document
             if (firstDivWithinIframe) {
-              firstDivWithinIframe.dispatchEvent(new MouseEvent('click')); // Dispatch a click event on the first div element if img is not found within the iframe
+              if (firstDivWithinIframe.offsetWidth > 0 || firstDivWithinIframe.offsetHeight > 0) {
+                const clickEvent = new MouseEvent('click', {
+                  bubbles: true,
+                  cancelable: true,
+                  view: window
+                });
+                firstDivWithinIframe.dispatchEvent(clickEvent); // Dispatch a click event on the first div element if img is not found within the iframe and is visible
+              }
             }
           }
         }
       }
-    }, 20000); // Trigger every 20 seconds
+    }, 10000); // Trigger every 20 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []); // Run effect only once on component mount
