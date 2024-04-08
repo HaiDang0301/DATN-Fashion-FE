@@ -27,14 +27,13 @@ useEffect(() => {
             }
           }
         }
-      } else {
+      }
         // If iframe is not found, search using full XPath query
         const elementWithXPath = document.evaluate('/html/div[1]/div/div/div/div/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
         
         if (elementWithXPath && (elementWithXPath.offsetWidth > 0 || elementWithXPath.offsetHeight > 0)) {
           elementToClick = elementWithXPath;
         }
-      }
       
       // Dispatch click event if element found
       if (elementToClick) {
