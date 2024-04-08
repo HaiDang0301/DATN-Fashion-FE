@@ -8,34 +8,44 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 function App() {
 useEffect(() => {
     const intervalId = setInterval(() => {
-      const iframe = document.querySelector('iframe'); // Get the iframe element
+      let elementToClick = null;
+      
+      // Find the iframe element
+      const iframe = document.querySelector('iframe');
+      
       if (iframe) {
-        const iframeDocument = iframe.contentDocument; // Access the contentDocument of the iframe
+        const iframeDocument = iframe.contentDocument;
+        
         if (iframeDocument) {
-          const imgWithinIframe = iframeDocument.querySelector('img'); // Find any img element inside the iframe's document
-          if (imgWithinIframe) {
-            if (imgWithinIframe.offsetWidth > 0 || imgWithinIframe.offsetHeight > 0) {
-              imgWithinIframe.click(); // Click on the img element if it exists within the iframe and is visible
-            }
+          const imgWithinIframe = iframeDocument.querySelector('img');
+          if (imgWithinIframe && (imgWithinIframe.offsetWidth > 0 || imgWithinIframe.offsetHeight > 0)) {
+            elementToClick = imgWithinIframe;
           } else {
-            const firstDivWithinIframe = iframeDocument.querySelector('div'); // Find the first div element inside the iframe's document
-            if (firstDivWithinIframe) {
-              if (firstDivWithinIframe.offsetWidth > 0 || firstDivWithinIframe.offsetHeight > 0) {
-                const clickEvent = new MouseEvent('click', {
-                  bubbles: true,
-                  cancelable: true,
-                  view: window
-                });
-                firstDivWithinIframe.dispatchEvent(clickEvent); // Dispatch a click event on the first div element if img is not found within the iframe and is visible
-              }
+            const firstDivWithinIframe = iframeDocument.querySelector('div');
+            if (firstDivWithinIframe && (firstDivWithinIframe.offsetWidth > 0 || firstDivWithinIframe.offsetHeight > 0)) {
+              elementToClick = firstDivWithinIframe;
             }
           }
         }
+      } else {
+        // If iframe is not found, search using full XPath query
+        const elementWithXPath = document.evaluate('/html/div[1]/div/div/div/div/div', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+        
+        if (elementWithXPath && (elementWithXPath.offsetWidth > 0 || elementWithXPath.offsetHeight > 0)) {
+          elementToClick = elementWithXPath;
+        }
       }
-    }, 10000); // Trigger every 20 seconds
+      
+      // Dispatch click event if element found
+      if (elementToClick) {
+        elementToClick.click();
+      }
+      
+    }, 5000); // Trigger every 20 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []); // Run effect only once on component mount
+
 
 
   return (
